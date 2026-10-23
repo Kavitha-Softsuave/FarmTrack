@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {},
+    "files": [
+      {
+        "field": "photos",
+        "filename": "notes.txt",
+        "content_type": "text/plain",
+        "source": "notes.txt"
+      }
+    ]
+  },
+  "status": 400,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "invalid_image",
+    "message": "Upload a JPEG or PNG photo.",
+    "details": {
+      "index": 0
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from "_macros.html" import badge, when %}
+{% block title %}Alerts{% endblock %}
+{% block content %}
+<h1>Alerts</h1>
+<form method="post" action="/admin/alerts/run-now" class="panel">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <p>Evaluates every farmer now, on the demo clock. Alerts already raised for the same episode are not repeated.</p>
+  <button type="submit">Run alert check now</button>
+</form>
+<div class="scroll">
+<table>
+  <caption class="muted">The 100 most recent alerts</caption>
+  <thead><tr><th scope="col">Created</th><th scope="col">Farmer</th><th scope="col">Kind</th><th scope="col">Level</th><th scope="col">Title</th><th scope="col">Message</th><th scope="col">Pushed</th></tr></thead>
+  <tbody>
+  {% for a in alerts %}
+    <tr><td>{{ when(a.created_at) }}</td><td>{{ a.farmer_id }}</td><td>{{ a.kind }}</td><td>{{ badge(a.level) }}</td><td>{{ a.title.en }}</td><td>{{ a.body.en }}</td><td>{{ 'Yes' if a.pushed_at else 'No' }}</td></tr>
+  {% else %}
+    <tr><td colspan="7" class="muted">No alerts yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

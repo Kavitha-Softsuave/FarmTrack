@@ -1,0 +1,54 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {},
+    "files": [
+      {
+        "field": "photos",
+        "filename": "blurry.jpg",
+        "content_type": "image/jpeg",
+        "source": "generated: blurry jpeg (640x480)"
+      }
+    ]
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "562c5961918fb18e56929c8c34e6e1a7",
+    "status": "photo_unusable",
+    "created_at": "2026-05-12T16:00:00+05:30",
+    "photos": 1,
+    "crop": null,
+    "quality": {
+      "usable": false,
+      "issues": [
+        "blurry"
+      ],
+      "tip_prompt_id": "scan_retake_blurry"
+    },
+    "disease": null,
+    "advice": null,
+    "review_task_id": null,
+    "next_steps": [
+      {
+        "action": "retake",
+        "prompt_id": "scan_retake_blurry"
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "The photo is not clear. Hold the phone still and take it again.",
+        "hi": "फोटो साफ़ नहीं आई। फोन को हिलाए बिना दोबारा खींचिए।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  },
+  "note": "Whatever the quality checker says for a blurred photo."
+}

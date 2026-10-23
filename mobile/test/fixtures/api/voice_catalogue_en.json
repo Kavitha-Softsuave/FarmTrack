@@ -1,0 +1,816 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/voice/catalogue",
+    "auth": "none",
+    "query": {
+      "lang": "en"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json",
+    "etag": "\"2026-10-19.1+0909345a-en\""
+  },
+  "body": {
+    "version": "2026-10-19.1+0909345a",
+    "language": "en",
+    "prompts": [
+      {
+        "id": "choose_language",
+        "text": "Please choose your language. Tap the language you want.",
+        "audio": null
+      },
+      {
+        "id": "language_hindi",
+        "text": "Hindi.",
+        "audio": null
+      },
+      {
+        "id": "language_english",
+        "text": "English.",
+        "audio": null
+      },
+      {
+        "id": "welcome",
+        "text": "Welcome to FarmTrack. It will speak to you and guide you step by step.",
+        "audio": null
+      },
+      {
+        "id": "ask_phone",
+        "text": "Type your phone number. It has ten numbers.",
+        "audio": null
+      },
+      {
+        "id": "tap_green_tick",
+        "text": "Now tap the green tick.",
+        "audio": null
+      },
+      {
+        "id": "phone_invalid",
+        "text": "This phone number is not right. Please check it and type again.",
+        "audio": null
+      },
+      {
+        "id": "phone_not_found",
+        "text": "We do not have this number. Please check it and type again.",
+        "audio": null
+      },
+      {
+        "id": "otp_sent",
+        "text": "We have sent a message to your phone.",
+        "audio": null
+      },
+      {
+        "id": "ask_otp",
+        "text": "Type the six numbers from the message.",
+        "audio": null
+      },
+      {
+        "id": "otp_wrong",
+        "text": "These numbers are not right. Please look at the message and type again.",
+        "audio": null
+      },
+      {
+        "id": "otp_resend",
+        "text": "If the message does not come, wait a little and tap the round arrow.",
+        "audio": null
+      },
+      {
+        "id": "login_ok",
+        "text": "You are in. Welcome.",
+        "audio": null
+      },
+      {
+        "id": "login_again",
+        "text": "Please log in again to come in.",
+        "audio": null
+      },
+      {
+        "id": "login_intro",
+        "text": "Welcome. Please log in to come in.",
+        "audio": null
+      },
+      {
+        "id": "login_ask_username",
+        "text": "Type your user name.",
+        "audio": null
+      },
+      {
+        "id": "login_ask_password",
+        "text": "Now type your password.",
+        "audio": null
+      },
+      {
+        "id": "login_tap_tick",
+        "text": "To log in, tap the green tick.",
+        "audio": null
+      },
+      {
+        "id": "login_wrong",
+        "text": "The user name or password is not right. Please look and type again.",
+        "audio": null
+      },
+      {
+        "id": "login_fields_needed",
+        "text": "First type your user name and your password.",
+        "audio": null
+      },
+      {
+        "id": "login_show_password",
+        "text": "Your password is shown. Tap the eye picture again to hide it.",
+        "audio": null
+      },
+      {
+        "id": "login_hide_password",
+        "text": "Your password is hidden. Tap the eye picture to see it.",
+        "audio": null
+      },
+      {
+        "id": "home_intro",
+        "text": "This is the first page. Tap a big picture to begin.",
+        "audio": null
+      },
+      {
+        "id": "home_scan",
+        "text": "To check a leaf, tap the big camera picture.",
+        "audio": null
+      },
+      {
+        "id": "home_field",
+        "text": "To see your field, tap the field picture.",
+        "audio": null
+      },
+      {
+        "id": "home_diary",
+        "text": "To write what you sprayed, tap the notebook picture.",
+        "audio": null
+      },
+      {
+        "id": "home_ask",
+        "text": "To ask a question, tap the question mark picture.",
+        "audio": null
+      },
+      {
+        "id": "home_settings",
+        "text": "To change the voice or language, tap the gear picture.",
+        "audio": null
+      },
+      {
+        "id": "scan_open_camera",
+        "text": "Let us take a photo of a leaf. Tap the big camera picture.",
+        "audio": null
+      },
+      {
+        "id": "scan_one_leaf",
+        "text": "Choose one leaf that has spots or damage.",
+        "audio": null
+      },
+      {
+        "id": "scan_or_gallery",
+        "text": "Or tap the small picture of photos to choose a photo that is already in your phone.",
+        "audio": null
+      },
+      {
+        "id": "scan_hold_close",
+        "text": "Hold the phone close to the leaf. Keep the whole leaf in the picture.",
+        "audio": null
+      },
+      {
+        "id": "scan_keep_still",
+        "text": "Hold the phone still.",
+        "audio": null
+      },
+      {
+        "id": "scan_daylight",
+        "text": "Take the photo in daylight.",
+        "audio": null
+      },
+      {
+        "id": "scan_tap_capture",
+        "text": "Now tap the big round button to take the photo.",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_taken",
+        "text": "Photo taken. Well done.",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_count_one",
+        "text": "You have taken one photo.",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_count_two",
+        "text": "You have taken two photos.",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_count_three",
+        "text": "You have taken three photos.",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_count_four",
+        "text": "You have taken four photos.",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_limit",
+        "text": "That is enough. Please send these photos now.",
+        "audio": null
+      },
+      {
+        "id": "scan_add_more",
+        "text": "Is the problem on other leaves too? If yes, take one more photo.",
+        "audio": null
+      },
+      {
+        "id": "scan_add_more_yes",
+        "text": "To take one more photo, tap the plus sign.",
+        "audio": null
+      },
+      {
+        "id": "scan_add_more_no",
+        "text": "If these photos are enough, tap the green tick.",
+        "audio": null
+      },
+      {
+        "id": "scan_send",
+        "text": "To send your photos, tap the green tick.",
+        "audio": null
+      },
+      {
+        "id": "scan_remove_photo",
+        "text": "To remove this photo, tap the red cross.",
+        "audio": null
+      },
+      {
+        "id": "scan_need_photo",
+        "text": "Please take a photo first.",
+        "audio": null
+      },
+      {
+        "id": "scan_uploading",
+        "text": "Sending your photos. Please wait.",
+        "audio": null
+      },
+      {
+        "id": "scan_wait",
+        "text": "We are looking at your leaf. Please wait, this takes a little time.",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_blurry",
+        "text": "The photo is not clear. Hold the phone still and take it again.",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_dark",
+        "text": "The light was not right. Take the photo again where it is not too dark or too bright.",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_far",
+        "text": "The leaf looks too small. Come closer and take the photo again.",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_no_leaf",
+        "text": "We could not see a leaf. Bring one leaf in front of the camera and try again.",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_tap",
+        "text": "To try again, tap the big camera picture.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_apple",
+        "text": "This looks like apple.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_tomato",
+        "text": "This looks like tomato.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_potato",
+        "text": "This looks like potato.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_maize",
+        "text": "This looks like maize.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_grape",
+        "text": "This looks like grapes.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_pear",
+        "text": "This looks like pear.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_plum",
+        "text": "This looks like plum.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_peach",
+        "text": "This looks like peach.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_apricot",
+        "text": "This looks like apricot.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_cherry",
+        "text": "This looks like cherry.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_walnut",
+        "text": "This looks like walnut.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_pomegranate",
+        "text": "This looks like pomegranate.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_kiwi",
+        "text": "This looks like kiwi.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_strawberry",
+        "text": "This looks like strawberry.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_pea",
+        "text": "This looks like peas.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_cauliflower",
+        "text": "This looks like cauliflower.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_cabbage",
+        "text": "This looks like cabbage.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_capsicum",
+        "text": "This looks like capsicum.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_beans",
+        "text": "This looks like beans.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_wheat",
+        "text": "This looks like wheat.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_paddy",
+        "text": "This looks like paddy.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_barley",
+        "text": "This looks like barley.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_ginger",
+        "text": "This looks like ginger.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_cucumber",
+        "text": "This looks like cucumber.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_mango",
+        "text": "This looks like mango.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_citrus",
+        "text": "This looks like citrus.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_litchi",
+        "text": "This looks like litchi.",
+        "audio": null
+      },
+      {
+        "id": "crop_is_unknown",
+        "text": "I could not tell the crop.",
+        "audio": null
+      },
+      {
+        "id": "crop_confirm_prompt",
+        "text": "Is this the right crop?",
+        "audio": null
+      },
+      {
+        "id": "crop_tap_yes",
+        "text": "If it is right, tap the green tick.",
+        "audio": null
+      },
+      {
+        "id": "crop_tap_no",
+        "text": "If it is wrong, tap the red cross.",
+        "audio": null
+      },
+      {
+        "id": "crop_choose_other",
+        "text": "Tap the picture of your crop.",
+        "audio": null
+      },
+      {
+        "id": "result_intro",
+        "text": "Here is what we found. Please listen carefully.",
+        "audio": null
+      },
+      {
+        "id": "result_expert",
+        "text": "I am not sure about this one. Please do not spray any medicine yet.",
+        "audio": null
+      },
+      {
+        "id": "expert_photos_saved",
+        "text": "Done. Your photos are saved.",
+        "audio": null
+      },
+      {
+        "id": "result_no_data",
+        "text": "We do not have advice for this crop yet. Please ask a farm expert.",
+        "audio": null
+      },
+      {
+        "id": "result_not_disease",
+        "text": "We could not see a disease in this photo. If you are still worried, take another photo.",
+        "audio": null
+      },
+      {
+        "id": "result_listen_again",
+        "text": "To listen again, tap the speaker picture.",
+        "audio": null
+      },
+      {
+        "id": "result_next_diary",
+        "text": "After you spray, write it in your diary. Tap the notebook picture.",
+        "audio": null
+      },
+      {
+        "id": "diary_intro",
+        "text": "This is your spray diary. Write here what you sprayed on your field.",
+        "audio": null
+      },
+      {
+        "id": "diary_pick_product",
+        "text": "Tap the medicine you sprayed.",
+        "audio": null
+      },
+      {
+        "id": "diary_pick_date",
+        "text": "Tap the day you sprayed.",
+        "audio": null
+      },
+      {
+        "id": "diary_tick_sprayed",
+        "text": "If you have sprayed, tap the green tick.",
+        "audio": null
+      },
+      {
+        "id": "diary_tap_save",
+        "text": "To write it in the diary, tap the green tick.",
+        "audio": null
+      },
+      {
+        "id": "diary_saved",
+        "text": "Done. It is saved in your diary.",
+        "audio": null
+      },
+      {
+        "id": "diary_warning",
+        "text": "Please listen carefully. There is a warning about this medicine.",
+        "audio": null
+      },
+      {
+        "id": "field_intro",
+        "text": "This is your field page. You can see your weather and sprays here.",
+        "audio": null
+      },
+      {
+        "id": "field_stale",
+        "text": "This information is old. Turn on the internet to see new information.",
+        "audio": null
+      },
+      {
+        "id": "field_updated_ok",
+        "text": "Your field information is up to date.",
+        "audio": null
+      },
+      {
+        "id": "field_no_data",
+        "text": "There is no information for your field yet.",
+        "audio": null
+      },
+      {
+        "id": "field_tap_weather",
+        "text": "To hear the weather, tap the cloud picture.",
+        "audio": null
+      },
+      {
+        "id": "alert_new",
+        "text": "You have a new alert for your field.",
+        "audio": null
+      },
+      {
+        "id": "alert_open",
+        "text": "To hear it, tap the bell picture.",
+        "audio": null
+      },
+      {
+        "id": "alert_read_more",
+        "text": "To hear more, tap the green arrow.",
+        "audio": null
+      },
+      {
+        "id": "alert_none",
+        "text": "You have no new alerts.",
+        "audio": null
+      },
+      {
+        "id": "ask_intro",
+        "text": "Here you can ask a question about your crop.",
+        "audio": null
+      },
+      {
+        "id": "ask_type_question",
+        "text": "Type your question.",
+        "audio": null
+      },
+      {
+        "id": "ask_tap_send",
+        "text": "To send your question, tap the green tick.",
+        "audio": null
+      },
+      {
+        "id": "ask_wait",
+        "text": "Looking for the answer. Please wait.",
+        "audio": null
+      },
+      {
+        "id": "ask_no_answer",
+        "text": "We could not find an answer to this question. Please ask a farm expert.",
+        "audio": null
+      },
+      {
+        "id": "error_no_internet",
+        "text": "Do not worry, there is no internet right now. Please check your phone's internet.",
+        "audio": null
+      },
+      {
+        "id": "error_try_again",
+        "text": "Something went wrong, but it is not your mistake. Please try again.",
+        "audio": null
+      },
+      {
+        "id": "offline_saved",
+        "text": "No internet. Your photo is saved and will be sent later.",
+        "audio": null
+      },
+      {
+        "id": "back_online_sent",
+        "text": "The internet is back. Your saved photo has been sent.",
+        "audio": null
+      },
+      {
+        "id": "app_updating",
+        "text": "FarmTrack is being updated. Please wait a little.",
+        "audio": null
+      },
+      {
+        "id": "please_wait",
+        "text": "Please wait a little.",
+        "audio": null
+      },
+      {
+        "id": "settings_speed",
+        "text": "Tap a picture to make the voice speak slower or faster.",
+        "audio": null
+      },
+      {
+        "id": "settings_volume",
+        "text": "Tap a picture to make the voice louder or softer.",
+        "audio": null
+      },
+      {
+        "id": "settings_language_changed",
+        "text": "The language has been changed.",
+        "audio": null
+      },
+      {
+        "id": "camera_permission",
+        "text": "FarmTrack needs your camera to take leaf photos. When the phone asks, tap the button that allows it.",
+        "audio": null
+      },
+      {
+        "id": "notification_permission",
+        "text": "FarmTrack wants to send you alerts about your field. When the phone asks, tap the button that allows it.",
+        "audio": null
+      },
+      {
+        "id": "permission_denied_camera",
+        "text": "The camera is not allowed, so we cannot take photos. Please open your phone settings and allow the camera.",
+        "audio": null
+      },
+      {
+        "id": "permission_denied_notifications",
+        "text": "Alerts will not come. You can turn them on later in your phone settings.",
+        "audio": null
+      },
+      {
+        "id": "nav_home",
+        "text": "To go to the first page, tap the house picture.",
+        "audio": null
+      },
+      {
+        "id": "nav_back",
+        "text": "To go back, tap the arrow that points left.",
+        "audio": null
+      },
+      {
+        "id": "diary_did_spray",
+        "text": "Did you spray this medicine?",
+        "audio": null
+      },
+      {
+        "id": "diary_cross_back",
+        "text": "If you did not, tap the red cross.",
+        "audio": null
+      },
+      {
+        "id": "diary_empty",
+        "text": "Nothing is written yet. To write a spray, tap the plus picture.",
+        "audio": null
+      },
+      {
+        "id": "diary_add_hint",
+        "text": "To write a spray you did, tap the plus picture.",
+        "audio": null
+      },
+      {
+        "id": "diary_pick_crop",
+        "text": "Tap the picture of the crop you sprayed.",
+        "audio": null
+      },
+      {
+        "id": "diary_type_medicine",
+        "text": "Type the name of the medicine you sprayed.",
+        "audio": null
+      },
+      {
+        "id": "diary_pick_recent",
+        "text": "Or tap a name you used before.",
+        "audio": null
+      },
+      {
+        "id": "diary_today",
+        "text": "Today.",
+        "audio": null
+      },
+      {
+        "id": "diary_yesterday",
+        "text": "Yesterday.",
+        "audio": null
+      },
+      {
+        "id": "diary_other_day",
+        "text": "Another day.",
+        "audio": null
+      },
+      {
+        "id": "diary_saved_offline",
+        "text": "No internet. Your spray note is saved and will be sent later.",
+        "audio": null
+      },
+      {
+        "id": "diary_sent",
+        "text": "The internet is back. Your spray note has been sent.",
+        "audio": null
+      },
+      {
+        "id": "diary_waiting",
+        "text": "This note is waiting for the internet.",
+        "audio": null
+      },
+      {
+        "id": "field_reload",
+        "text": "To see new information, tap the round arrow.",
+        "audio": null
+      },
+      {
+        "id": "alert_see_scan",
+        "text": "To see the result of your photo, tap the green arrow.",
+        "audio": null
+      },
+      {
+        "id": "offline_waiting",
+        "text": "Your saved photos and diary entries are waiting for the internet. They will be sent when it comes.",
+        "audio": null
+      },
+      {
+        "id": "offline_result_ready",
+        "text": "The result is ready. Tap the green card on the first page.",
+        "audio": null
+      },
+      {
+        "id": "settings_logout_confirm",
+        "text": "Do you want to log out? Tap the green tick for yes, or the red cross for no.",
+        "audio": null
+      },
+      {
+        "id": "ask_tap_picture",
+        "text": "Tap a picture to ask that question. To ask your own question, tap the keyboard picture.",
+        "audio": null
+      },
+      {
+        "id": "ask_expert_sent",
+        "text": "Done. Your question is saved.",
+        "audio": null
+      },
+      {
+        "id": "ask_q_rain_after_spray",
+        "text": "What should I do if it rains after I spray?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_harvest_wait",
+        "text": "How many days should I wait between my last spray and the harvest?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_mix_medicines",
+        "text": "Can I mix other chemicals with my spray?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_protect_myself",
+        "text": "How do I protect myself when I spray?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_scab_risk",
+        "text": "When does apple scab spread?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_fallen_leaves",
+        "text": "What should I do with the fallen leaves in my orchard?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_spray_gap",
+        "text": "How many days should I keep between two sprays?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_same_chemical",
+        "text": "Can I use the same chemical again and again?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_spray_not_needed",
+        "text": "Should I spray even when there is no risk of disease?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_keep_healthy",
+        "text": "How can I prevent diseases in my orchard?",
+        "audio": null
+      }
+    ]
+  }
+}

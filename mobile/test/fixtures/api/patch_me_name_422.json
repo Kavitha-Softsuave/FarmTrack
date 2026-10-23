@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "PATCH",
+    "path": "/v1/me",
+    "auth": "bearer",
+    "json": {
+      "name": "   "
+    }
+  },
+  "status": 422,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "invalid_name",
+    "message": "The name cannot be empty.",
+    "details": null
+  }
+}

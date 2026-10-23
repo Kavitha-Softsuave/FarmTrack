@@ -1,0 +1,816 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/voice/catalogue",
+    "auth": "none",
+    "query": {
+      "lang": "hi"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json",
+    "etag": "\"2026-10-19.1+a72ddc83-hi\""
+  },
+  "body": {
+    "version": "2026-10-19.1+a72ddc83",
+    "language": "hi",
+    "prompts": [
+      {
+        "id": "choose_language",
+        "text": "कृपया अपनी भाषा चुनिए। जो भाषा चाहिए, उसे दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "language_hindi",
+        "text": "हिंदी।",
+        "audio": null
+      },
+      {
+        "id": "language_english",
+        "text": "अंग्रेज़ी।",
+        "audio": null
+      },
+      {
+        "id": "welcome",
+        "text": "फार्मट्रैक में आपका स्वागत है। यह आपको हर कदम पर बोलकर बताएगा कि क्या करना है।",
+        "audio": null
+      },
+      {
+        "id": "ask_phone",
+        "text": "अपना फोन नंबर लिखिए। इसमें दस अंक होते हैं।",
+        "audio": null
+      },
+      {
+        "id": "tap_green_tick",
+        "text": "अब हरा सही का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "phone_invalid",
+        "text": "यह फोन नंबर सही नहीं है। कृपया देखकर फिर से लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "phone_not_found",
+        "text": "यह नंबर हमारे पास नहीं है। कृपया देखकर फिर से लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "otp_sent",
+        "text": "आपके फोन पर मैसेज भेज दिया गया है।",
+        "audio": null
+      },
+      {
+        "id": "ask_otp",
+        "text": "मैसेज में आए छह अंक लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "otp_wrong",
+        "text": "ये अंक सही नहीं हैं। कृपया मैसेज देखकर फिर से लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "otp_resend",
+        "text": "अगर मैसेज न आए, तो थोड़ा रुककर गोल तीर वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "login_ok",
+        "text": "आप अंदर आ गए हैं। स्वागत है।",
+        "audio": null
+      },
+      {
+        "id": "login_again",
+        "text": "अंदर आने के लिए कृपया फिर से लॉग इन कीजिए।",
+        "audio": null
+      },
+      {
+        "id": "login_intro",
+        "text": "स्वागत है। अंदर आने के लिए कृपया लॉग इन कीजिए।",
+        "audio": null
+      },
+      {
+        "id": "login_ask_username",
+        "text": "अपना यूज़र नेम लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "login_ask_password",
+        "text": "अब अपना पासवर्ड लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "login_tap_tick",
+        "text": "अंदर आने के लिए हरा सही का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "login_wrong",
+        "text": "यूज़र नेम या पासवर्ड सही नहीं है। कृपया देखकर फिर से लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "login_fields_needed",
+        "text": "पहले अपना यूज़र नेम और अपना पासवर्ड लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "login_show_password",
+        "text": "आपका पासवर्ड दिख रहा है। छिपाने के लिए आँख वाली तस्वीर फिर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "login_hide_password",
+        "text": "आपका पासवर्ड छिपा है। देखने के लिए आँख वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "home_intro",
+        "text": "यह पहला पन्ना है। शुरू करने के लिए कोई बड़ी तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "home_scan",
+        "text": "पत्ती की फोटो खींचने के लिए बड़ी कैमरे वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "home_field",
+        "text": "अपना खेत देखने के लिए खेत वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "home_diary",
+        "text": "छिड़काव लिखने के लिए कॉपी वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "home_ask",
+        "text": "सवाल पूछने के लिए सवाल के निशान वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "home_settings",
+        "text": "आवाज़ या भाषा बदलने के लिए दाँतों वाले पहिये की तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "scan_open_camera",
+        "text": "चलिए, पत्ती की फोटो खींचते हैं। बड़ी कैमरे वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "scan_one_leaf",
+        "text": "एक ऐसी पत्ती चुनिए जिस पर दाग या खराबी दिखती हो।",
+        "audio": null
+      },
+      {
+        "id": "scan_or_gallery",
+        "text": "या फोन में पहले से रखी फोटो चुनने के लिए, फोटो वाली छोटी तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "scan_hold_close",
+        "text": "फोन को पत्ती के पास लाइए। पूरी पत्ती फोटो में दिखनी चाहिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_keep_still",
+        "text": "फोन को हिलाइए मत।",
+        "audio": null
+      },
+      {
+        "id": "scan_daylight",
+        "text": "फोटो दिन की रोशनी में खींचिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_tap_capture",
+        "text": "अब फोटो खींचने के लिए बड़ा गोल बटन दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_taken",
+        "text": "फोटो खिंच गई है। बहुत बढ़िया।",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_count_one",
+        "text": "आपने एक फोटो खींची है।",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_count_two",
+        "text": "आपने दो फोटो खींची हैं।",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_count_three",
+        "text": "आपने तीन फोटो खींची हैं।",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_count_four",
+        "text": "आपने चार फोटो खींची हैं।",
+        "audio": null
+      },
+      {
+        "id": "scan_photo_limit",
+        "text": "इतनी फोटो काफी हैं। अब इन्हें भेज दीजिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_add_more",
+        "text": "क्या दूसरी पत्तियों में भी यही खराबी है? अगर हाँ, तो एक और फोटो खींचिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_add_more_yes",
+        "text": "एक और फोटो खींचने के लिए प्लस का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "scan_add_more_no",
+        "text": "अगर इतनी फोटो काफी हैं, तो हरा सही का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "scan_send",
+        "text": "फोटो भेजने के लिए हरा सही का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "scan_remove_photo",
+        "text": "यह फोटो हटाने के लिए लाल क्रॉस का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "scan_need_photo",
+        "text": "पहले एक फोटो खींचिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_uploading",
+        "text": "आपकी फोटो भेजी जा रही हैं। कृपया रुकिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_wait",
+        "text": "आपकी पत्ती देखी जा रही है। थोड़ा समय लगेगा, कृपया रुकिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_blurry",
+        "text": "फोटो साफ़ नहीं आई। फोन को हिलाए बिना दोबारा खींचिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_dark",
+        "text": "रोशनी ठीक नहीं थी। जहाँ न बहुत अँधेरा हो, न बहुत तेज़ धूप, वहाँ दोबारा फोटो खींचिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_far",
+        "text": "पत्ती फोटो में बहुत छोटी दिख रही है। पास आकर दोबारा फोटो खींचिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_no_leaf",
+        "text": "फोटो में पत्ती नहीं दिखी। कैमरे के सामने एक पत्ती लाकर दोबारा फोटो खींचिए।",
+        "audio": null
+      },
+      {
+        "id": "scan_retake_tap",
+        "text": "फिर से कोशिश करने के लिए बड़ी कैमरे वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_apple",
+        "text": "यह सेब की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_tomato",
+        "text": "यह टमाटर की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_potato",
+        "text": "यह आलू की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_maize",
+        "text": "यह मक्का की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_grape",
+        "text": "यह अंगूर की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_pear",
+        "text": "यह नाशपाती की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_plum",
+        "text": "यह आलूबुखारा की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_peach",
+        "text": "यह आड़ू की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_apricot",
+        "text": "यह खुबानी की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_cherry",
+        "text": "यह चेरी की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_walnut",
+        "text": "यह अखरोट की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_pomegranate",
+        "text": "यह अनार की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_kiwi",
+        "text": "यह कीवी की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_strawberry",
+        "text": "यह स्ट्रॉबेरी की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_pea",
+        "text": "यह मटर की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_cauliflower",
+        "text": "यह फूलगोभी की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_cabbage",
+        "text": "यह पत्तागोभी की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_capsicum",
+        "text": "यह शिमला मिर्च की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_beans",
+        "text": "यह फलियों की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_wheat",
+        "text": "यह गेहूँ की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_paddy",
+        "text": "यह धान की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_barley",
+        "text": "यह जौ की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_ginger",
+        "text": "यह अदरक की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_cucumber",
+        "text": "यह खीरा की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_mango",
+        "text": "यह आम की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_citrus",
+        "text": "यह नींबू की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_litchi",
+        "text": "यह लीची की फसल लगती है।",
+        "audio": null
+      },
+      {
+        "id": "crop_is_unknown",
+        "text": "फसल पहचान में नहीं आई।",
+        "audio": null
+      },
+      {
+        "id": "crop_confirm_prompt",
+        "text": "क्या यह सही फसल है?",
+        "audio": null
+      },
+      {
+        "id": "crop_tap_yes",
+        "text": "अगर सही है, तो हरा सही का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "crop_tap_no",
+        "text": "अगर गलत है, तो लाल क्रॉस का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "crop_choose_other",
+        "text": "अपनी फसल की तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "result_intro",
+        "text": "आपकी पत्ती के बारे में यह पता चला है। ध्यान से सुनिए।",
+        "audio": null
+      },
+      {
+        "id": "result_expert",
+        "text": "इसमें मुझे पक्का नहीं पता। अभी कोई दवा न छिड़कें।",
+        "audio": null
+      },
+      {
+        "id": "expert_photos_saved",
+        "text": "हो गया। आपकी फोटो सुरक्षित रख ली गई हैं।",
+        "audio": null
+      },
+      {
+        "id": "result_no_data",
+        "text": "इस फसल की सलाह अभी हमारे पास नहीं है। कृपया खेती के जानकार से पूछिए।",
+        "audio": null
+      },
+      {
+        "id": "result_not_disease",
+        "text": "इस फोटो में हमें कोई बीमारी नहीं दिखी। फिर भी चिंता हो तो दूसरी फोटो खींचिए।",
+        "audio": null
+      },
+      {
+        "id": "result_listen_again",
+        "text": "दोबारा सुनने के लिए स्पीकर वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "result_next_diary",
+        "text": "छिड़काव करने के बाद उसे डायरी में लिख लीजिए। कॉपी वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_intro",
+        "text": "यह आपकी छिड़काव की डायरी है। यहाँ लिखिए कि आपने खेत में क्या छिड़का।",
+        "audio": null
+      },
+      {
+        "id": "diary_pick_product",
+        "text": "आपने जो दवा छिड़की, उसे दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_pick_date",
+        "text": "जिस दिन छिड़काव किया, वह दिन दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_tick_sprayed",
+        "text": "अगर आपने छिड़काव कर लिया है, तो हरा सही का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_tap_save",
+        "text": "डायरी में लिखने के लिए हरा सही का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_saved",
+        "text": "हो गया। आपकी डायरी में लिख लिया गया है।",
+        "audio": null
+      },
+      {
+        "id": "diary_warning",
+        "text": "ध्यान से सुनिए। इस दवा के बारे में एक चेतावनी है।",
+        "audio": null
+      },
+      {
+        "id": "field_intro",
+        "text": "यह आपके खेत का पन्ना है। यहाँ आपके खेत का मौसम और छिड़काव की जानकारी मिलेगी।",
+        "audio": null
+      },
+      {
+        "id": "field_stale",
+        "text": "यह जानकारी पुरानी है। नई जानकारी के लिए इंटरनेट चालू कीजिए।",
+        "audio": null
+      },
+      {
+        "id": "field_updated_ok",
+        "text": "आपके खेत की जानकारी नई है।",
+        "audio": null
+      },
+      {
+        "id": "field_no_data",
+        "text": "आपके खेत की जानकारी अभी नहीं है।",
+        "audio": null
+      },
+      {
+        "id": "field_tap_weather",
+        "text": "मौसम सुनने के लिए बादल वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "alert_new",
+        "text": "आपके खेत के लिए एक नई सूचना आई है।",
+        "audio": null
+      },
+      {
+        "id": "alert_open",
+        "text": "सुनने के लिए घंटी वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "alert_read_more",
+        "text": "और सुनने के लिए हरे तीर वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "alert_none",
+        "text": "आपके लिए कोई नई सूचना नहीं है।",
+        "audio": null
+      },
+      {
+        "id": "ask_intro",
+        "text": "यहाँ आप अपनी फसल के बारे में सवाल पूछ सकते हैं।",
+        "audio": null
+      },
+      {
+        "id": "ask_type_question",
+        "text": "अपना सवाल लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "ask_tap_send",
+        "text": "सवाल भेजने के लिए हरा सही का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "ask_wait",
+        "text": "जवाब ढूँढा जा रहा है। कृपया रुकिए।",
+        "audio": null
+      },
+      {
+        "id": "ask_no_answer",
+        "text": "इस सवाल का जवाब हमें नहीं मिला। कृपया खेती के जानकार से पूछिए।",
+        "audio": null
+      },
+      {
+        "id": "error_no_internet",
+        "text": "कोई बात नहीं, अभी इंटरनेट नहीं चल रहा है। कृपया अपने फोन का इंटरनेट देखिए।",
+        "audio": null
+      },
+      {
+        "id": "error_try_again",
+        "text": "कुछ गड़बड़ हो गई, यह आपकी गलती नहीं है। कृपया दोबारा कोशिश कीजिए।",
+        "audio": null
+      },
+      {
+        "id": "offline_saved",
+        "text": "इंटरनेट नहीं है। आपकी फोटो रख ली गई है, इंटरनेट आने पर भेज दी जाएगी।",
+        "audio": null
+      },
+      {
+        "id": "back_online_sent",
+        "text": "इंटरनेट आ गया है। आपकी रखी हुई फोटो भेज दी गई है।",
+        "audio": null
+      },
+      {
+        "id": "app_updating",
+        "text": "फार्मट्रैक नया किया जा रहा है। कृपया थोड़ा रुकिए।",
+        "audio": null
+      },
+      {
+        "id": "please_wait",
+        "text": "कृपया थोड़ा रुकिए।",
+        "audio": null
+      },
+      {
+        "id": "settings_speed",
+        "text": "बोलने की रफ़्तार धीमी या तेज़ करने के लिए तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "settings_volume",
+        "text": "आवाज़ बढ़ाने या घटाने के लिए तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "settings_language_changed",
+        "text": "भाषा बदल दी गई है।",
+        "audio": null
+      },
+      {
+        "id": "camera_permission",
+        "text": "पत्ती की फोटो लेने के लिए फार्मट्रैक को आपका कैमरा चाहिए। जब फोन पूछे, तो इजाज़त देने वाला बटन दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "notification_permission",
+        "text": "फार्मट्रैक आपके खेत की सूचनाएँ भेजना चाहता है। जब फोन पूछे, तो इजाज़त देने वाला बटन दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "permission_denied_camera",
+        "text": "कैमरे की इजाज़त नहीं है, इसलिए फोटो नहीं खींच सकते। कृपया फोन की सेटिंग खोलकर कैमरे की इजाज़त दीजिए।",
+        "audio": null
+      },
+      {
+        "id": "permission_denied_notifications",
+        "text": "सूचनाएँ नहीं आएँगी। आप बाद में फोन की सेटिंग में इन्हें चालू कर सकते हैं।",
+        "audio": null
+      },
+      {
+        "id": "nav_home",
+        "text": "पहले पन्ने पर जाने के लिए घर वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "nav_back",
+        "text": "पीछे जाने के लिए बाईं तरफ वाला तीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_did_spray",
+        "text": "क्या आपने यह दवा छिड़की?",
+        "audio": null
+      },
+      {
+        "id": "diary_cross_back",
+        "text": "अगर नहीं छिड़की, तो लाल क्रॉस का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_empty",
+        "text": "अभी कुछ नहीं लिखा है। छिड़काव लिखने के लिए प्लस का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_add_hint",
+        "text": "आपने जो छिड़काव किया, उसे लिखने के लिए प्लस का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_pick_crop",
+        "text": "आपने जिस फसल पर छिड़काव किया, उसकी तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_type_medicine",
+        "text": "आपने जो दवा छिड़की, उसका नाम लिखिए।",
+        "audio": null
+      },
+      {
+        "id": "diary_pick_recent",
+        "text": "या पहले इस्तेमाल किया हुआ कोई नाम दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "diary_today",
+        "text": "आज।",
+        "audio": null
+      },
+      {
+        "id": "diary_yesterday",
+        "text": "बीता हुआ कल।",
+        "audio": null
+      },
+      {
+        "id": "diary_other_day",
+        "text": "कोई और दिन।",
+        "audio": null
+      },
+      {
+        "id": "diary_saved_offline",
+        "text": "इंटरनेट नहीं है। आपकी छिड़काव की जानकारी रख ली गई है, बाद में भेज दी जाएगी।",
+        "audio": null
+      },
+      {
+        "id": "diary_sent",
+        "text": "इंटरनेट आ गया है। आपकी छिड़काव की जानकारी भेज दी गई है।",
+        "audio": null
+      },
+      {
+        "id": "diary_waiting",
+        "text": "यह जानकारी इंटरनेट का इंतज़ार कर रही है।",
+        "audio": null
+      },
+      {
+        "id": "field_reload",
+        "text": "नई जानकारी देखने के लिए गोल तीर वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "alert_see_scan",
+        "text": "अपनी फोटो का नतीजा देखने के लिए हरे तीर वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "offline_waiting",
+        "text": "आपकी रखी हुई फोटो और डायरी की बातें इंटरनेट का इंतज़ार कर रही हैं। इंटरनेट आते ही भेज दी जाएँगी।",
+        "audio": null
+      },
+      {
+        "id": "offline_result_ready",
+        "text": "नतीजा आ गया है। पहले पन्ने पर हरा कार्ड दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "settings_logout_confirm",
+        "text": "क्या आप बाहर निकलना चाहते हैं? हाँ के लिए हरा सही का निशान, नहीं के लिए लाल क्रॉस का निशान दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "ask_tap_picture",
+        "text": "कोई सवाल पूछने के लिए उसकी तस्वीर दबाइए। अपना सवाल पूछने के लिए कीबोर्ड वाली तस्वीर दबाइए।",
+        "audio": null
+      },
+      {
+        "id": "ask_expert_sent",
+        "text": "हो गया। आपका सवाल सुरक्षित रख लिया गया है।",
+        "audio": null
+      },
+      {
+        "id": "ask_q_rain_after_spray",
+        "text": "छिड़काव के बाद बारिश हो जाए तो क्या करना चाहिए?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_harvest_wait",
+        "text": "आख़िरी छिड़काव और तुड़ाई के बीच कितने दिन रुकना चाहिए?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_mix_medicines",
+        "text": "छिड़काव में कोई और दवा मिलाएँ क्या?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_protect_myself",
+        "text": "छिड़काव करते समय अपनी सुरक्षा कैसे करें?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_scab_risk",
+        "text": "सेब का स्कैब कब फैलता है?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_fallen_leaves",
+        "text": "बाग़ में गिरी हुई पत्तियों का क्या करें?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_spray_gap",
+        "text": "दो छिड़काव के बीच कितने दिन का अंतर रखें?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_same_chemical",
+        "text": "क्या लगातार छिड़काव में एक ही रसायन दोहरा सकते हैं?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_spray_not_needed",
+        "text": "क्या बीमारी का ख़तरा न हो तब भी छिड़काव करना चाहिए?",
+        "audio": null
+      },
+      {
+        "id": "ask_q_keep_healthy",
+        "text": "बीमारी से बचाव के लिए बाग़ में क्या करें?",
+        "audio": null
+      }
+    ]
+  }
+}

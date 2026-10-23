@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Approved products{% endblock %}
+{% block content %}
+<h1>Approved products</h1>
+<p>Disabling a product removes it from every recommendation until it is enabled again. The product list itself comes from the approved-list data file.</p>
+<form method="get" action="/admin/products" class="inline">
+  <label for="crop-filter">Crop</label>
+  <select id="crop-filter" name="crop">
+    <option value="">All crops</option>
+    {% for c in crops %}<option value="{{ c }}"{% if c == crop %} selected{% endif %}>{{ c }}</option>{% endfor %}
+  </select>
+  <button type="submit" class="secondary">Show</button>
+</form>
+<div class="scroll">
+<table>
+  <caption class="muted">{{ products|length }} products</caption>
+  <thead><tr><th scope="col">ID</th><th scope="col">Crop</th><th scope="col">Active ingredient</th><th scope="col">Stage</th><th scope="col">Dose</th><th scope="col">Waiting period (days)</th><th scope="col">Ban status</th><th scope="col">Status</th><th scope="col">Change</th></tr></thead>
+  <tbody>
+  {% for p in products %}
+    <tr>
+      <th scope="row">{{ p.product_id }}</th><td>{{ p.crop }}</td><td>{{ p.active_ingredient }}</td><td>{{ p.stage or '' }}</td>
+      <td>{{ p.dose_text or '' }}</td><td>{{ p.waiting_period_days if p.waiting_period_days is not none else '' }}</td>
+      <td>{{ p.ban_status|replace('_', ' ') }}</td>
+      <td><span class="badge {{ 'enabled' if p.enabled else 'disabled' }}">{{ 'Enabled' if p.enabled else 'Disabled' }}</span>
+          {% if notes.get(p.product_id) %}<br><span class="muted">{{ notes[p.product_id] }}</span>{% endif %}</td>
+      <td>
+        <form method="post" action="/admin/products/{{ p.product_id }}/toggle" class="inline">
+          <input type="hidden" name="csrf" value="{{ csrf }}">
+          <input type="hidden" name="crop" value="{{ crop }}">
+          <input type="hidden" name="enabled" value="{{ '0' if p.enabled else '1' }}">
+          <label class="muted" for="note-{{ p.product_id }}" style="margin:0;font-weight:400">Note</label>
+          <input id="note-{{ p.product_id }}" name="note" type="text" maxlength="300">
+          <button type="submit"{% if p.enabled %} class="danger"{% endif %}>{{ 'Disable' if p.enabled else 'Enable' }} {{ p.product_id }}</button>
+        </form>
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

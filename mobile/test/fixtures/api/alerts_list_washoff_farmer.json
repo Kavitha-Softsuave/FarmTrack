@@ -1,0 +1,199 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/alerts",
+    "auth": "bearer"
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "items": [
+      {
+        "id": "dbf7cd858998e78cbc8c420aa5824d06",
+        "kind": "marssonina_alternaria_risk",
+        "level": "red",
+        "title": {
+          "en": "Leaf spot weather (Marssonina, Alternaria)",
+          "hi": "पत्ती धब्बा रोग का मौसम (मार्सोनिना, आल्टरनेरिया)"
+        },
+        "body": {
+          "en": "It has been warm and humid for five days or more. Leaf spots can spread fast. Check your leaves and call your expert.",
+          "hi": "पाँच दिन या उससे ज़्यादा से गर्मी और नमी है। पत्तियों के धब्बे तेज़ी से फैल सकते हैं। पत्तियाँ देखें और अपने खेती के जानकार से बात करें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Leaf spot weather (Marssonina, Alternaria). It has been warm and humid for five days or more. Leaf spots can spread fast. Check your leaves and call your expert.",
+            "hi": "पत्ती धब्बा रोग का मौसम (मार्सोनिना, आल्टरनेरिया). पाँच दिन या उससे ज़्यादा से गर्मी और नमी है। पत्तियों के धब्बे तेज़ी से फैल सकते हैं। पत्तियाँ देखें और अपने खेती के जानकार से बात करें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-07-12T08:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      },
+      {
+        "id": "01ba5444bf5ad145eb3c3cd89819f5a5",
+        "kind": "late_blight_risk",
+        "level": "red",
+        "title": {
+          "en": "Late blight risk",
+          "hi": "पछेती झुलसा (लेट ब्लाइट) का खतरा"
+        },
+        "body": {
+          "en": "The last seven days were cool, wet and humid. Late blight can appear within ten days. Check your leaves often and ask for advice.",
+          "hi": "पिछले सात दिन ठंडे, गीले और नमी वाले रहे। दस दिन के अंदर पछेती झुलसा आ सकता है। पत्तियाँ बार-बार देखें और सलाह लें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Late blight risk. The last seven days were cool, wet and humid. Late blight can appear within ten days. Check your leaves often and ask for advice.",
+            "hi": "पछेती झुलसा (लेट ब्लाइट) का खतरा. पिछले सात दिन ठंडे, गीले और नमी वाले रहे। दस दिन के अंदर पछेती झुलसा आ सकता है। पत्तियाँ बार-बार देखें और सलाह लें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-07-12T08:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      },
+      {
+        "id": "926c0ee2987c41110a1ac6a658b649be",
+        "kind": "marssonina_alternaria_risk",
+        "level": "red",
+        "title": {
+          "en": "Leaf spot weather (Marssonina, Alternaria)",
+          "hi": "पत्ती धब्बा रोग का मौसम (मार्सोनिना, आल्टरनेरिया)"
+        },
+        "body": {
+          "en": "It has been warm and humid for five days or more. Leaf spots can spread fast. Check your leaves and call your expert.",
+          "hi": "पाँच दिन या उससे ज़्यादा से गर्मी और नमी है। पत्तियों के धब्बे तेज़ी से फैल सकते हैं। पत्तियाँ देखें और अपने खेती के जानकार से बात करें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Leaf spot weather (Marssonina, Alternaria). It has been warm and humid for five days or more. Leaf spots can spread fast. Check your leaves and call your expert.",
+            "hi": "पत्ती धब्बा रोग का मौसम (मार्सोनिना, आल्टरनेरिया). पाँच दिन या उससे ज़्यादा से गर्मी और नमी है। पत्तियों के धब्बे तेज़ी से फैल सकते हैं। पत्तियाँ देखें और अपने खेती के जानकार से बात करें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-07-05T08:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      },
+      {
+        "id": "bd0be7068e7391f94112324afdf1242b",
+        "kind": "late_blight_risk",
+        "level": "red",
+        "title": {
+          "en": "Late blight risk",
+          "hi": "पछेती झुलसा (लेट ब्लाइट) का खतरा"
+        },
+        "body": {
+          "en": "The last seven days were cool, wet and humid. Late blight can appear within ten days. Check your leaves often and ask for advice.",
+          "hi": "पिछले सात दिन ठंडे, गीले और नमी वाले रहे। दस दिन के अंदर पछेती झुलसा आ सकता है। पत्तियाँ बार-बार देखें और सलाह लें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Late blight risk. The last seven days were cool, wet and humid. Late blight can appear within ten days. Check your leaves often and ask for advice.",
+            "hi": "पछेती झुलसा (लेट ब्लाइट) का खतरा. पिछले सात दिन ठंडे, गीले और नमी वाले रहे। दस दिन के अंदर पछेती झुलसा आ सकता है। पत्तियाँ बार-बार देखें और सलाह लें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-07-05T08:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      },
+      {
+        "id": "67f7b73b8a47cbdd69797978a5c422b7",
+        "kind": "scab_infection_risk",
+        "level": "red",
+        "title": {
+          "en": "Apple scab infection risk",
+          "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा"
+        },
+        "body": {
+          "en": "The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+          "hi": "पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Apple scab infection risk. The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+            "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा. पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-05-04T21:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      },
+      {
+        "id": "0b687ad3a4e497b8417d59ed94256d13",
+        "kind": "scab_infection_risk",
+        "level": "red",
+        "title": {
+          "en": "Apple scab infection risk",
+          "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा"
+        },
+        "body": {
+          "en": "The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+          "hi": "पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Apple scab infection risk. The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+            "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा. पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-03-30T20:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      },
+      {
+        "id": "e316fd93e5d4f9c0b49467d49806c261",
+        "kind": "rain_washoff",
+        "level": "red",
+        "title": {
+          "en": "Rain after your spray",
+          "hi": "छिड़काव के बाद बारिश"
+        },
+        "body": {
+          "en": "Heavy rain fell soon after your spray, about 15.3 millimetres. The spray may be washed off. Spray again within 7 days with a different medicine.",
+          "hi": "छिड़काव के तुरंत बाद तेज़ बारिश हुई, लगभग 15.3 मिलीमीटर। दवा धुल गई हो सकती है। 7 दिन के अंदर दूसरी दवा से फिर छिड़काव करें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Rain after your spray. Heavy rain fell soon after your spray, about 15.3 millimetres. The spray may be washed off. Spray again within 7 days with a different medicine.",
+            "hi": "छिड़काव के बाद बारिश. छिड़काव के तुरंत बाद तेज़ बारिश हुई, लगभग 15.3 मिलीमीटर। दवा धुल गई हो सकती है। 7 दिन के अंदर दूसरी दवा से फिर छिड़काव करें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-03-30T20:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      }
+    ],
+    "unread": 7
+  },
+  "note": "F007: rain wash-off, S3."
+}

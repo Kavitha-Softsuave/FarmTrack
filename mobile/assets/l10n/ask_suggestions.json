@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "comment": "Suggestion cards of the Ask screen. 'question' is spoken and sent to POST /v1/ask; it must be the same text as the voice prompt 'prompt_id' (a test checks it). Only generic questions that the approved notes can answer: never 'which medicine' or 'how much' without a disease. Hindi is a draft for native review.",
+  "suggestions": [
+    {
+      "id": "rain_after_spray",
+      "icon": "water_drop",
+      "prompt_id": "ask_q_rain_after_spray",
+      "label": {
+        "en": "Rain after spraying",
+        "hi": "छिड़काव के बाद बारिश"
+      },
+      "question": {
+        "en": "What should I do if it rains after I spray?",
+        "hi": "छिड़काव के बाद बारिश हो जाए तो क्या करना चाहिए?"
+      }
+    },
+    {
+      "id": "harvest_wait",
+      "icon": "hourglass",
+      "prompt_id": "ask_q_harvest_wait",
+      "label": {
+        "en": "Days before harvest",
+        "hi": "तुड़ाई से पहले के दिन"
+      },
+      "question": {
+        "en": "How many days should I wait between my last spray and the harvest?",
+        "hi": "आख़िरी छिड़काव और तुड़ाई के बीच कितने दिन रुकना चाहिए?"
+      }
+    },
+    {
+      "id": "mix_medicines",
+      "icon": "science",
+      "prompt_id": "ask_q_mix_medicines",
+      "label": {
+        "en": "Mixing medicines",
+        "hi": "दवाइयाँ मिलाना"
+      },
+      "question": {
+        "en": "Can I mix other chemicals with my spray?",
+        "hi": "छिड़काव में कोई और दवा मिलाएँ क्या?"
+      }
+    },
+    {
+      "id": "protect_myself",
+      "icon": "safety",
+      "prompt_id": "ask_q_protect_myself",
+      "label": {
+        "en": "Stay safe",
+        "hi": "अपनी सुरक्षा"
+      },
+      "question": {
+        "en": "How do I protect myself when I spray?",
+        "hi": "छिड़काव करते समय अपनी सुरक्षा कैसे करें?"
+      }
+    },
+    {
+      "id": "scab_risk",
+      "icon": "leaf",
+      "prompt_id": "ask_q_scab_risk",
+      "label": {
+        "en": "Apple scab",
+        "hi": "सेब का स्कैब"
+      },
+      "question": {
+        "en": "When does apple scab spread?",
+        "hi": "सेब का स्कैब कब फैलता है?"
+      }
+    },
+    {
+      "id": "fallen_leaves",
+      "icon": "forest",
+      "prompt_id": "ask_q_fallen_leaves",
+      "label": {
+        "en": "Fallen leaves",
+        "hi": "गिरी हुई पत्तियाँ"
+      },
+      "question": {
+        "en": "What should I do with the fallen leaves in my orchard?",
+        "hi": "बाग़ में गिरी हुई पत्तियों का क्या करें?"
+      }
+    },
+    {
+      "id": "spray_gap",
+      "icon": "calendar",
+      "prompt_id": "ask_q_spray_gap",
+      "label": {
+        "en": "Days between sprays",
+        "hi": "दो छिड़काव के बीच"
+      },
+      "question": {
+        "en": "How many days should I keep between two sprays?",
+        "hi": "दो छिड़काव के बीच कितने दिन का अंतर रखें?"
+      }
+    },
+    {
+      "id": "same_chemical",
+      "icon": "repeat",
+      "prompt_id": "ask_q_same_chemical",
+      "label": {
+        "en": "Repeating a chemical",
+        "hi": "वही रसायन दोबारा"
+      },
+      "question": {
+        "en": "Can I use the same chemical again and again?",
+        "hi": "क्या लगातार छिड़काव में एक ही रसायन दोहरा सकते हैं?"
+      }
+    },
+    {
+      "id": "spray_not_needed",
+      "icon": "sun",
+      "prompt_id": "ask_q_spray_not_needed",
+      "label": {
+        "en": "Spray without risk",
+        "hi": "ख़तरा न हो तब छिड़काव"
+      },
+      "question": {
+        "en": "Should I spray even when there is no risk of disease?",
+        "hi": "क्या बीमारी का ख़तरा न हो तब भी छिड़काव करना चाहिए?"
+      }
+    },
+    {
+      "id": "keep_healthy",
+      "icon": "spa",
+      "prompt_id": "ask_q_keep_healthy",
+      "label": {
+        "en": "Prevent diseases",
+        "hi": "बीमारी से बचाव"
+      },
+      "question": {
+        "en": "How can I prevent diseases in my orchard?",
+        "hi": "बीमारी से बचाव के लिए बाग़ में क्या करें?"
+      }
+    }
+  ]
+}

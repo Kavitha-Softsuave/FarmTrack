@@ -1,0 +1,129 @@
+﻿band_id,elev_min_m,elev_max_m,stage_id,cultivar,offset_from_full_bloom_days,typical_doy,typical_date_2026,confidence,source_ref
+B1,0,1500,silver_tip,,-45,47,2026-02-16,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,green_tip,,-38,54,2026-02-23,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,half_inch_green_tip,,-30,62,2026-03-03,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,tight_cluster,,-18,74,2026-03-15,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,pink_bud,,-8,84,2026-03-25,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,full_bloom,,0,92,2026-04-02,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,petal_fall,,12,104,2026-04-14,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,fruit_set,,20,112,2026-04-22,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,walnut_size,,45,137,2026-05-17,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,walnut_plus_20d,,65,157,2026-06-06,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,walnut_plus_40d,,85,177,2026-06-26,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B1,0,1500,pre_harvest,Gala,98,190,2026-07-09,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,harvest,Gala,120,212,2026-07-31,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,post_harvest,Gala,127,219,2026-08-07,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,pre_harvest,Scarlet_Spur,108,200,2026-07-19,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,harvest,Scarlet_Spur,130,222,2026-08-10,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,post_harvest,Scarlet_Spur,137,229,2026-08-17,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,pre_harvest,Red_Chief,106,198,2026-07-17,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,harvest,Red_Chief,128,220,2026-08-08,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,post_harvest,Red_Chief,135,227,2026-08-15,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,pre_harvest,Golden_Delicious,108,200,2026-07-19,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,harvest,Golden_Delicious,130,222,2026-08-10,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,post_harvest,Golden_Delicious,137,229,2026-08-17,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,pre_harvest,Royal_Delicious,116,208,2026-07-27,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,harvest,Royal_Delicious,138,230,2026-08-18,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,post_harvest,Royal_Delicious,145,237,2026-08-25,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,pre_harvest,Red_Delicious,116,208,2026-07-27,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,harvest,Red_Delicious,138,230,2026-08-18,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,post_harvest,Red_Delicious,145,237,2026-08-25,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,pre_harvest,Granny_Smith,143,235,2026-08-23,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,harvest,Granny_Smith,165,257,2026-09-14,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B1,0,1500,post_harvest,Granny_Smith,172,264,2026-09-21,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,silver_tip,,-45,55,2026-02-24,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,green_tip,,-38,62,2026-03-03,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,half_inch_green_tip,,-30,70,2026-03-11,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,tight_cluster,,-18,82,2026-03-23,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,pink_bud,,-8,92,2026-04-02,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,full_bloom,,0,100,2026-04-10,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,petal_fall,,12,112,2026-04-22,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,fruit_set,,20,120,2026-04-30,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,walnut_size,,45,145,2026-05-25,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,walnut_plus_20d,,65,165,2026-06-14,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,walnut_plus_40d,,85,185,2026-07-04,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B2,1500,2000,pre_harvest,Gala,98,198,2026-07-17,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,harvest,Gala,120,220,2026-08-08,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,post_harvest,Gala,127,227,2026-08-15,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,pre_harvest,Scarlet_Spur,108,208,2026-07-27,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,harvest,Scarlet_Spur,130,230,2026-08-18,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,post_harvest,Scarlet_Spur,137,237,2026-08-25,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,pre_harvest,Red_Chief,106,206,2026-07-25,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,harvest,Red_Chief,128,228,2026-08-16,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,post_harvest,Red_Chief,135,235,2026-08-23,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,pre_harvest,Golden_Delicious,108,208,2026-07-27,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,harvest,Golden_Delicious,130,230,2026-08-18,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,post_harvest,Golden_Delicious,137,237,2026-08-25,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,pre_harvest,Royal_Delicious,116,216,2026-08-04,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,harvest,Royal_Delicious,138,238,2026-08-26,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,post_harvest,Royal_Delicious,145,245,2026-09-02,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,pre_harvest,Red_Delicious,116,216,2026-08-04,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,harvest,Red_Delicious,138,238,2026-08-26,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,post_harvest,Red_Delicious,145,245,2026-09-02,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,pre_harvest,Granny_Smith,143,243,2026-08-31,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,harvest,Granny_Smith,165,265,2026-09-22,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B2,1500,2000,post_harvest,Granny_Smith,172,272,2026-09-29,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,silver_tip,,-45,69,2026-03-10,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,green_tip,,-38,76,2026-03-17,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,half_inch_green_tip,,-30,84,2026-03-25,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,tight_cluster,,-18,96,2026-04-06,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,pink_bud,,-8,106,2026-04-16,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,full_bloom,,0,114,2026-04-24,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,petal_fall,,12,126,2026-05-06,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,fruit_set,,20,134,2026-05-14,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,walnut_size,,45,159,2026-06-08,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,walnut_plus_20d,,65,179,2026-06-28,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,walnut_plus_40d,,85,199,2026-07-18,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B3,2000,2500,pre_harvest,Gala,98,212,2026-07-31,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,harvest,Gala,120,234,2026-08-22,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,post_harvest,Gala,127,241,2026-08-29,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,pre_harvest,Scarlet_Spur,108,222,2026-08-10,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,harvest,Scarlet_Spur,130,244,2026-09-01,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,post_harvest,Scarlet_Spur,137,251,2026-09-08,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,pre_harvest,Red_Chief,106,220,2026-08-08,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,harvest,Red_Chief,128,242,2026-08-30,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,post_harvest,Red_Chief,135,249,2026-09-06,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,pre_harvest,Golden_Delicious,108,222,2026-08-10,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,harvest,Golden_Delicious,130,244,2026-09-01,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,post_harvest,Golden_Delicious,137,251,2026-09-08,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,pre_harvest,Royal_Delicious,116,230,2026-08-18,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,harvest,Royal_Delicious,138,252,2026-09-09,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,post_harvest,Royal_Delicious,145,259,2026-09-16,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,pre_harvest,Red_Delicious,116,230,2026-08-18,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,harvest,Red_Delicious,138,252,2026-09-09,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,post_harvest,Red_Delicious,145,259,2026-09-16,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,pre_harvest,Granny_Smith,143,257,2026-09-14,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,harvest,Granny_Smith,165,279,2026-10-06,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B3,2000,2500,post_harvest,Granny_Smith,172,286,2026-10-13,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,silver_tip,,-45,74,2026-03-15,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,green_tip,,-38,81,2026-03-22,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,half_inch_green_tip,,-30,89,2026-03-30,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,tight_cluster,,-18,101,2026-04-11,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,pink_bud,,-8,111,2026-04-21,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,full_bloom,,0,119,2026-04-29,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,petal_fall,,12,131,2026-05-11,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,fruit_set,,20,139,2026-05-19,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,walnut_size,,45,164,2026-06-13,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,walnut_plus_20d,,65,184,2026-07-03,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,walnut_plus_40d,,85,204,2026-07-23,I,Anchors: Priyanka et al. 2021 IJCMAS 10(1):686-692; offsets inferred
+B4,2500,3600,pre_harvest,Gala,103,222,2026-08-10,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,harvest,Gala,125,244,2026-09-01,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,post_harvest,Gala,132,251,2026-09-08,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,pre_harvest,Scarlet_Spur,113,232,2026-08-20,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,harvest,Scarlet_Spur,135,254,2026-09-11,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,post_harvest,Scarlet_Spur,142,261,2026-09-18,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,pre_harvest,Red_Chief,111,230,2026-08-18,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,harvest,Red_Chief,133,252,2026-09-09,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,post_harvest,Red_Chief,140,259,2026-09-16,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,pre_harvest,Golden_Delicious,113,232,2026-08-20,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,harvest,Golden_Delicious,135,254,2026-09-11,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,post_harvest,Golden_Delicious,142,261,2026-09-18,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,pre_harvest,Royal_Delicious,121,240,2026-08-28,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,harvest,Royal_Delicious,143,262,2026-09-19,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,post_harvest,Royal_Delicious,150,269,2026-09-26,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,pre_harvest,Red_Delicious,121,240,2026-08-28,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,harvest,Red_Delicious,143,262,2026-09-19,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,post_harvest,Red_Delicious,150,269,2026-09-26,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,pre_harvest,Granny_Smith,148,267,2026-09-24,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,harvest,Granny_Smith,170,289,2026-10-16,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom
+B4,2500,3600,post_harvest,Granny_Smith,177,296,2026-10-23,I,Harvest windows from farm/travel sources (secondary) + FAO-type maturity of 130-150 d after full bloom

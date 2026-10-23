@@ -1,0 +1,40 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/spray-logs",
+    "auth": "bearer",
+    "json": {
+      "free_text": "mancozeb"
+    }
+  },
+  "status": 422,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "validation_error",
+    "message": "The request is not valid.",
+    "details": {
+      "errors": [
+        {
+          "loc": [
+            "body",
+            "crop_id"
+          ],
+          "msg": "Field required",
+          "type": "missing"
+        }
+      ]
+    },
+    "detail": [
+      {
+        "loc": [
+          "body",
+          "crop_id"
+        ],
+        "msg": "Field required",
+        "type": "missing"
+      }
+    ]
+  }
+}

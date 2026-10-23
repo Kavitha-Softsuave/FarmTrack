@@ -1,0 +1,41 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {
+      "client_crop": "Apple"
+    },
+    "files": []
+  },
+  "status": 422,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "validation_error",
+    "message": "The request is not valid.",
+    "details": {
+      "errors": [
+        {
+          "loc": [
+            "body",
+            "photos"
+          ],
+          "msg": "Field required",
+          "type": "missing"
+        }
+      ]
+    },
+    "detail": [
+      {
+        "loc": [
+          "body",
+          "photos"
+        ],
+        "msg": "Field required",
+        "type": "missing"
+      }
+    ]
+  }
+}

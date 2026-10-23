@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/expert-requests",
+    "auth": "bearer",
+    "json": {
+      "scan_id": "bd7ec2397955af21e37b9b01a5d75923",
+      "message": "Please look at these spots."
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "b48af93e639e354b17d160bca212d1b4",
+    "status": "open"
+  }
+}

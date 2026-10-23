@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/spray-logs",
+    "auth": "bearer",
+    "json": {
+      "crop_id": "Apple",
+      "advice_id": "4f4b5c8c751817e2896392a0d197ae66",
+      "product_id": "P011"
+    }
+  },
+  "status": 404,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "advice_not_found",
+    "message": "That advice was not found.",
+    "details": null
+  }
+}

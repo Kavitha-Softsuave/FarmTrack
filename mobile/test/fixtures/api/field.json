@@ -1,0 +1,116 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/field",
+    "auth": "bearer"
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "station_id": "ST01",
+    "village": "Theog",
+    "as_of": "2026-05-12T16:00:00+05:30",
+    "stale": false,
+    "readings": {
+      "temp_c": 18.4,
+      "rh_pct": 40.0,
+      "rain_24h_mm": 0.9,
+      "leaf_wetness_min": 0,
+      "soil_moisture_pct": 45.5
+    },
+    "forecast": [
+      {
+        "day": "2026-05-12",
+        "tmin_c": 7.2,
+        "tmax_c": 20.2,
+        "rain_mm": 0.9
+      },
+      {
+        "day": "2026-05-13",
+        "tmin_c": 8.9,
+        "tmax_c": 22.6,
+        "rain_mm": 1.1
+      },
+      {
+        "day": "2026-05-14",
+        "tmin_c": 5.5,
+        "tmax_c": 22.7,
+        "rain_mm": 0.7
+      },
+      {
+        "day": "2026-05-15",
+        "tmin_c": 8.7,
+        "tmax_c": 21.4,
+        "rain_mm": 1.1
+      },
+      {
+        "day": "2026-05-16",
+        "tmin_c": 7.1,
+        "tmax_c": 21.5,
+        "rain_mm": 0.4
+      },
+      {
+        "day": "2026-05-17",
+        "tmin_c": 7.9,
+        "tmax_c": 23.4,
+        "rain_mm": 0.0
+      },
+      {
+        "day": "2026-05-18",
+        "tmin_c": 9.1,
+        "tmax_c": 25.6,
+        "rain_mm": 0.0
+      }
+    ],
+    "risks": [
+      {
+        "id": "scab_infection_risk",
+        "level": "red",
+        "title": {
+          "en": "Apple scab infection risk",
+          "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा"
+        },
+        "text": {
+          "en": "The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+          "hi": "पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+        }
+      },
+      {
+        "id": "marssonina_alternaria_risk",
+        "level": "green",
+        "title": {
+          "en": "Leaf spot weather (Marssonina, Alternaria)",
+          "hi": "पत्ती धब्बा रोग का मौसम (मार्सोनिना, आल्टरनेरिया)"
+        },
+        "text": {
+          "en": "The leaf spot season starts on 1 June.",
+          "hi": "पत्ती धब्बे का मौसम 1 जून से शुरू होता है।"
+        }
+      },
+      {
+        "id": "rain_washoff",
+        "level": "green",
+        "title": {
+          "en": "Rain after your spray",
+          "hi": "छिड़काव के बाद बारिश"
+        },
+        "text": {
+          "en": "The rain after your spray was light. The spray should stay on the leaves.",
+          "hi": "छिड़काव के बाद हल्की बारिश हुई। दवा पत्तियों पर टिकी रहनी चाहिए।"
+        }
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "The weather in your field is pleasant now. Some light rain is expected in the next two days. Please note. The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+        "hi": "आपके खेत में अभी मौसम अच्छा है। अगले दो दिन में हल्की बारिश हो सकती है। ध्यान दीजिए। पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  }
+}

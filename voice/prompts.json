@@ -1,0 +1,1143 @@
+{
+  "version": "2026-10-19.1",
+  "review": "draft_needs_native_review",
+  "languages": [
+    "hi",
+    "en"
+  ],
+  "prompts": [
+    {
+      "id": "choose_language",
+      "screen": "language",
+      "when": "First launch, before any language is chosen; app plays hi and en back to back",
+      "en": "Please choose your language. Tap the language you want.",
+      "hi": "कृपया अपनी भाषा चुनिए। जो भाषा चाहिए, उसे दबाइए।",
+      "notes": "Spoken in BOTH languages on first launch: hi voice for the hi text, then en voice for the en text."
+    },
+    {
+      "id": "language_hindi",
+      "screen": "language",
+      "when": "Farmer taps or focuses the Hindi button",
+      "en": "Hindi.",
+      "hi": "हिंदी।",
+      "notes": "Play the hi text with the hi voice and language_english with the en voice, whatever the current language."
+    },
+    {
+      "id": "language_english",
+      "screen": "language",
+      "when": "Farmer taps or focuses the English button",
+      "en": "English.",
+      "hi": "अंग्रेज़ी।",
+      "notes": "Play the en text with the en voice. The hi text is only for a Hindi speaker asking what the button is."
+    },
+    {
+      "id": "welcome",
+      "screen": "language",
+      "when": "Right after the language is chosen, in the chosen language",
+      "en": "Welcome to FarmTrack. It will speak to you and guide you step by step.",
+      "hi": "फार्मट्रैक में आपका स्वागत है। यह आपको हर कदम पर बोलकर बताएगा कि क्या करना है।"
+    },
+    {
+      "id": "ask_phone",
+      "screen": "login",
+      "when": "Phone number screen opens",
+      "en": "Type your phone number. It has ten numbers.",
+      "hi": "अपना फोन नंबर लिखिए। इसमें दस अंक होते हैं।"
+    },
+    {
+      "id": "tap_green_tick",
+      "screen": "general",
+      "when": "After the farmer has typed a phone number or code, or on any screen that waits for a tick",
+      "en": "Now tap the green tick.",
+      "hi": "अब हरा सही का निशान दबाइए।"
+    },
+    {
+      "id": "phone_invalid",
+      "screen": "login",
+      "when": "Phone number is not ten numbers or is not valid",
+      "en": "This phone number is not right. Please check it and type again.",
+      "hi": "यह फोन नंबर सही नहीं है। कृपया देखकर फिर से लिखिए।"
+    },
+    {
+      "id": "phone_not_found",
+      "screen": "login",
+      "when": "Server says this number is not registered",
+      "en": "We do not have this number. Please check it and type again.",
+      "hi": "यह नंबर हमारे पास नहीं है। कृपया देखकर फिर से लिखिए।"
+    },
+    {
+      "id": "otp_sent",
+      "screen": "login",
+      "when": "Right after the message with the code was sent",
+      "en": "We have sent a message to your phone.",
+      "hi": "आपके फोन पर मैसेज भेज दिया गया है।"
+    },
+    {
+      "id": "ask_otp",
+      "screen": "login",
+      "when": "Code screen opens",
+      "en": "Type the six numbers from the message.",
+      "hi": "मैसेज में आए छह अंक लिखिए।"
+    },
+    {
+      "id": "otp_wrong",
+      "screen": "login",
+      "when": "The code typed is wrong or expired",
+      "en": "These numbers are not right. Please look at the message and type again.",
+      "hi": "ये अंक सही नहीं हैं। कृपया मैसेज देखकर फिर से लिखिए।"
+    },
+    {
+      "id": "otp_resend",
+      "screen": "login",
+      "when": "Code screen, if the farmer waits or asks for a new code",
+      "en": "If the message does not come, wait a little and tap the round arrow.",
+      "hi": "अगर मैसेज न आए, तो थोड़ा रुककर गोल तीर वाली तस्वीर दबाइए।",
+      "notes": "Only use if the screen has a resend button drawn as a round arrow."
+    },
+    {
+      "id": "login_ok",
+      "screen": "login",
+      "when": "Right after a successful login (first sentence on Home)",
+      "en": "You are in. Welcome.",
+      "hi": "आप अंदर आ गए हैं। स्वागत है।"
+    },
+    {
+      "id": "login_again",
+      "screen": "login",
+      "when": "Session expired; farmer must log in again",
+      "en": "Please log in again to come in.",
+      "hi": "अंदर आने के लिए कृपया फिर से लॉग इन कीजिए।"
+    },
+    {
+      "id": "login_intro",
+      "screen": "login",
+      "when": "Login screen opens (first sentence)",
+      "en": "Welcome. Please log in to come in.",
+      "hi": "स्वागत है। अंदर आने के लिए कृपया लॉग इन कीजिए।"
+    },
+    {
+      "id": "login_ask_username",
+      "screen": "login",
+      "when": "Login screen, after login_intro",
+      "en": "Type your user name.",
+      "hi": "अपना यूज़र नेम लिखिए।"
+    },
+    {
+      "id": "login_ask_password",
+      "screen": "login",
+      "when": "Login screen, after login_ask_username",
+      "en": "Now type your password.",
+      "hi": "अब अपना पासवर्ड लिखिए।"
+    },
+    {
+      "id": "login_tap_tick",
+      "screen": "login",
+      "when": "Login screen, last sentence: says what the green tick does",
+      "en": "To log in, tap the green tick.",
+      "hi": "अंदर आने के लिए हरा सही का निशान दबाइए।"
+    },
+    {
+      "id": "login_wrong",
+      "screen": "login",
+      "when": "The user name or password is not right (server says invalid_credentials)",
+      "en": "The user name or password is not right. Please look and type again.",
+      "hi": "यूज़र नेम या पासवर्ड सही नहीं है। कृपया देखकर फिर से लिखिए।"
+    },
+    {
+      "id": "login_fields_needed",
+      "screen": "login",
+      "when": "The green tick was tapped with the user name or the password empty",
+      "en": "First type your user name and your password.",
+      "hi": "पहले अपना यूज़र नेम और अपना पासवर्ड लिखिए।"
+    },
+    {
+      "id": "login_show_password",
+      "screen": "login",
+      "when": "The eye picture was tapped and the password is now shown",
+      "en": "Your password is shown. Tap the eye picture again to hide it.",
+      "hi": "आपका पासवर्ड दिख रहा है। छिपाने के लिए आँख वाली तस्वीर फिर दबाइए।"
+    },
+    {
+      "id": "login_hide_password",
+      "screen": "login",
+      "when": "The eye picture was tapped and the password is now hidden",
+      "en": "Your password is hidden. Tap the eye picture to see it.",
+      "hi": "आपका पासवर्ड छिपा है। देखने के लिए आँख वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "home_intro",
+      "screen": "home",
+      "when": "Home screen opens",
+      "en": "This is the first page. Tap a big picture to begin.",
+      "hi": "यह पहला पन्ना है। शुरू करने के लिए कोई बड़ी तस्वीर दबाइए।"
+    },
+    {
+      "id": "home_scan",
+      "screen": "home",
+      "when": "Camera button on home is tapped once or highlighted",
+      "en": "To check a leaf, tap the big camera picture.",
+      "hi": "पत्ती की फोटो खींचने के लिए बड़ी कैमरे वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "home_field",
+      "screen": "home",
+      "when": "Field button on home is highlighted",
+      "en": "To see your field, tap the field picture.",
+      "hi": "अपना खेत देखने के लिए खेत वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "home_diary",
+      "screen": "home",
+      "when": "Diary button on home is highlighted",
+      "en": "To write what you sprayed, tap the notebook picture.",
+      "hi": "छिड़काव लिखने के लिए कॉपी वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "home_ask",
+      "screen": "home",
+      "when": "Ask button on home is highlighted",
+      "en": "To ask a question, tap the question mark picture.",
+      "hi": "सवाल पूछने के लिए सवाल के निशान वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "home_settings",
+      "screen": "home",
+      "when": "Settings button on home is highlighted",
+      "en": "To change the voice or language, tap the gear picture.",
+      "hi": "आवाज़ या भाषा बदलने के लिए दाँतों वाले पहिये की तस्वीर दबाइए।",
+      "notes": "Gear icon; adjust the wording if the app uses another picture."
+    },
+    {
+      "id": "scan_open_camera",
+      "screen": "scan",
+      "when": "Scan screen opens, before the camera",
+      "en": "Let us take a photo of a leaf. Tap the big camera picture.",
+      "hi": "चलिए, पत्ती की फोटो खींचते हैं। बड़ी कैमरे वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "scan_one_leaf",
+      "screen": "scan",
+      "when": "Camera guidance, step 1",
+      "en": "Choose one leaf that has spots or damage.",
+      "hi": "एक ऐसी पत्ती चुनिए जिस पर दाग या खराबी दिखती हो।"
+    },
+    {
+      "id": "scan_or_gallery",
+      "screen": "scan",
+      "when": "Camera screen, after the camera sentence: photos that are already in the phone can be chosen too",
+      "en": "Or tap the small picture of photos to choose a photo that is already in your phone.",
+      "hi": "या फोन में पहले से रखी फोटो चुनने के लिए, फोटो वाली छोटी तस्वीर दबाइए।"
+    },
+    {
+      "id": "scan_hold_close",
+      "screen": "scan",
+      "when": "Camera guidance, step 2",
+      "en": "Hold the phone close to the leaf. Keep the whole leaf in the picture.",
+      "hi": "फोन को पत्ती के पास लाइए। पूरी पत्ती फोटो में दिखनी चाहिए।"
+    },
+    {
+      "id": "scan_keep_still",
+      "screen": "scan",
+      "when": "Camera guidance, step 3",
+      "en": "Hold the phone still.",
+      "hi": "फोन को हिलाइए मत।"
+    },
+    {
+      "id": "scan_daylight",
+      "screen": "scan",
+      "when": "Camera guidance, step 4 (or before step 1 if the light looks poor)",
+      "en": "Take the photo in daylight.",
+      "hi": "फोटो दिन की रोशनी में खींचिए।"
+    },
+    {
+      "id": "scan_tap_capture",
+      "screen": "scan",
+      "when": "Camera view is ready for the shot",
+      "en": "Now tap the big round button to take the photo.",
+      "hi": "अब फोटो खींचने के लिए बड़ा गोल बटन दबाइए।"
+    },
+    {
+      "id": "scan_photo_taken",
+      "screen": "scan",
+      "when": "Right after a photo is taken (with a vibration)",
+      "en": "Photo taken. Well done.",
+      "hi": "फोटो खिंच गई है। बहुत बढ़िया।"
+    },
+    {
+      "id": "scan_photo_count_one",
+      "screen": "scan",
+      "when": "After the first photo of a scan",
+      "en": "You have taken one photo.",
+      "hi": "आपने एक फोटो खींची है।"
+    },
+    {
+      "id": "scan_photo_count_two",
+      "screen": "scan",
+      "when": "After the second photo of a scan",
+      "en": "You have taken two photos.",
+      "hi": "आपने दो फोटो खींची हैं।"
+    },
+    {
+      "id": "scan_photo_count_three",
+      "screen": "scan",
+      "when": "After the third photo of a scan",
+      "en": "You have taken three photos.",
+      "hi": "आपने तीन फोटो खींची हैं।"
+    },
+    {
+      "id": "scan_photo_count_four",
+      "screen": "scan",
+      "when": "After the fourth photo of a scan",
+      "en": "You have taken four photos.",
+      "hi": "आपने चार फोटो खींची हैं।",
+      "notes": "backend max_photos_per_scan is 4; add more count prompts if that setting is raised."
+    },
+    {
+      "id": "scan_photo_limit",
+      "screen": "scan",
+      "when": "The maximum number of photos is reached; no more can be added",
+      "en": "That is enough. Please send these photos now.",
+      "hi": "इतनी फोटो काफी हैं। अब इन्हें भेज दीजिए।"
+    },
+    {
+      "id": "scan_add_more",
+      "screen": "scan",
+      "when": "After a photo, asking if more leaves are affected",
+      "en": "Is the problem on other leaves too? If yes, take one more photo.",
+      "hi": "क्या दूसरी पत्तियों में भी यही खराबी है? अगर हाँ, तो एक और फोटो खींचिए।"
+    },
+    {
+      "id": "scan_add_more_yes",
+      "screen": "scan",
+      "when": "Plus button is highlighted",
+      "en": "To take one more photo, tap the plus sign.",
+      "hi": "एक और फोटो खींचने के लिए प्लस का निशान दबाइए।"
+    },
+    {
+      "id": "scan_add_more_no",
+      "screen": "scan",
+      "when": "Green tick is highlighted on the add-more question",
+      "en": "If these photos are enough, tap the green tick.",
+      "hi": "अगर इतनी फोटो काफी हैं, तो हरा सही का निशान दबाइए।"
+    },
+    {
+      "id": "scan_send",
+      "screen": "scan",
+      "when": "Review screen, ready to send",
+      "en": "To send your photos, tap the green tick.",
+      "hi": "फोटो भेजने के लिए हरा सही का निशान दबाइए।"
+    },
+    {
+      "id": "scan_remove_photo",
+      "screen": "scan",
+      "when": "Review screen, a photo can be removed",
+      "en": "To remove this photo, tap the red cross.",
+      "hi": "यह फोटो हटाने के लिए लाल क्रॉस का निशान दबाइए।"
+    },
+    {
+      "id": "scan_need_photo",
+      "screen": "scan",
+      "when": "Farmer taps send with no photo taken",
+      "en": "Please take a photo first.",
+      "hi": "पहले एक फोटो खींचिए।"
+    },
+    {
+      "id": "scan_uploading",
+      "screen": "scan",
+      "when": "Photos are being sent",
+      "en": "Sending your photos. Please wait.",
+      "hi": "आपकी फोटो भेजी जा रही हैं। कृपया रुकिए।"
+    },
+    {
+      "id": "scan_wait",
+      "screen": "scan",
+      "when": "Waiting for the result after the upload",
+      "en": "We are looking at your leaf. Please wait, this takes a little time.",
+      "hi": "आपकी पत्ती देखी जा रही है। थोड़ा समय लगेगा, कृपया रुकिए।"
+    },
+    {
+      "id": "scan_retake_blurry",
+      "screen": "scan",
+      "when": "Quality tip: blurry",
+      "en": "The photo is not clear. Hold the phone still and take it again.",
+      "hi": "फोटो साफ़ नहीं आई। फोन को हिलाए बिना दोबारा खींचिए।"
+    },
+    {
+      "id": "scan_retake_dark",
+      "screen": "scan",
+      "when": "Quality tip: too_dark or too_bright",
+      "en": "The light was not right. Take the photo again where it is not too dark or too bright.",
+      "hi": "रोशनी ठीक नहीं थी। जहाँ न बहुत अँधेरा हो, न बहुत तेज़ धूप, वहाँ दोबारा फोटो खींचिए।"
+    },
+    {
+      "id": "scan_retake_far",
+      "screen": "scan",
+      "when": "Quality tip: too_small",
+      "en": "The leaf looks too small. Come closer and take the photo again.",
+      "hi": "पत्ती फोटो में बहुत छोटी दिख रही है। पास आकर दोबारा फोटो खींचिए।"
+    },
+    {
+      "id": "scan_retake_no_leaf",
+      "screen": "scan",
+      "when": "Quality tip: no_leaf",
+      "en": "We could not see a leaf. Bring one leaf in front of the camera and try again.",
+      "hi": "फोटो में पत्ती नहीं दिखी। कैमरे के सामने एक पत्ती लाकर दोबारा फोटो खींचिए।"
+    },
+    {
+      "id": "scan_retake_tap",
+      "screen": "scan",
+      "when": "After any scan_retake_* prompt",
+      "en": "To try again, tap the big camera picture.",
+      "hi": "फिर से कोशिश करने के लिए बड़ी कैमरे वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "crop_is_apple",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like apple.",
+      "hi": "यह सेब की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_tomato",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like tomato.",
+      "hi": "यह टमाटर की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_potato",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like potato.",
+      "hi": "यह आलू की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_maize",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like maize.",
+      "hi": "यह मक्का की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_grape",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like grapes.",
+      "hi": "यह अंगूर की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_pear",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like pear.",
+      "hi": "यह नाशपाती की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_plum",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like plum.",
+      "hi": "यह आलूबुखारा की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_peach",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like peach.",
+      "hi": "यह आड़ू की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_apricot",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like apricot.",
+      "hi": "यह खुबानी की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_cherry",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like cherry.",
+      "hi": "यह चेरी की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_walnut",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like walnut.",
+      "hi": "यह अखरोट की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_pomegranate",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like pomegranate.",
+      "hi": "यह अनार की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_kiwi",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like kiwi.",
+      "hi": "यह कीवी की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_strawberry",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like strawberry.",
+      "hi": "यह स्ट्रॉबेरी की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_pea",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like peas.",
+      "hi": "यह मटर की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_cauliflower",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like cauliflower.",
+      "hi": "यह फूलगोभी की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_cabbage",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like cabbage.",
+      "hi": "यह पत्तागोभी की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_capsicum",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like capsicum.",
+      "hi": "यह शिमला मिर्च की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_beans",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like beans.",
+      "hi": "यह फलियों की फसल लगती है।",
+      "notes": "Hindi uses the oblique plural (फलियों की फसल) so the grammar is correct."
+    },
+    {
+      "id": "crop_is_wheat",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like wheat.",
+      "hi": "यह गेहूँ की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_paddy",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like paddy.",
+      "hi": "यह धान की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_barley",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like barley.",
+      "hi": "यह जौ की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_ginger",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like ginger.",
+      "hi": "यह अदरक की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_cucumber",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like cucumber.",
+      "hi": "यह खीरा की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_mango",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like mango.",
+      "hi": "यह आम की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_citrus",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like citrus.",
+      "hi": "यह नींबू की फसल लगती है।",
+      "notes": "नींबू is the everyday word; it is meant to cover the whole citrus group (malta, orange, lemon)."
+    },
+    {
+      "id": "crop_is_litchi",
+      "screen": "crop",
+      "when": "System named this crop (spoken before crop_confirm_prompt)",
+      "en": "This looks like litchi.",
+      "hi": "यह लीची की फसल लगती है।"
+    },
+    {
+      "id": "crop_is_unknown",
+      "screen": "crop",
+      "when": "System could not tell the crop (then crop_choose_other)",
+      "en": "I could not tell the crop.",
+      "hi": "फसल पहचान में नहीं आई।",
+      "notes": "Hindi avoids a first person verb so it works for any voice gender."
+    },
+    {
+      "id": "crop_confirm_prompt",
+      "screen": "crop",
+      "when": "After crop_is_<crop>, asking the farmer to confirm",
+      "en": "Is this the right crop?",
+      "hi": "क्या यह सही फसल है?"
+    },
+    {
+      "id": "crop_tap_yes",
+      "screen": "crop",
+      "when": "Green tick is highlighted on the crop question",
+      "en": "If it is right, tap the green tick.",
+      "hi": "अगर सही है, तो हरा सही का निशान दबाइए।"
+    },
+    {
+      "id": "crop_tap_no",
+      "screen": "crop",
+      "when": "Red cross is highlighted on the crop question",
+      "en": "If it is wrong, tap the red cross.",
+      "hi": "अगर गलत है, तो लाल क्रॉस का निशान दबाइए।"
+    },
+    {
+      "id": "crop_choose_other",
+      "screen": "crop",
+      "when": "Farmer said the crop is wrong, or the crop was unknown; crop pictures shown",
+      "en": "Tap the picture of your crop.",
+      "hi": "अपनी फसल की तस्वीर दबाइए।"
+    },
+    {
+      "id": "result_intro",
+      "screen": "result",
+      "when": "Result screen opens, before the spoken advice",
+      "en": "Here is what we found. Please listen carefully.",
+      "hi": "आपकी पत्ती के बारे में यह पता चला है। ध्यान से सुनिए।"
+    },
+    {
+      "id": "result_expert",
+      "screen": "result",
+      "when": "The app is not sure (case is kept in the database for the experts); general protective advice follows",
+      "en": "I am not sure about this one. Please do not spray any medicine yet.",
+      "hi": "इसमें मुझे पक्का नहीं पता। अभी कोई दवा न छिड़कें।",
+      "notes": "Owner decision 19 Oct 2026: no callback and no promise of a reply; the farmer gets an immediate answer."
+    },
+    {
+      "id": "expert_photos_saved",
+      "screen": "result",
+      "when": "The farmer tapped the button that saves the case for the experts",
+      "en": "Done. Your photos are saved.",
+      "hi": "हो गया। आपकी फोटो सुरक्षित रख ली गई हैं।",
+      "notes": "No promise of a reply or a call back."
+    },
+    {
+      "id": "result_no_data",
+      "screen": "result",
+      "when": "Crop has no approved advice data",
+      "en": "We do not have advice for this crop yet. Please ask a farm expert.",
+      "hi": "इस फसल की सलाह अभी हमारे पास नहीं है। कृपया खेती के जानकार से पूछिए।"
+    },
+    {
+      "id": "result_not_disease",
+      "screen": "result",
+      "when": "No disease class was found in the photo",
+      "en": "We could not see a disease in this photo. If you are still worried, take another photo.",
+      "hi": "इस फोटो में हमें कोई बीमारी नहीं दिखी। फिर भी चिंता हो तो दूसरी फोटो खींचिए।",
+      "notes": "Deliberately does not say the plant is healthy; we cannot promise that."
+    },
+    {
+      "id": "result_listen_again",
+      "screen": "result",
+      "when": "After the advice; the speaker button replays it. Can be used on any screen",
+      "en": "To listen again, tap the speaker picture.",
+      "hi": "दोबारा सुनने के लिए स्पीकर वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "result_next_diary",
+      "screen": "result",
+      "when": "End of the result screen",
+      "en": "After you spray, write it in your diary. Tap the notebook picture.",
+      "hi": "छिड़काव करने के बाद उसे डायरी में लिख लीजिए। कॉपी वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "diary_intro",
+      "screen": "diary",
+      "when": "Diary screen opens",
+      "en": "This is your spray diary. Write here what you sprayed on your field.",
+      "hi": "यह आपकी छिड़काव की डायरी है। यहाँ लिखिए कि आपने खेत में क्या छिड़का।"
+    },
+    {
+      "id": "diary_pick_product",
+      "screen": "diary",
+      "when": "Medicine list is shown",
+      "en": "Tap the medicine you sprayed.",
+      "hi": "आपने जो दवा छिड़की, उसे दबाइए।"
+    },
+    {
+      "id": "diary_pick_date",
+      "screen": "diary",
+      "when": "Date choice is shown",
+      "en": "Tap the day you sprayed.",
+      "hi": "जिस दिन छिड़काव किया, वह दिन दबाइए।"
+    },
+    {
+      "id": "diary_tick_sprayed",
+      "screen": "diary",
+      "when": "Farmer can mark that the spray was done",
+      "en": "If you have sprayed, tap the green tick.",
+      "hi": "अगर आपने छिड़काव कर लिया है, तो हरा सही का निशान दबाइए।"
+    },
+    {
+      "id": "diary_tap_save",
+      "screen": "diary",
+      "when": "Entry is complete, ready to save",
+      "en": "To write it in the diary, tap the green tick.",
+      "hi": "डायरी में लिखने के लिए हरा सही का निशान दबाइए।"
+    },
+    {
+      "id": "diary_saved",
+      "screen": "diary",
+      "when": "Entry saved",
+      "en": "Done. It is saved in your diary.",
+      "hi": "हो गया। आपकी डायरी में लिख लिया गया है।"
+    },
+    {
+      "id": "diary_warning",
+      "screen": "diary",
+      "when": "Introduces a dynamic warning (banned, off-label, waiting period, too soon); the warning text is spoken next",
+      "en": "Please listen carefully. There is a warning about this medicine.",
+      "hi": "ध्यान से सुनिए। इस दवा के बारे में एक चेतावनी है।",
+      "notes": "Fixed lead-in only; the warning itself comes from the backend."
+    },
+    {
+      "id": "field_intro",
+      "screen": "field",
+      "when": "Field screen opens",
+      "en": "This is your field page. You can see your weather and sprays here.",
+      "hi": "यह आपके खेत का पन्ना है। यहाँ आपके खेत का मौसम और छिड़काव की जानकारी मिलेगी।"
+    },
+    {
+      "id": "field_stale",
+      "screen": "field",
+      "when": "Field data is old and could not be refreshed",
+      "en": "This information is old. Turn on the internet to see new information.",
+      "hi": "यह जानकारी पुरानी है। नई जानकारी के लिए इंटरनेट चालू कीजिए।"
+    },
+    {
+      "id": "field_updated_ok",
+      "screen": "field",
+      "when": "Field data was refreshed just now",
+      "en": "Your field information is up to date.",
+      "hi": "आपके खेत की जानकारी नई है।"
+    },
+    {
+      "id": "field_no_data",
+      "screen": "field",
+      "when": "No weather or spray data for this farmer yet",
+      "en": "There is no information for your field yet.",
+      "hi": "आपके खेत की जानकारी अभी नहीं है।"
+    },
+    {
+      "id": "field_tap_weather",
+      "screen": "field",
+      "when": "Weather button is highlighted",
+      "en": "To hear the weather, tap the cloud picture.",
+      "hi": "मौसम सुनने के लिए बादल वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "alert_new",
+      "screen": "alerts",
+      "when": "Push alert arrives while the app is open",
+      "en": "You have a new alert for your field.",
+      "hi": "आपके खेत के लिए एक नई सूचना आई है।"
+    },
+    {
+      "id": "alert_open",
+      "screen": "alerts",
+      "when": "Right after alert_new, or when the alerts list opens",
+      "en": "To hear it, tap the bell picture.",
+      "hi": "सुनने के लिए घंटी वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "alert_read_more",
+      "screen": "alerts",
+      "when": "After a short alert has been spoken",
+      "en": "To hear more, tap the green arrow.",
+      "hi": "और सुनने के लिए हरे तीर वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "alert_none",
+      "screen": "alerts",
+      "when": "Alerts list is empty",
+      "en": "You have no new alerts.",
+      "hi": "आपके लिए कोई नई सूचना नहीं है।"
+    },
+    {
+      "id": "ask_intro",
+      "screen": "ask",
+      "when": "Ask screen opens",
+      "en": "Here you can ask a question about your crop.",
+      "hi": "यहाँ आप अपनी फसल के बारे में सवाल पूछ सकते हैं।"
+    },
+    {
+      "id": "ask_type_question",
+      "screen": "ask",
+      "when": "Right after ask_intro",
+      "en": "Type your question.",
+      "hi": "अपना सवाल लिखिए।"
+    },
+    {
+      "id": "ask_tap_send",
+      "screen": "ask",
+      "when": "A question has been typed",
+      "en": "To send your question, tap the green tick.",
+      "hi": "सवाल भेजने के लिए हरा सही का निशान दबाइए।"
+    },
+    {
+      "id": "ask_wait",
+      "screen": "ask",
+      "when": "Waiting for the answer",
+      "en": "Looking for the answer. Please wait.",
+      "hi": "जवाब ढूँढा जा रहा है। कृपया रुकिए।"
+    },
+    {
+      "id": "ask_no_answer",
+      "screen": "ask",
+      "when": "No safe answer could be given",
+      "en": "We could not find an answer to this question. Please ask a farm expert.",
+      "hi": "इस सवाल का जवाब हमें नहीं मिला। कृपया खेती के जानकार से पूछिए।"
+    },
+    {
+      "id": "error_no_internet",
+      "screen": "errors",
+      "when": "Action needs the internet and there is none",
+      "en": "Do not worry, there is no internet right now. Please check your phone's internet.",
+      "hi": "कोई बात नहीं, अभी इंटरनेट नहीं चल रहा है। कृपया अपने फोन का इंटरनेट देखिए।"
+    },
+    {
+      "id": "error_try_again",
+      "screen": "errors",
+      "when": "Any unexpected failure",
+      "en": "Something went wrong, but it is not your mistake. Please try again.",
+      "hi": "कुछ गड़बड़ हो गई, यह आपकी गलती नहीं है। कृपया दोबारा कोशिश कीजिए।"
+    },
+    {
+      "id": "offline_saved",
+      "screen": "errors",
+      "when": "Photo taken with no internet and queued",
+      "en": "No internet. Your photo is saved and will be sent later.",
+      "hi": "इंटरनेट नहीं है। आपकी फोटो रख ली गई है, इंटरनेट आने पर भेज दी जाएगी।"
+    },
+    {
+      "id": "back_online_sent",
+      "screen": "errors",
+      "when": "Internet is back and the queued photo was sent",
+      "en": "The internet is back. Your saved photo has been sent.",
+      "hi": "इंटरनेट आ गया है। आपकी रखी हुई फोटो भेज दी गई है।"
+    },
+    {
+      "id": "app_updating",
+      "screen": "errors",
+      "when": "App or its data is updating",
+      "en": "FarmTrack is being updated. Please wait a little.",
+      "hi": "फार्मट्रैक नया किया जा रहा है। कृपया थोड़ा रुकिए।"
+    },
+    {
+      "id": "please_wait",
+      "screen": "general",
+      "when": "Any short wait with no better prompt",
+      "en": "Please wait a little.",
+      "hi": "कृपया थोड़ा रुकिए।"
+    },
+    {
+      "id": "settings_speed",
+      "screen": "settings",
+      "when": "Speed control is highlighted",
+      "en": "Tap a picture to make the voice speak slower or faster.",
+      "hi": "बोलने की रफ़्तार धीमी या तेज़ करने के लिए तस्वीर दबाइए।"
+    },
+    {
+      "id": "settings_volume",
+      "screen": "settings",
+      "when": "Volume control is highlighted",
+      "en": "Tap a picture to make the voice louder or softer.",
+      "hi": "आवाज़ बढ़ाने या घटाने के लिए तस्वीर दबाइए।"
+    },
+    {
+      "id": "settings_language_changed",
+      "screen": "settings",
+      "when": "After the language is changed (played in the new language)",
+      "en": "The language has been changed.",
+      "hi": "भाषा बदल दी गई है।"
+    },
+    {
+      "id": "camera_permission",
+      "screen": "permissions",
+      "when": "Before the phone's camera permission dialog",
+      "en": "FarmTrack needs your camera to take leaf photos. When the phone asks, tap the button that allows it.",
+      "hi": "पत्ती की फोटो लेने के लिए फार्मट्रैक को आपका कैमरा चाहिए। जब फोन पूछे, तो इजाज़त देने वाला बटन दबाइए।",
+      "notes": "Does not name the dialog button, which is in the phone's own language."
+    },
+    {
+      "id": "notification_permission",
+      "screen": "permissions",
+      "when": "Before the phone's notification permission dialog",
+      "en": "FarmTrack wants to send you alerts about your field. When the phone asks, tap the button that allows it.",
+      "hi": "फार्मट्रैक आपके खेत की सूचनाएँ भेजना चाहता है। जब फोन पूछे, तो इजाज़त देने वाला बटन दबाइए।"
+    },
+    {
+      "id": "permission_denied_camera",
+      "screen": "permissions",
+      "when": "Camera permission was refused",
+      "en": "The camera is not allowed, so we cannot take photos. Please open your phone settings and allow the camera.",
+      "hi": "कैमरे की इजाज़त नहीं है, इसलिए फोटो नहीं खींच सकते। कृपया फोन की सेटिंग खोलकर कैमरे की इजाज़त दीजिए।"
+    },
+    {
+      "id": "permission_denied_notifications",
+      "screen": "permissions",
+      "when": "Notification permission was refused",
+      "en": "Alerts will not come. You can turn them on later in your phone settings.",
+      "hi": "सूचनाएँ नहीं आएँगी। आप बाद में फोन की सेटिंग में इन्हें चालू कर सकते हैं।"
+    },
+    {
+      "id": "nav_home",
+      "screen": "general",
+      "when": "Home button is highlighted on any screen",
+      "en": "To go to the first page, tap the house picture.",
+      "hi": "पहले पन्ने पर जाने के लिए घर वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "nav_back",
+      "screen": "general",
+      "when": "Back button is highlighted on any screen",
+      "en": "To go back, tap the arrow that points left.",
+      "hi": "पीछे जाने के लिए बाईं तरफ वाला तीर दबाइए।"
+    },
+    {
+      "id": "diary_did_spray",
+      "screen": "diary",
+      "when": "Advice 'I sprayed this' confirm screen, after the medicine name",
+      "en": "Did you spray this medicine?",
+      "hi": "क्या आपने यह दवा छिड़की?"
+    },
+    {
+      "id": "diary_cross_back",
+      "screen": "diary",
+      "when": "Confirm screen, says what the red cross does",
+      "en": "If you did not, tap the red cross.",
+      "hi": "अगर नहीं छिड़की, तो लाल क्रॉस का निशान दबाइए।"
+    },
+    {
+      "id": "diary_empty",
+      "screen": "diary",
+      "when": "Diary list is empty",
+      "en": "Nothing is written yet. To write a spray, tap the plus picture.",
+      "hi": "अभी कुछ नहीं लिखा है। छिड़काव लिखने के लिए प्लस का निशान दबाइए।"
+    },
+    {
+      "id": "diary_add_hint",
+      "screen": "diary",
+      "when": "Diary list has entries; right after diary_intro",
+      "en": "To write a spray you did, tap the plus picture.",
+      "hi": "आपने जो छिड़काव किया, उसे लिखने के लिए प्लस का निशान दबाइए।"
+    },
+    {
+      "id": "diary_pick_crop",
+      "screen": "diary",
+      "when": "Add a spray: crop pictures are shown",
+      "en": "Tap the picture of the crop you sprayed.",
+      "hi": "आपने जिस फसल पर छिड़काव किया, उसकी तस्वीर दबाइए।"
+    },
+    {
+      "id": "diary_type_medicine",
+      "screen": "diary",
+      "when": "Add a spray: medicine name box is shown",
+      "en": "Type the name of the medicine you sprayed.",
+      "hi": "आपने जो दवा छिड़की, उसका नाम लिखिए।"
+    },
+    {
+      "id": "diary_pick_recent",
+      "screen": "diary",
+      "when": "Add a spray: only when names used before are listed under the box",
+      "en": "Or tap a name you used before.",
+      "hi": "या पहले इस्तेमाल किया हुआ कोई नाम दबाइए।"
+    },
+    {
+      "id": "diary_today",
+      "screen": "diary",
+      "when": "Today button is tapped",
+      "en": "Today.",
+      "hi": "आज।"
+    },
+    {
+      "id": "diary_yesterday",
+      "screen": "diary",
+      "when": "Yesterday button is tapped",
+      "en": "Yesterday.",
+      "hi": "बीता हुआ कल।",
+      "notes": "Hindi kal means both yesterday and tomorrow, so the passed day is spelled out; native review."
+    },
+    {
+      "id": "diary_other_day",
+      "screen": "diary",
+      "when": "Other day button is tapped",
+      "en": "Another day.",
+      "hi": "कोई और दिन।"
+    },
+    {
+      "id": "diary_saved_offline",
+      "screen": "diary",
+      "when": "Spray note could not be sent for lack of internet and was queued",
+      "en": "No internet. Your spray note is saved and will be sent later.",
+      "hi": "इंटरनेट नहीं है। आपकी छिड़काव की जानकारी रख ली गई है, बाद में भेज दी जाएगी।",
+      "notes": "Used instead of offline_saved, which talks about a photo."
+    },
+    {
+      "id": "diary_sent",
+      "screen": "diary",
+      "when": "A queued spray note was sent while the diary is open",
+      "en": "The internet is back. Your spray note has been sent.",
+      "hi": "इंटरनेट आ गया है। आपकी छिड़काव की जानकारी भेज दी गई है।"
+    },
+    {
+      "id": "diary_waiting",
+      "screen": "diary",
+      "when": "Farmer taps a diary entry that is still waiting to be sent",
+      "en": "This note is waiting for the internet.",
+      "hi": "यह जानकारी इंटरनेट का इंतज़ार कर रही है।"
+    },
+    {
+      "id": "field_reload",
+      "screen": "field",
+      "when": "Field page has no data or could not be loaded; hint for the round arrow",
+      "en": "To see new information, tap the round arrow.",
+      "hi": "नई जानकारी देखने के लिए गोल तीर वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "alert_see_scan",
+      "screen": "alerts",
+      "when": "Alert detail: the alert belongs to a photo check",
+      "en": "To see the result of your photo, tap the green arrow.",
+      "hi": "अपनी फोटो का नतीजा देखने के लिए हरे तीर वाली तस्वीर दबाइए।"
+    },
+    {
+      "id": "offline_waiting",
+      "screen": "home",
+      "when": "Farmer taps the waiting-to-send card on the first page",
+      "en": "Your saved photos and diary entries are waiting for the internet. They will be sent when it comes.",
+      "hi": "आपकी रखी हुई फोटो और डायरी की बातें इंटरनेट का इंतज़ार कर रही हैं। इंटरनेट आते ही भेज दी जाएँगी।",
+      "notes": "Card text shows the number; the number is not spoken."
+    },
+    {
+      "id": "offline_result_ready",
+      "screen": "home",
+      "when": "A saved photo was sent and its result is ready; also played when the first page opens with a result waiting",
+      "en": "The result is ready. Tap the green card on the first page.",
+      "hi": "नतीजा आ गया है। पहले पन्ने पर हरा कार्ड दबाइए।",
+      "notes": "Played after back_online_sent."
+    },
+    {
+      "id": "settings_logout_confirm",
+      "screen": "settings",
+      "when": "Farmer taps log out; asks for the green tick or the red cross",
+      "en": "Do you want to log out? Tap the green tick for yes, or the red cross for no.",
+      "hi": "क्या आप बाहर निकलना चाहते हैं? हाँ के लिए हरा सही का निशान, नहीं के लिए लाल क्रॉस का निशान दबाइए।"
+    },
+    {
+      "id": "ask_tap_picture",
+      "screen": "ask",
+      "when": "Ask screen opens, after ask_intro",
+      "en": "Tap a picture to ask that question. To ask your own question, tap the keyboard picture.",
+      "hi": "कोई सवाल पूछने के लिए उसकी तस्वीर दबाइए। अपना सवाल पूछने के लिए कीबोर्ड वाली तस्वीर दबाइए।",
+      "notes": "Keyboard picture = the big button that opens the typing screen."
+    },
+    {
+      "id": "ask_expert_sent",
+      "screen": "ask",
+      "when": "A question that could not be answered was sent to a farm expert",
+      "en": "Done. Your question is saved.",
+      "hi": "हो गया। आपका सवाल सुरक्षित रख लिया गया है।",
+      "notes": "No promise of a call back."
+    },
+    {
+      "id": "ask_q_rain_after_spray",
+      "screen": "ask",
+      "when": "Suggestion card: rain after spraying",
+      "en": "What should I do if it rains after I spray?",
+      "hi": "छिड़काव के बाद बारिश हो जाए तो क्या करना चाहिए?"
+    },
+    {
+      "id": "ask_q_harvest_wait",
+      "screen": "ask",
+      "when": "Suggestion card: waiting days before harvest",
+      "en": "How many days should I wait between my last spray and the harvest?",
+      "hi": "आख़िरी छिड़काव और तुड़ाई के बीच कितने दिन रुकना चाहिए?"
+    },
+    {
+      "id": "ask_q_mix_medicines",
+      "screen": "ask",
+      "when": "Suggestion card: mixing medicines",
+      "en": "Can I mix other chemicals with my spray?",
+      "hi": "छिड़काव में कोई और दवा मिलाएँ क्या?"
+    },
+    {
+      "id": "ask_q_protect_myself",
+      "screen": "ask",
+      "when": "Suggestion card: staying safe while spraying",
+      "en": "How do I protect myself when I spray?",
+      "hi": "छिड़काव करते समय अपनी सुरक्षा कैसे करें?"
+    },
+    {
+      "id": "ask_q_scab_risk",
+      "screen": "ask",
+      "when": "Suggestion card: when apple scab spreads",
+      "en": "When does apple scab spread?",
+      "hi": "सेब का स्कैब कब फैलता है?"
+    },
+    {
+      "id": "ask_q_fallen_leaves",
+      "screen": "ask",
+      "when": "Suggestion card: fallen leaves",
+      "en": "What should I do with the fallen leaves in my orchard?",
+      "hi": "बाग़ में गिरी हुई पत्तियों का क्या करें?"
+    },
+    {
+      "id": "ask_q_spray_gap",
+      "screen": "ask",
+      "when": "Suggestion card: days between two sprays",
+      "en": "How many days should I keep between two sprays?",
+      "hi": "दो छिड़काव के बीच कितने दिन का अंतर रखें?"
+    },
+    {
+      "id": "ask_q_same_chemical",
+      "screen": "ask",
+      "when": "Suggestion card: repeating the same chemical",
+      "en": "Can I use the same chemical again and again?",
+      "hi": "क्या लगातार छिड़काव में एक ही रसायन दोहरा सकते हैं?"
+    },
+    {
+      "id": "ask_q_spray_not_needed",
+      "screen": "ask",
+      "when": "Suggestion card: spraying with no risk of disease",
+      "en": "Should I spray even when there is no risk of disease?",
+      "hi": "क्या बीमारी का ख़तरा न हो तब भी छिड़काव करना चाहिए?"
+    },
+    {
+      "id": "ask_q_keep_healthy",
+      "screen": "ask",
+      "when": "Suggestion card: preventing diseases",
+      "en": "How can I prevent diseases in my orchard?",
+      "hi": "बीमारी से बचाव के लिए बाग़ में क्या करें?"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans/57579c4bd041f84cca168910b34fb8e4/crop",
+    "auth": "bearer",
+    "json": {
+      "crop_id": "Dragonfruit"
+    }
+  },
+  "status": 422,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "unknown_crop",
+    "message": "That crop is not known.",
+    "details": null
+  }
+}

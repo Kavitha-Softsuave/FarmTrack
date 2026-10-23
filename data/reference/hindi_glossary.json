@@ -1,0 +1,161 @@
+{
+  "_status": "Hindi is a DRAFT written by the assistant. A native-speaker agronomy reviewer must approve it before any client demo.",
+  "crops": {
+    "Apple": "सेब",
+    "Tomato": "टमाटर",
+    "Potato": "आलू",
+    "Maize": "मक्का",
+    "Grape": "अंगूर"
+  },
+  "stages": {
+    "dormant": {
+      "en": "Dormant",
+      "hi": "सुप्तावस्था"
+    },
+    "silver_tip": {
+      "en": "Silver tip",
+      "hi": "सिल्वर टिप"
+    },
+    "green_tip": {
+      "en": "Green tip",
+      "hi": "ग्रीन टिप (कली फूटना)"
+    },
+    "half_inch_green_tip": {
+      "en": "Half-inch green tip",
+      "hi": "आधा इंच हरी नोक"
+    },
+    "tight_cluster": {
+      "en": "Tight cluster",
+      "hi": "टाइट क्लस्टर (कलियों का गुच्छा)"
+    },
+    "pink_bud": {
+      "en": "Pink bud",
+      "hi": "पिंक बड (गुलाबी कली)"
+    },
+    "full_bloom": {
+      "en": "Full bloom",
+      "hi": "पूर्ण फूल"
+    },
+    "petal_fall": {
+      "en": "Petal fall / pea size",
+      "hi": "पंखुड़ी झड़ना / मटर के आकार का फल"
+    },
+    "fruit_set": {
+      "en": "Fruit set",
+      "hi": "फल बनना"
+    },
+    "walnut_size": {
+      "en": "Fruit development (walnut size)",
+      "hi": "फल विकास (अखरोट के आकार का)"
+    },
+    "walnut_plus_20d": {
+      "en": "Fruit development (20 days after walnut size)",
+      "hi": "फल विकास (अखरोट आकार के 20 दिन बाद)"
+    },
+    "walnut_plus_40d": {
+      "en": "Fruit development (20 days after the walnut+20d mite spray)",
+      "hi": "फल विकास (पिछले माइट छिड़काव के 20 दिन बाद)"
+    },
+    "pre_harvest": {
+      "en": "Pre-harvest (20-25 days before harvest)",
+      "hi": "तुड़ाई से 20-25 दिन पहले"
+    },
+    "harvest": {
+      "en": "Harvest",
+      "hi": "तुड़ाई"
+    },
+    "post_harvest": {
+      "en": "After harvest",
+      "hi": "तुड़ाई के बाद"
+    },
+    "any": {
+      "en": "Any stage",
+      "hi": "किसी भी अवस्था में"
+    }
+  },
+  "diseases": {
+    "Apple___Apple_scab": "सेब का स्कैब (पपड़ी रोग)",
+    "Apple___Apple_scab_rust": "सेब स्कैब/रस्ट (मिश्रित - विशेषज्ञ जाँच)",
+    "Apple___Black_rot": "सेब का ब्लैक रॉट",
+    "Apple___Cedar_apple_rust": "सेब का सीडर रस्ट (भारत में दुर्लभ)",
+    "Apple___healthy": "स्वस्थ सेब की पत्ती",
+    "Apple___Marssonina_blotch": "मार्सोनिना पत्ती धब्बा (समय से पहले पत्ते झड़ना)",
+    "Apple___Alternaria_leaf_spot": "आल्टरनेरिया पत्ती धब्बा",
+    "Apple___Brown_spot": "सेब का भूरा धब्बा",
+    "Apple___Gray_spot": "सेब का स्लेटी धब्बा",
+    "Apple___Powdery_mildew": "सेब का चूर्णिल आसिता (पाउडरी मिल्ड्यू)",
+    "Apple___Root_rot_collar_rot": "जड़ सड़न / कॉलर रॉट",
+    "Apple___Canker": "सेब का कैंकर (तने का रोग)",
+    "PEST_apple_mites": "सेब में माइट (लाल मकड़ी)",
+    "PEST_apple_san_jose_scale": "सेब में सैन जोज़ स्केल",
+    "PEST_apple_thrips": "सेब में थ्रिप्स",
+    "PEST_apple_woolly_aphid": "सेब का वूली एफिड (सफेद रूई जैसा कीट)",
+    "Tomato___Bacterial_spot": "टमाटर का जीवाणु धब्बा",
+    "Tomato___Early_blight": "टमाटर का अगेती झुलसा",
+    "Tomato___Late_blight": "टमाटर का पछेती झुलसा",
+    "Tomato___Leaf_Mold": "टमाटर का लीफ मोल्ड",
+    "Tomato___Septoria_leaf_spot": "टमाटर का सेप्टोरिया पत्ती धब्बा",
+    "Tomato___Spider_mites Two-spotted_spider_mite": "टमाटर में लाल मकड़ी (माइट)",
+    "Tomato___Target_Spot": "टमाटर का टार्गेट स्पॉट",
+    "Tomato___Tomato_Yellow_Leaf_Curl_Virus": "टमाटर का पत्ती मरोड़ (येलो लीफ कर्ल) वायरस",
+    "Tomato___Tomato_mosaic_virus": "टमाटर का मोज़ेक वायरस",
+    "Tomato___healthy": "स्वस्थ टमाटर की पत्ती",
+    "Potato___Early_blight": "आलू का अगेती झुलसा",
+    "Potato___Late_blight": "आलू का पछेती झुलसा",
+    "Potato___healthy": "स्वस्थ आलू की पत्ती",
+    "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": "मक्का का ग्रे लीफ स्पॉट",
+    "Corn_(maize)___Common_rust_": "मक्का का सामान्य रस्ट (गेरुआ)",
+    "Corn_(maize)___Northern_Leaf_Blight": "मक्का का उत्तरी पत्ती झुलसा",
+    "Corn_(maize)___healthy": "स्वस्थ मक्का की पत्ती",
+    "Grape___Black_rot": "अंगूर का ब्लैक रॉट",
+    "Grape___Esca_(Black_Measles)": "अंगूर का एस्का (ब्लैक मीज़ल्स)",
+    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)": "अंगूर का पत्ती झुलसा (इज़ारियोप्सिस)",
+    "Grape___healthy": "स्वस्थ अंगूर की पत्ती"
+  },
+  "active_ingredients": {
+    "Captan": "कैप्टान",
+    "Dodine": "डोडीन",
+    "Ziram": "ज़ीरम",
+    "Mancozeb": "मैन्कोज़ेब",
+    "Propineb": "प्रोपीनेब",
+    "Difenoconazole": "डिफेनोकोनाज़ोल",
+    "Hexaconazole": "हेक्साकोनाज़ोल",
+    "Zineb": "ज़िनेब",
+    "Carbendazim": "कार्बेन्डाज़िम",
+    "Thiophanate-methyl": "थायोफैनेट-मिथाइल",
+    "Myclobutanil": "मायक्लोब्यूटानिल",
+    "Flusilazole": "फ्लुसिलाज़ोल",
+    "Pyraclostrobin": "पायराक्लोस्ट्रोबिन",
+    "Tebuconazole": "टेबुकोनाज़ोल",
+    "Trifloxystrobin": "ट्राइफ्लॉक्सीस्ट्रोबिन",
+    "Boscalid": "बोस्कैलिड",
+    "Metrafenone": "मेट्राफेनोन",
+    "Chlorothalonil": "क्लोरोथैलोनिल",
+    "Metiram": "मेटिराम",
+    "Fluxapyroxad": "फ्लक्सापाइरोक्साड",
+    "Fluopyram": "फ्लुओपाइराम",
+    "Copper sulphate": "कॉपर सल्फेट",
+    "Copper oxychloride": "कॉपर ऑक्सीक्लोराइड",
+    "Sulphur": "गंधक (सल्फर)",
+    "Aureofungin": "ऑरियोफंगिन",
+    "Horticultural mineral oil": "बागवानी खनिज तेल",
+    "Thiacloprid": "थायाक्लोप्रिड",
+    "Spiromesifen": "स्पाइरोमेसिफेन",
+    "Etoxazole": "एटोक्साज़ोल",
+    "Hexythiazox": "हेक्सीथियाज़ॉक्स",
+    "Oxydemeton-methyl": "ऑक्सीडेमेटॉन-मिथाइल",
+    "Cyenopyrafen": "साइनोपायरेफेन",
+    "Fenazaquin": "फेनाज़ाक्विन",
+    "Propargite": "प्रोपार्गाइट",
+    "Chlorpyriphos": "क्लोरपायरीफॉस",
+    "Azoxystrobin": "एज़ॉक्सीस्ट्रोबिन",
+    "Cymoxanil": "साइमोक्सानिल",
+    "Cyazofamid": "साइज़ोफामिड",
+    "Dimethomorph": "डाइमेथोमॉर्फ",
+    "Imidacloprid": "इमिडाक्लोप्रिड",
+    "Cyantraniliprole": "साइएंट्रानिलिप्रोल",
+    "Propiconazole": "प्रोपिकोनाज़ोल",
+    "Kresoxim-methyl": "क्रेसोक्सिम-मिथाइल",
+    "Hexaconazole + Zineb": "हेक्साकोनाज़ोल + ज़िनेब"
+  }
+}

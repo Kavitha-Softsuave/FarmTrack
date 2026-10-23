@@ -1,0 +1,41 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/ask",
+    "auth": "bearer",
+    "json": {
+      "question": "",
+      "language": "en"
+    }
+  },
+  "status": 422,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "validation_error",
+    "message": "The request is not valid.",
+    "details": {
+      "errors": [
+        {
+          "loc": [
+            "body",
+            "question"
+          ],
+          "msg": "String should have at least 2 characters",
+          "type": "string_too_short"
+        }
+      ]
+    },
+    "detail": [
+      {
+        "loc": [
+          "body",
+          "question"
+        ],
+        "msg": "String should have at least 2 characters",
+        "type": "string_too_short"
+      }
+    ]
+  }
+}

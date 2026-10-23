@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/health",
+    "auth": "none"
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "status": "ok",
+    "db": true
+  }
+}

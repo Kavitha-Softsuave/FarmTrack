@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Demo clock{% endblock %}
+{% block content %}
+<h1>Demo clock</h1>
+<p class="panel">
+  The app currently thinks it is <strong>{{ clock.now.strftime('%d %b %Y %H:%M') }}</strong> (India time),
+  {{ 'a time fixed by the admin' if clock.fixed else 'the real time' }}.
+  Weather and sensor data after this time are served from the archive as a forecast.
+</p>
+<form method="post" action="/admin/clock" class="panel">
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <label for="now">Set the clock to (India time)</label>
+  <input id="now" name="now" type="datetime-local" step="60" value="{{ picker_value }}" required>
+  <p class="inline">
+    <button type="submit" name="action" value="set">Set clock</button>
+    <button type="submit" name="action" value="real" class="secondary" formnovalidate>Use the real clock</button>
+  </p>
+</form>
+{% endblock %}

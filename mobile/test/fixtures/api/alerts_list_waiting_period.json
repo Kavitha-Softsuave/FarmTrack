@@ -1,0 +1,124 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/alerts",
+    "auth": "bearer",
+    "query": {
+      "limit": 5
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "items": [
+      {
+        "id": "d3be960543252b2e3539ec03125f26e1",
+        "kind": "waiting_period",
+        "level": "yellow",
+        "title": {
+          "en": "Wait before picking fruit",
+          "hi": "फल तोड़ने से पहले रुकें"
+        },
+        "body": {
+          "en": "Hexaconazole was sprayed on 1 Sep. It needs 30 days. Do not pick fruit before 1 Oct.",
+          "hi": "हेक्साकोनाज़ोल का छिड़काव 1 सितंबर को हुआ था। इसके बाद 30 दिन रुकना है। 1 अक्तूबर से पहले फल न तोड़ें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Wait before picking fruit. Hexaconazole was sprayed on 1 Sep. It needs 30 days. Do not pick fruit before 1 Oct.",
+            "hi": "फल तोड़ने से पहले रुकें. हेक्साकोनाज़ोल का छिड़काव 1 सितंबर को हुआ था। इसके बाद 30 दिन रुकना है। 1 अक्तूबर से पहले फल न तोड़ें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-09-01T09:30:00+05:30",
+        "read_at": null,
+        "scan_id": "accf9f3e8441f0d902ba12e193bfb317"
+      },
+      {
+        "id": "9dff2a236272765d10de25069ec901c1",
+        "kind": "scab_infection_risk",
+        "level": "red",
+        "title": {
+          "en": "Apple scab infection risk",
+          "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा"
+        },
+        "body": {
+          "en": "The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+          "hi": "पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Apple scab infection risk. The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+            "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा. पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-05-12T16:00:00+05:30",
+        "read_at": "2026-05-12T16:00:00+05:30",
+        "scan_id": null
+      },
+      {
+        "id": "44dad96454de83278815300f291327bf",
+        "kind": "scab_infection_risk",
+        "level": "red",
+        "title": {
+          "en": "Apple scab infection risk",
+          "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा"
+        },
+        "body": {
+          "en": "The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+          "hi": "पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Apple scab infection risk. The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+            "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा. पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-05-04T21:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      },
+      {
+        "id": "703921921db232508904ef54665ac4ac",
+        "kind": "scab_infection_risk",
+        "level": "red",
+        "title": {
+          "en": "Apple scab infection risk",
+          "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा"
+        },
+        "body": {
+          "en": "The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+          "hi": "पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Apple scab infection risk. The leaves stayed wet long enough for scab to infect. Look at your trees and ask for spray advice today.",
+            "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा. पत्तियाँ इतनी देर गीली रहीं कि स्कैब का संक्रमण हो सकता है। अपने पेड़ देखें और आज ही छिड़काव की सलाह लें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-03-30T20:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      }
+    ],
+    "unread": 3
+  },
+  "note": "Waiting-period alert of a spray taken from a scan's advice: scan_id is set."
+}

@@ -1,0 +1,41 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/ask",
+    "auth": "bearer",
+    "json": {
+      "question": "hello there",
+      "language": "fr"
+    }
+  },
+  "status": 422,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "validation_error",
+    "message": "The request is not valid.",
+    "details": {
+      "errors": [
+        {
+          "loc": [
+            "body",
+            "language"
+          ],
+          "msg": "Input should be 'hi' or 'en'",
+          "type": "literal_error"
+        }
+      ]
+    },
+    "detail": [
+      {
+        "loc": [
+          "body",
+          "language"
+        ],
+        "msg": "Input should be 'hi' or 'en'",
+        "type": "literal_error"
+      }
+    ]
+  }
+}

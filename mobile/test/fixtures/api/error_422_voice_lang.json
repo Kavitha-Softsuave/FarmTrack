@@ -1,0 +1,40 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/voice/catalogue",
+    "auth": "none",
+    "query": {
+      "lang": "xx"
+    }
+  },
+  "status": 422,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "validation_error",
+    "message": "The request is not valid.",
+    "details": {
+      "errors": [
+        {
+          "loc": [
+            "query",
+            "lang"
+          ],
+          "msg": "Input should be 'hi' or 'en'",
+          "type": "literal_error"
+        }
+      ]
+    },
+    "detail": [
+      {
+        "loc": [
+          "query",
+          "lang"
+        ],
+        "msg": "Input should be 'hi' or 'en'",
+        "type": "literal_error"
+      }
+    ]
+  }
+}

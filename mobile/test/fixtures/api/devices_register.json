@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/devices",
+    "auth": "bearer",
+    "json": {
+      "platform": "android",
+      "push_token": "fixture-push-token-0001",
+      "app_version": "1.0.0+1"
+    }
+  },
+  "status": 204,
+  "body": null
+}

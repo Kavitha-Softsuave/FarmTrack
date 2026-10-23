@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>{% block title %}Admin{% endblock %} - FarmTrack admin</title>
+  <link rel="stylesheet" href="/admin/static/admin.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  {% if logged_in %}
+  <header class="bar">
+    <strong class="brand">FarmTrack admin</strong>
+    <nav aria-label="Main">
+      <ul>
+        {% for slug, label in nav %}
+        <li><a href="/admin/{{ slug }}"{% if page == slug %} aria-current="page"{% endif %}>{{ label }}</a></li>
+        {% endfor %}
+      </ul>
+    </nav>
+    <form method="post" action="/admin/logout">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <button type="submit" class="link">Sign out</button>
+    </form>
+  </header>
+  {% endif %}
+  <main id="main">
+    {% if flash %}
+    <p class="flash {{ flash[0] }}" role="{{ 'alert' if flash[0] == 'error' else 'status' }}">{{ flash[1] }}</p>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

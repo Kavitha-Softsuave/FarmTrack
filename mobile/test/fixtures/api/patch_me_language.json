@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "PATCH",
+    "path": "/v1/me",
+    "auth": "bearer",
+    "json": {
+      "language": "en"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "F001",
+    "name": "Dinesh Sharma",
+    "phone_masked": "+91******0001",
+    "language": "en",
+    "district": "Shimla",
+    "village": "Theog",
+    "crops": [
+      "Apple"
+    ],
+    "primary_crop": "Apple",
+    "station_id": "ST01"
+  }
+}

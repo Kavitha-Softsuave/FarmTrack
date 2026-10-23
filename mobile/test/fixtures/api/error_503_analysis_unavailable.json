@@ -1,0 +1,28 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {
+      "client_crop": "Apple",
+      "client_confidence": "0.9"
+    },
+    "files": [
+      {
+        "field": "photos",
+        "filename": "SCB_09.jpg",
+        "content_type": "image/jpeg",
+        "source": "data/images/testset_v1/leaf/Apple___Apple_scab/SCB_09.jpg"
+      }
+    ]
+  },
+  "status": 503,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "analysis_unavailable",
+    "message": "We could not check your photo right now. Please try again.",
+    "details": null
+  }
+}

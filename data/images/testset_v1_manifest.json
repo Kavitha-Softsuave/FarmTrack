@@ -1,0 +1,28 @@
+{
+  "prepared": "19 Oct 2026",
+  "source_folder": "images/incoming (30 originals, 10 per folder)",
+  "originals": 30,
+  "leaf_test": {
+    "Apple___Alternaria_leaf_spot": 8,
+    "Apple___Marssonina_blotch": 11,
+    "Apple___Apple_scab": 4
+  },
+  "leaf_test_total": 23,
+  "leaf_test_reliable_labels": {
+    "Apple___Alternaria_leaf_spot": 7,
+    "Apple___Marssonina_blotch": 11,
+    "Apple___Apple_scab": 1
+  },
+  "fruit_info": {
+    "Apple___Apple_scab": 5
+  },
+  "fruit_info_total": 5,
+  "excluded_not_a_leaf": 1,
+  "excluded_exact_duplicates": 3,
+  "caveats": [
+    "Labels come from the folder names chosen by the collector; not confirmed by an agronomist.",
+    "Photos look like web images (no camera EXIF, thumbnail sizes), not photos taken by the client; accuracy on them is NOT a field measure.",
+    "Source and licence unknown: internal testing only.",
+    "Counts per disease are tiny; a single wrong answer moves a class result by 9 to 25 points."
+  ]
+}

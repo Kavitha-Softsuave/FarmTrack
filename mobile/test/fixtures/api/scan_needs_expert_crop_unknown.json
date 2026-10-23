@@ -1,0 +1,81 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {},
+    "files": [
+      {
+        "field": "photos",
+        "filename": "SCB_09.jpg",
+        "content_type": "image/jpeg",
+        "source": "data/images/testset_v1/leaf/Apple___Apple_scab/SCB_09.jpg"
+      }
+    ]
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "a49177760052f3c3efa3b778c8bbec0c",
+    "status": "needs_expert",
+    "created_at": "2026-05-12T16:00:00+05:30",
+    "photos": 1,
+    "crop": {
+      "crop_id": null,
+      "name": null,
+      "confidence": 0.0,
+      "needs_confirmation": true,
+      "unknown": true,
+      "candidates": [
+        {
+          "crop_id": "Apple",
+          "name": {
+            "en": "Apple",
+            "hi": "सेब"
+          },
+          "confidence": 0.3
+        },
+        {
+          "crop_id": "Potato",
+          "name": {
+            "en": "Potato",
+            "hi": "आलू"
+          },
+          "confidence": 0.3
+        }
+      ],
+      "source": "farmer_profile"
+    },
+    "quality": {
+      "usable": true,
+      "issues": [],
+      "tip_prompt_id": null
+    },
+    "disease": null,
+    "advice": null,
+    "review_task_id": "6ea00221c2b339296640bb91bd2cf6bf",
+    "next_steps": [
+      {
+        "action": "ask_expert",
+        "prompt_id": "result_expert"
+      },
+      {
+        "action": "add_photo",
+        "prompt_id": "scan_add_more"
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "I could not tell the crop. I am not sure about this one. Please do not spray any medicine yet.",
+        "hi": "फसल पहचान में नहीं आई। इसमें मुझे पक्का नहीं पता। अभी कोई दवा न छिड़कें।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  },
+  "note": "Two crops and no guess: crop.unknown is true, candidates list both, and the scan goes to the expert queue."
+}

@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/alerts/0c7935ae47ce44a1281158e85189fcf8/read",
+    "auth": "bearer"
+  },
+  "status": 404,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "alert_not_found",
+    "message": "That alert was not found.",
+    "details": null
+  }
+}

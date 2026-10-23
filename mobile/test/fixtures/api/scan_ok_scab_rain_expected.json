@@ -1,0 +1,220 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {
+      "client_crop": "Apple",
+      "client_confidence": "0.9"
+    },
+    "files": [
+      {
+        "field": "photos",
+        "filename": "SCB_09.jpg",
+        "content_type": "image/jpeg",
+        "source": "data/images/testset_v1/leaf/Apple___Apple_scab/SCB_09.jpg"
+      }
+    ]
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "1be1c459fa299be0547f08bd551e1e93",
+    "status": "ok",
+    "created_at": "2026-04-30T08:00:00+05:30",
+    "photos": 1,
+    "crop": {
+      "crop_id": "Apple",
+      "name": {
+        "en": "Apple",
+        "hi": "सेब"
+      },
+      "confidence": 0.9,
+      "needs_confirmation": false,
+      "unknown": false,
+      "candidates": [
+        {
+          "crop_id": "Apple",
+          "name": {
+            "en": "Apple",
+            "hi": "सेब"
+          },
+          "confidence": 0.9
+        }
+      ],
+      "source": "on_device"
+    },
+    "quality": {
+      "usable": true,
+      "issues": [],
+      "tip_prompt_id": null
+    },
+    "disease": {
+      "disease_id": "Apple___Apple_scab",
+      "name": {
+        "en": "Apple scab",
+        "hi": "सेब का स्कैब (पपड़ी रोग)"
+      },
+      "confidence": 0.9,
+      "route": "auto_advice",
+      "candidates": [
+        {
+          "disease_id": "Apple___Apple_scab",
+          "name": {
+            "en": "Apple scab",
+            "hi": "सेब का स्कैब (पपड़ी रोग)"
+          },
+          "confidence": 0.9
+        }
+      ]
+    },
+    "advice": {
+      "id": "ea341f279c81222f21c368f68e41f570",
+      "scan_id": "1be1c459fa299be0547f08bd551e1e93",
+      "crop_id": "Apple",
+      "disease_id": "Apple___Apple_scab",
+      "severity": "yellow",
+      "headline": {
+        "en": "Apple scab: your next step",
+        "hi": "सेब का स्कैब: आपका अगला कदम"
+      },
+      "summary": {
+        "en": "Your apple crop shows signs of Apple scab. Follow the steps below.",
+        "hi": "आपकी सेब की फसल में सेब का स्कैब के लक्षण दिख रहे हैं। नीचे दिए कदम अपनाएँ।"
+      },
+      "products": [
+        {
+          "product_id": "P007",
+          "active_ingredient": {
+            "en": "Difenoconazole",
+            "hi": "डिफेनोकोनाज़ोल"
+          },
+          "brand_examples": [
+            "Dizole",
+            "Karara",
+            "Rubigan D",
+            "Scale"
+          ],
+          "formulation": "25 EC",
+          "category": "fungicide",
+          "frac_irac_code": "3",
+          "dose_text": {
+            "en": "30 ml in 200 litres of water",
+            "hi": "200 लीटर पानी में 30 मिलीलीटर"
+          },
+          "dose_min": 30.0,
+          "dose_max": 30.0,
+          "dose_unit": "ml/200L",
+          "waiting_period_days": 14,
+          "warnings": [
+            {
+              "code": "DOSE_PER_200L",
+              "level": "green",
+              "text": {
+                "en": "The dose is for 200 litres of water.",
+                "hi": "यह मात्रा 200 लीटर पानी के लिए है।"
+              }
+            }
+          ]
+        }
+      ],
+      "timing": {
+        "action": "wait",
+        "text": {
+          "en": "About 11.4 millimetres of rain are expected in the next 12 hours. Wait. Spray when the leaves are dry and no rain is expected for 2 hours.",
+          "hi": "अगले 12 घंटे में लगभग 11.4 मिलीमीटर बारिश की उम्मीद है। रुकें। जब पत्ते सूखे हों और 2 घंटे बारिश न हो, तब छिड़काव करें।"
+        },
+        "rain_next_12h_mm": 11.4,
+        "repeat_within_days": null
+      },
+      "steps": [
+        {
+          "en": "Do not spray yet. Wait for a dry, calm day.",
+          "hi": "अभी छिड़काव न करें। सूखे और शांत दिन का इंतज़ार करें।"
+        },
+        {
+          "en": "Difenoconazole (Dizole): 30 ml in 200 litres of water. Wait at least 14 days before harvest.",
+          "hi": "डिफेनोकोनाज़ोल: 200 लीटर पानी में 30 मिलीलीटर। तुड़ाई से पहले कम से कम 14 दिन रुकें।"
+        },
+        {
+          "en": "Compost fallen leaf litter or spray 5% urea on the orchard floor (HP 2026 point 8). Keep 12-14 day interval until the end of primary scab in scab-prone areas.",
+          "hi": "गिरी हुई पत्तियों की खाद बनाएँ, या बाग की ज़मीन पर 5 प्रतिशत यूरिया का छिड़काव करें। स्कैब वाले इलाकों में शुरुआती स्कैब की अवस्था खत्म होने तक छिड़कावों के बीच 12 से 14 दिन का अंतर रखें।"
+        }
+      ],
+      "safety": [
+        {
+          "en": "Do not mix any other medicine, nutrient or growth spray with this spray. Spray each one separately.",
+          "hi": "इस छिड़काव में कोई दूसरी दवा, पोषक तत्व या हार्मोन न मिलाएँ। हर एक को अलग से छिड़कें।"
+        },
+        {
+          "en": "The dose is for 200 litres of water.",
+          "hi": "यह मात्रा 200 लीटर पानी के लिए है।"
+        },
+        {
+          "en": "Safe use (HP 2026): keep children, pets and unfamiliar people away while mixing and spraying; wear long sleeves, long trousers, closed shoes, gloves and goggles; mix outdoors or in a well-ventilated place; mix only what is advised; wash hands before eating; dispose of empty containers properly.",
+          "hi": "सुरक्षित प्रयोग (सारणी 2026): मिलाते और छिड़कते समय बच्चों, पालतू पशुओं और अनजान लोगों को दूर रखें; पूरी बाँह की कमीज़, लंबी पैंट, बंद जूते, दस्ताने और चश्मा पहनें; खुले में या हवादार जगह पर मिलाएँ; उतना ही मिलाएँ जितना बताया गया है; खाने से पहले हाथ धोएँ; खाली डिब्बे/थैले सही तरीक़े से नष्ट करें।"
+        },
+        {
+          "en": "Do not mix any other pesticide, nutrient or growth regulator with the spray.",
+          "hi": "छिड़काव की दवा में कोई और दवा, पोषक तत्व या वृद्धि नियामक न मिलाएँ।"
+        },
+        {
+          "en": "Please confirm with your agriculture expert before you spray.",
+          "hi": "छिड़काव से पहले अपने खेती के जानकार से पक्का कर लें।"
+        }
+      ],
+      "warnings": [
+        {
+          "code": "NO_TANK_MIX",
+          "level": "green",
+          "text": {
+            "en": "Do not mix any other medicine, nutrient or growth spray with this spray. Spray each one separately.",
+            "hi": "इस छिड़काव में कोई दूसरी दवा, पोषक तत्व या हार्मोन न मिलाएँ। हर एक को अलग से छिड़कें।"
+          }
+        }
+      ],
+      "sources": [
+        "HP Dept of Horticulture + UHF Nauni, Spray Schedule 2026 (Apple), eudyan.hp.gov.in/cms/media/fd3dr2c5/1699-horti-2026-eng.pdf",
+        "HP Dept of Horticulture + UHF Nauni, Spray Schedule 2026 (Apple), eudyan.hp.gov.in/cms/media/fd3dr2c5/1699-horti-2026-eng.pdf; Penn State Extension apple scab review",
+        "HP Horticulture Dept + UHF Nauni, Spray Schedule 2026 (Apple)",
+        "HP Horticulture Dept + UHF Nauni, Spray Schedule 2026 (Apple) (Ensure safe use of pesticides)"
+      ],
+      "validated": true,
+      "spoken": {
+        "text": {
+          "en": "This looks like Apple scab. Do not spray yet. Wait for a dry, calm day. Use Difenoconazole, thirty millilitres in two hundred litres of water. Wait at least fourteen days before harvest. Wear gloves, goggles and full clothes while you spray, and keep children and animals away. Please confirm with your agriculture expert before you spray.",
+          "hi": "सेब का स्कैब लग रहा है। अभी छिड़काव न करें। सूखे और शांत दिन का इंतज़ार करें। डिफेनोकोनाज़ोल का इस्तेमाल करें, दो सौ लीटर पानी में तीस मिलीलीटर। तुड़ाई से पहले कम से कम चौदह दिन रुकें। छिड़काव करते समय दस्ताने, चश्मा और पूरे कपड़े पहनें, और बच्चों और पशुओं को दूर रखें। छिड़काव से पहले अपने खेती के जानकार से पक्का कर लें।"
+        },
+        "audio": {
+          "hi": null,
+          "en": null
+        }
+      },
+      "created_at": "2026-04-30T08:00:00+05:30"
+    },
+    "review_task_id": null,
+    "next_steps": [
+      {
+        "action": "mark_sprayed",
+        "prompt_id": "diary_tick_sprayed"
+      },
+      {
+        "action": "done",
+        "prompt_id": "result_next_diary"
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "This looks like Apple scab. Do not spray yet. Wait for a dry, calm day. Use Difenoconazole, thirty millilitres in two hundred litres of water. Wait at least fourteen days before harvest. Wear gloves, goggles and full clothes while you spray, and keep children and animals away. Please confirm with your agriculture expert before you spray.",
+        "hi": "सेब का स्कैब लग रहा है। अभी छिड़काव न करें। सूखे और शांत दिन का इंतज़ार करें। डिफेनोकोनाज़ोल का इस्तेमाल करें, दो सौ लीटर पानी में तीस मिलीलीटर। तुड़ाई से पहले कम से कम चौदह दिन रुकें। छिड़काव करते समय दस्ताने, चश्मा और पूरे कपड़े पहनें, और बच्चों और पशुओं को दूर रखें। छिड़काव से पहले अपने खेती के जानकार से पक्का कर लें।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  },
+  "note": "Heavy rain in the next 12 hours: the timing action is not spray_now."
+}

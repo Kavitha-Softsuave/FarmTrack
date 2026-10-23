@@ -1,0 +1,36 @@
+{
+  "infos": {
+    "A": {
+      "revision": "d33601185b32cf05b3942661b8d84ffb86dc48ec",
+      "labels": 38
+    },
+    "B": {
+      "revision": "8bb9c1ae513fff294eed77bdec53ca6fa3c10e8a",
+      "expected_revision": "8bb9c1ae513fff294eed77bdec53ca6fa3c10e8a",
+      "labels": 8,
+      "input_size": [
+        224,
+        224
+      ],
+      "raw_label_names": [
+        "Apple Scab & Rust",
+        "Gray Spot",
+        "Apple Scab",
+        "Brown Spot",
+        "Alternaria Leaf Spot",
+        "Healthy",
+        "Marssonina Blotch",
+        "Root Rot / Collar Rot"
+      ]
+    }
+  },
+  "python": "3.13.15",
+  "args": {
+    "dry_run": false,
+    "selftest": false,
+    "limit": 3,
+    "device": "cpu",
+    "models": "AB"
+  },
+  "fake": false
+}

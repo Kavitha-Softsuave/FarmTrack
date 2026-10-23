@@ -1,0 +1,34 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/auth/refresh",
+    "auth": "none",
+    "json": {
+      "refresh_token": "FIXTURE-REFRESH-TOKEN"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "access_token": "FIXTURE-ACCESS-TOKEN",
+    "refresh_token": "FIXTURE-REFRESH-TOKEN",
+    "token_type": "bearer",
+    "expires_in": 3600,
+    "farmer": {
+      "id": "F003",
+      "name": "Narayan Panwar",
+      "phone_masked": "+91******0003",
+      "language": "en",
+      "district": "Shimla",
+      "village": "Theog",
+      "crops": [
+        "Apple",
+        "Potato"
+      ],
+      "primary_crop": "Apple",
+      "station_id": "ST01"
+    }
+  }
+}

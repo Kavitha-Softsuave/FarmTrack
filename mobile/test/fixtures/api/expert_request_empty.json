@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/expert-requests",
+    "auth": "bearer",
+    "json": {}
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "03120ec111f469362931c1c4bbfccbc2",
+    "status": "open"
+  },
+  "note": "No scan and no message: the smallest valid body (what the app sends from the result screen has a scan_id)."
+}

@@ -1,0 +1,7 @@
+{
+  "default_language": "hi",
+  "languages": [
+    {"code": "hi", "native_name": "हिन्दी", "prompt_id": "language_hindi", "tts_locales": ["hi-IN", "hi"]},
+    {"code": "en", "native_name": "English", "prompt_id": "language_english", "tts_locales": ["en-IN", "en-US", "en-GB", "en"]}
+  ]
+}

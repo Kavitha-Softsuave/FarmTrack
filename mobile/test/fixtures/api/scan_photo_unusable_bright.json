@@ -1,0 +1,54 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {},
+    "files": [
+      {
+        "field": "photos",
+        "filename": "bright.jpg",
+        "content_type": "image/jpeg",
+        "source": "generated: bright jpeg (640x640)"
+      }
+    ]
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "de52a01f728082ca83a130e6a4293d1f",
+    "status": "photo_unusable",
+    "created_at": "2026-05-12T16:00:00+05:30",
+    "photos": 1,
+    "crop": null,
+    "quality": {
+      "usable": false,
+      "issues": [
+        "too_bright"
+      ],
+      "tip_prompt_id": "scan_retake_dark"
+    },
+    "disease": null,
+    "advice": null,
+    "review_task_id": null,
+    "next_steps": [
+      {
+        "action": "retake",
+        "prompt_id": "scan_retake_dark"
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "The light was not right. Take the photo again where it is not too dark or too bright.",
+        "hi": "रोशनी ठीक नहीं थी। जहाँ न बहुत अँधेरा हो, न बहुत तेज़ धूप, वहाँ दोबारा फोटो खींचिए।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  },
+  "note": "Whatever the quality checker says for a white photo."
+}

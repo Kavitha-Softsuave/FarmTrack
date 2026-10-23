@@ -1,0 +1,46 @@
+# ADVICE notes (llm, advice, voice)
+
+Code: `backend/app/llm/`, `app/advice/`, `app/voice/`, `backend/scripts/generate_prompt_audio.py`. Tests: `backend/tests/{advice,llm,voice}/` (757 pass, ruff and mypy clean on these packages). No network, no `.env`, no real API call anywhere.
+
+## What PLATFORM calls (all already wired in `services/container.py`, `api/routes/voice.py`, `services/presenters.py`)
+- `app.llm.factory.build_llm(settings)`: MockLLM unless `llm_provider == "openai"` AND `settings.openai_configured` (a missing key falls back to the mock and logs once).
+- `app.advice.factory.build_advice_composer(settings, llm)` -> `.compose(inp, out, notes) -> ValidatedAdvice`. `draft.spoken` is already words (no digits); `draft.safety` already carries the rule warnings, the HP safe-use note, "do not mix" and "confirm with an expert".
+- `app.advice.dose.dose_text(product) -> LocalizedText` for `ProductOut.dose_text`.
+- `app.voice.factory.build_audio_store(settings)`: ALWAYS returns a `FileAudioStore` (with no TTS configured its `get_or_create` returns None), so `container.audio` is never None; `store.provider_name` gives "null" or "google" for `/meta`.
+- `app.voice.spoken.spoken_out(store, en, hi) -> SpokenOut` and `app.voice.catalogue.load_catalogue(settings, lang, audio_store)`.
+- Routes (already in `routes/voice.py`): synthesised advice audio `GET /audio/<sha256>.mp3` from `<storage_dir>/audio`; fixed prompt audio `GET /audio-prompts/<lang>/<id>.mp3` from `<voice_dir>/audio/<lang>/`. **Decision: two mounts, not one**, because prompt audio is generated offline and reviewed by id (the file name is the prompt id), while advice audio is a content-addressed cache. The catalogue never synthesises: it points at files made by `scripts/generate_prompt_audio.py`.
+- MockLLM `ask_answer` (request from RAG via the architect): for `schema_name == "ask_answer"` it returns the first sentence of the first `NOTE <id>` block, in Hindi when the prompt says "Write the answer in Hindi", else English, with `used_note_ids=[id]`. Tested against the real `AskService` offline. The decision is by schema name, never by text inside the prompt.
+
+## Decisions
+- **LLM only for status `advice`.** `expert_review`, `no_approved_data`, `not_a_disease`, `needs_more_info` always use the fixed template: "the app is not sure, an expert will look, no medicine" must not drift. One constructor argument (`llm_statuses`) turns the LLM on for other statuses; the validator then still blocks any medicine or spraying. For these statuses `validated=True, used_llm=False`.
+- **Numbers on screen are digits, in words only when spoken.** `dose_text` Hindi is `200 लीटर पानी में 600 ग्राम`, not `छह सौ ग्राम` as in the brief's example: digits are checkable by the validator and readable; the spoken text turns the same sentence into words. Change `dose.py` if the owner wants words on screen.
+- **The LLM writes spoken text with digits and short units (g, ml, L, kg, days); code turns them into words** (`normalise_spoken`). LLMs spell Hindi numbers wrongly; the table in `numbers.py` does not. The validator checks the digits first, so a wrong dose is caught before it is ever spoken. The normaliser guarantees no digit and no symbol (property-tested on random noise and on all 97 products).
+- **Spoken text for statuses without medicine uses fixed whole sentences, not the rules' `non_chemical` fragments** ("Resistant varieties (Kufri Jyoti)" is not a sentence for the ear). Those measures stay on the card. In these statuses a rule measure that says to spray ("spray the basin too", seen for `PEST_apple_mites` which the rules route to expert review) is dropped from the card: it would contradict "do not spray until the expert answers". That is a rules-data question for the RULES owner.
+- Spoken Hindi names chemicals in Devanagari (from the product master and `hindi_glossary.json`; brackets dropped: `गंधक (सल्फर)` -> `गंधक`). Spoken Hindi has no brand name (no reliable Latin to Devanagari transliteration); the card shows it. Spoken English keeps Latin names and the brand. Every one of the 97 products yields Latin-free spoken Hindi.
+- Hindi expert term is **"खेती के जानकार"** (matches voice/prompts.json and the rules messages), not "विशेषज्ञ".
+- Spoken length: templates give 3 to 6 sentences; the validator accepts 2 to 8 for LLM text. Brand is spoken only for the first product; the card lists up to 3 products (`MAX_PRODUCTS`), "choose one" line when more than one.
+- Audio cache key = `sha256("text|lang|voice|speed")` with speed as `%.2f`; the stored sha256 in `AudioRef` is the hash of the mp3 bytes. One synthesis per key under concurrency (striped locks); atomic write with a retry for the Windows replace race (found by a test).
+- `GoogleCloudTTS`: API key in the `X-Goog-Api-Key` header (never in the URL), text and key never logged, `speakingRate` omitted for `Chirp3-HD` voices, language code taken from the voice name.
+- `generate_prompt_audio.py` also writes `voice/audio/manifest.json` so a changed text, voice or speed regenerates only that file, while a hand-made recording (no manifest entry) is never overwritten without `--force`. The review sheet keeps what the reviewer already filled in and flags rows whose text changed after review.
+
+## Validator: what it checks and the trade-offs
+Checks: both languages present, Hindi in Devanagari, English without it; only rule products named (ingredients, synonyms, HP brands of those products); no other master product or brand, no banned or off-label name (`banned_restricted.csv`, `offlabel_products.csv`), no excluded product; names of unknown pesticides by suffix (`-conazole`, `-strobin`, `-thrin`, ...); every dose figure equals the rule dose (unit-converted, per sentence when a product is named, water volumes allowed, doses spelled as words in EN or HI are read back); waiting period per product; days, hours, mm, degrees, percent only from the rules or retrieved notes; no spraying sentence without a hedge ("not", "wait", "when", "ask" ...) when timing is `wait`/`not_needed` or the status carries no medicine; `wait` and "repeat within N days" must be conveyed; no disease other than the diagnosed one; no phone number (US poison number); declared product ids and dose present.
+- Strict on purpose: a rejected draft costs only the LLM wording (the template is always valid, tested for every status and every master product x 4 timings).
+- Rule-provided sentences copied word for word are trusted (for example the rules' "spray 5% urea on the orchard floor" under timing `wait`); a paraphrase of them is not.
+- Known gaps: Hindi product spellings that differ from the master are not recognised (the Latin scan still catches Latin names); a hedge word anywhere in a sentence excuses it ("Spray Captan if you like"); "no waiting period" claimed when the rules have a number is not detected; bare numbers without a unit are not checked; disease names are matched by catalogue name only.
+
+## Hindi and other items needing a native reader
+- All Hindi in `app/advice/phrases.py`, the Hindi number table in `numbers.py` (`छह`, `हज़ार`, `एक सौ`, half forms `आधा / डेढ़ / ढाई` for 0.5 / 1.5 / 2.5, other decimals read as `दशमलव`), unit words (`किलोग्राम`, `एकड़`), crop phrase `आपकी सेब की फसल`, `प्रति हेक्टेयर` order, drench sentence. Hindi crop names beyond the five in `hindi_glossary.json` come from a built-in draft table in `refdata.py` (same words as voice/prompts.json `crop_is_*`); an unknown crop falls back to its English name. Data request: add these names to the glossary `crops` and drop the table.
+- General protective measures (`GENERIC_MEASURES`: remove fallen leaves, watch the plants) are my own wording of standard hygiene for expert-review/no-data cases when the rules give none; the agronomist should confirm or replace them.
+- Dose per hectare (tomato, potato) is stated as the master has it; a farmer in Himachal thinks in bigha or kanal and per tank. Conversion is an agronomist decision, not made here.
+
+## TTS voices
+- `tts_voice_hi = hi-IN-Neural2-A`, `tts_voice_en = en-IN-Neural2-A` are the architect's unverified defaults; Hindi availability and prices unchecked, no listening test done. Neural2 accepts `speakingRate` (slower speech works); Chirp 3 HD does not. Use `scripts/generate_prompt_audio.py --voice-hi ... --lang hi --only welcome,ask_phone` for the listening test.
+- `AudioRef.duration_s` is not filled (no mp3 parser added).
+
+## OpenAI
+- Model name comes only from `settings.openai_model` (`gpt-4o-mini` retires 14 Jan 2027; set `gpt-6-luna`). A parameter the model rejects (`temperature`) is dropped, retried and remembered. Usage is parsed (`last_usage`, `total_usage`) but not priced. The Responses API call mirrors `data/model_test/run_llm_vision.py`; it was never called for real in tests.
+- The advice prompt (`advice/prompt.py`) holds only rule facts and retrieved notes (max 6, 500 characters each, notes carrying the US poison number dropped); farmer name, phone, village, excluded products and the decision trace are never included.
+
+## Contract requests
+None required. Optional: `AudioStore` in `interfaces.py` could declare `get_cached` (the catalogue uses it when present, through `getattr`); a `tts_speed` setting (the store uses the protocol default 0.9).

@@ -1,0 +1,37 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/ask",
+    "auth": "bearer",
+    "json": {
+      "question": "What should I do if it rains after spraying?",
+      "language": "en",
+      "crop_id": "Apple"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "answer": "Rain-fastness (guidance): contact fungicides need roughly 8-24 hours without rain after spraying, systemic ones about 1-2 hours; mancozeb needs at least about 4 hours.",
+    "language": "en",
+    "refused": false,
+    "citations": [
+      {
+        "note_id": "N118",
+        "source": "Purdue Vegetable Crops Hotline 2021; NC State Apple Alert 2018"
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "Rain-fastness (guidance): contact fungicides need roughly 8-24 hours without rain after spraying, systemic ones about 1-2 hours; mancozeb needs at least about 4 hours.",
+        "hi": ""
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  }
+}

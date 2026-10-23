@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/auth/login",
+    "auth": "none",
+    "json": {
+      "username": "f001",
+      "password": "not-the-password",
+      "device_id": null
+    }
+  },
+  "status": 401,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "invalid_credentials",
+    "message": "The username or password is not correct.",
+    "details": null
+  },
+  "note": "Wrong password. An unknown username gives exactly the same 401 invalid_credentials."
+}

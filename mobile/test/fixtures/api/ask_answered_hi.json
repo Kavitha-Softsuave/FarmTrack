@@ -1,0 +1,37 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/ask",
+    "auth": "bearer",
+    "json": {
+      "question": "स्प्रे के बाद बारिश हो जाए तो क्या करूँ?",
+      "language": "hi",
+      "crop_id": "Apple"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "answer": "वर्षा-सहनशीलता (मार्गदर्शन): संपर्क फफूंदनाशकों को छिड़काव के बाद लगभग 8-24 घंटे बारिश से बचाव चाहिए, अंतर्प्रवाही को लगभग 1-2 घंटे; मैन्कोज़ेब को कम से कम लगभग 4 घंटे।",
+    "language": "hi",
+    "refused": false,
+    "citations": [
+      {
+        "note_id": "N118",
+        "source": "Purdue Vegetable Crops Hotline 2021; NC State Apple Alert 2018"
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "",
+        "hi": "वर्षा-सहनशीलता (मार्गदर्शन): संपर्क फफूंदनाशकों को छिड़काव के बाद लगभग 8-24 घंटे बारिश से बचाव चाहिए, अंतर्प्रवाही को लगभग 1-2 घंटे; मैन्कोज़ेब को कम से कम लगभग 4 घंटे।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  }
+}

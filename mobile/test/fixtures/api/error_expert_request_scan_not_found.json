@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/expert-requests",
+    "auth": "bearer",
+    "json": {
+      "scan_id": "ffa8ec01f9429ecd69a25fa8fa946bb2"
+    }
+  },
+  "status": 404,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "scan_not_found",
+    "message": "That scan was not found.",
+    "details": null
+  }
+}

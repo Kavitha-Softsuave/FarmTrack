@@ -1,0 +1,3 @@
+filename,crop,label,confirmed_by,leaf_id,plant_id,photo_date,location,source,notes
+incoming/example_001.jpg,Apple,Scab,Agronomist Name,L01,T01,2026-05-10,Theog,Phone camera,Example row: delete before use
+incoming/example_002.jpg,Apple,healthy,Agronomist Name,L02,T01,2026-05-10,Theog,Phone camera,Example row: delete before use

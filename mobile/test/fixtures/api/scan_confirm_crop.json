@@ -1,0 +1,72 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {},
+    "files": [
+      {
+        "field": "photos",
+        "filename": "SCB_09.jpg",
+        "content_type": "image/jpeg",
+        "source": "data/images/testset_v1/leaf/Apple___Apple_scab/SCB_09.jpg"
+      }
+    ]
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "57579c4bd041f84cca168910b34fb8e4",
+    "status": "confirm_crop",
+    "created_at": "2026-05-12T16:00:00+05:30",
+    "photos": 1,
+    "crop": {
+      "crop_id": "Apple",
+      "name": {
+        "en": "Apple",
+        "hi": "सेब"
+      },
+      "confidence": 0.6,
+      "needs_confirmation": true,
+      "unknown": false,
+      "candidates": [
+        {
+          "crop_id": "Apple",
+          "name": {
+            "en": "Apple",
+            "hi": "सेब"
+          },
+          "confidence": 0.6
+        }
+      ],
+      "source": "farmer_profile"
+    },
+    "quality": {
+      "usable": true,
+      "issues": [],
+      "tip_prompt_id": null
+    },
+    "disease": null,
+    "advice": null,
+    "review_task_id": null,
+    "next_steps": [
+      {
+        "action": "confirm_crop",
+        "prompt_id": "crop_confirm_prompt"
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "This looks like apple. Is this the right crop?",
+        "hi": "यह सेब की फसल लगती है। क्या यह सही फसल है?"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  },
+  "note": "No client_crop: the farmer's only crop is proposed and must be confirmed."
+}

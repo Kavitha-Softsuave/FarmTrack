@@ -1,0 +1,41 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/devices",
+    "auth": "bearer",
+    "json": {
+      "platform": "windows",
+      "push_token": "x"
+    }
+  },
+  "status": 422,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "validation_error",
+    "message": "The request is not valid.",
+    "details": {
+      "errors": [
+        {
+          "loc": [
+            "body",
+            "platform"
+          ],
+          "msg": "Input should be 'android' or 'ios'",
+          "type": "literal_error"
+        }
+      ]
+    },
+    "detail": [
+      {
+        "loc": [
+          "body",
+          "platform"
+        ],
+        "msg": "Input should be 'android' or 'ios'",
+        "type": "literal_error"
+      }
+    ]
+  }
+}

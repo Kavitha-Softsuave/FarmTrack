@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/audio/0000000000000000000000000000000000000000000000000000000000000000.mp3",
+    "auth": "none"
+  },
+  "status": 404,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "audio_not_found",
+    "message": "That audio file was not found.",
+    "details": null
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/auth/otp/request",
+    "auth": "none",
+    "json": {
+      "phone": "abc"
+    }
+  },
+  "status": 422,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "validation_error",
+    "message": "The request is not valid.",
+    "details": {
+      "errors": [
+        {
+          "loc": [
+            "body",
+            "phone"
+          ],
+          "msg": "String should match pattern '^\\+?[0-9]{10,13}$'",
+          "type": "string_pattern_mismatch"
+        }
+      ]
+    },
+    "detail": [
+      {
+        "loc": [
+          "body",
+          "phone"
+        ],
+        "msg": "String should match pattern '^\\+?[0-9]{10,13}$'",
+        "type": "string_pattern_mismatch"
+      }
+    ]
+  }
+}

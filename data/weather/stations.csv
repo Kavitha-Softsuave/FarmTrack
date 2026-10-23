@@ -1,0 +1,13 @@
+station_id,village,block,district,lat_approx,lon_approx,grid_lat,grid_lon,grid_elevation_m
+ST01,Theog,Theog,Shimla,31.12,77.36,31.107204,77.38718,2243.0
+ST02,Kotgarh,Kotgarh,Shimla,31.31,77.46,31.3181,77.44935,1450.0
+ST03,Narkanda,Narkanda,Shimla,31.26,77.45,31.247803,77.46429,2631.0
+ST04,Rohru,Rohru,Shimla,31.2,77.75,31.177504,77.80024,1516.0
+ST05,Jubbal,Jubbal,Shimla,31.12,77.67,31.107204,77.70784,2119.0
+ST06,Naggar,Naggar,Kullu,32.11,77.17,32.021088,77.189384,1827.0
+ST07,Manali,Manali,Kullu,32.24,77.19,32.161686,77.1584,1891.0
+ST08,Sangla,Sangla,Kinnaur,31.42,78.26,31.458698,78.17204,2801.0
+ST09,Kalpa,Kalpa,Kinnaur,31.54,78.26,31.528997,78.26555,2615.0
+ST10,Bharmour,Bharmour,Chamba,32.44,76.53,32.442883,76.43986,2208.0
+ST11,Karsog,Karsog,Mandi,31.38,77.2,31.3181,77.2348,1374.0
+ST12,Nauni,Nauni,Solan,30.86,77.17,30.82601,77.12766,1254.0

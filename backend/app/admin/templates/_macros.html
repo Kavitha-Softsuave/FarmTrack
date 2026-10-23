@@ -1,0 +1,2 @@
+{% macro badge(level) %}<span class="badge {{ level }}">{{ level }}</span>{% endmacro %}
+{% macro when(value) %}{% if value %}<time datetime="{{ value.isoformat() }}">{{ value.strftime('%d %b %Y %H:%M') }}</time>{% else %}<span class="muted">-</span>{% endif %}{% endmacro %}

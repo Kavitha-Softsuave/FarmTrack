@@ -1,0 +1,147 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {
+      "client_crop": "Apple",
+      "client_confidence": "0.9"
+    },
+    "files": [
+      {
+        "field": "photos",
+        "filename": "ALT_01.jpg",
+        "content_type": "image/jpeg",
+        "source": "data/images/testset_v1/leaf/Apple___Alternaria_leaf_spot/ALT_01.jpg"
+      }
+    ]
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "8d620fb0ac3bd200d72564dac1b87ba1",
+    "status": "needs_expert",
+    "created_at": "2026-05-12T16:00:00+05:30",
+    "photos": 1,
+    "crop": {
+      "crop_id": "Apple",
+      "name": {
+        "en": "Apple",
+        "hi": "सेब"
+      },
+      "confidence": 0.9,
+      "needs_confirmation": false,
+      "unknown": false,
+      "candidates": [
+        {
+          "crop_id": "Apple",
+          "name": {
+            "en": "Apple",
+            "hi": "सेब"
+          },
+          "confidence": 0.9
+        }
+      ],
+      "source": "on_device"
+    },
+    "quality": {
+      "usable": true,
+      "issues": [],
+      "tip_prompt_id": null
+    },
+    "disease": {
+      "disease_id": "Apple___Alternaria_leaf_spot",
+      "name": {
+        "en": "Alternaria leaf blotch / leaf spot",
+        "hi": "आल्टरनेरिया पत्ती धब्बा"
+      },
+      "confidence": 0.9,
+      "route": "expert_queue",
+      "candidates": [
+        {
+          "disease_id": "Apple___Alternaria_leaf_spot",
+          "name": {
+            "en": "Alternaria leaf blotch / leaf spot",
+            "hi": "आल्टरनेरिया पत्ती धब्बा"
+          },
+          "confidence": 0.9
+        }
+      ]
+    },
+    "advice": {
+      "id": "9e13c6b6f6326b5d10a9c97c172f0d22",
+      "scan_id": "8d620fb0ac3bd200d72564dac1b87ba1",
+      "crop_id": "Apple",
+      "disease_id": "Apple___Alternaria_leaf_spot",
+      "severity": "yellow",
+      "headline": {
+        "en": "Not sure yet: do not spray any medicine now",
+        "hi": "अभी पक्का नहीं है: अभी कोई दवा न छिड़कें"
+      },
+      "summary": {
+        "en": "The app is not sure what is wrong with your apple crop. Please do not spray any medicine yet. Take another clear photo of one leaf, or show the plant to a local agriculture expert.",
+        "hi": "ऐप को पक्का नहीं पता कि आपकी सेब की फसल में क्या दिक्कत है। अभी कोई दवा न छिड़कें। एक पत्ती की दूसरी साफ़ फ़ोटो लें, या पौधा अपने स्थानीय खेती के जानकार को दिखाएँ।"
+      },
+      "products": [],
+      "timing": null,
+      "steps": [
+        {
+          "en": "Do not spray any medicine until you know what is wrong.",
+          "hi": "जब तक पक्का न पता चले कि क्या दिक्कत है, कोई भी दवा न छिड़कें।"
+        },
+        {
+          "en": "Compost leaf litter; balanced nutrition",
+          "hi": "गिरी हुई पत्तियों की खाद बनाएँ। संतुलित खाद दें।"
+        }
+      ],
+      "safety": [
+        {
+          "en": "If the problem grows, show the plant to a local agriculture expert.",
+          "hi": "अगर दिक्कत बढ़े तो पौधा अपने स्थानीय खेती के जानकार को दिखाएँ।"
+        }
+      ],
+      "warnings": [],
+      "sources": [
+        "HP Dept of Horticulture + UHF Nauni, Spray Schedule 2026 (Apple), eudyan.hp.gov.in/cms/media/fd3dr2c5/1699-horti-2026-eng.pdf; Nauni advisory July 2026",
+        "HP Horticulture Dept + UHF Nauni, Spray Schedule 2026 (Apple) (Ensure safe use of pesticides)",
+        "HP Horticulture Dept + UHF Nauni, Spray Schedule 2026 (Apple)",
+        "FRAC recommendations for SBI fungicides (frac.info); FRAC QoI WG minutes 2025; FRAC SDHI minutes 2024"
+      ],
+      "validated": true,
+      "spoken": {
+        "text": {
+          "en": "I am not sure what is wrong with your apple crop. Please do not spray any medicine now. Remove fallen leaves and badly spotted leaves from around the plants. Watch the plants. If the spots spread quickly, take another clear photo. You can also show the plant to a local agriculture expert.",
+          "hi": "मुझे पक्का नहीं पता कि आपकी सेब की फसल में क्या दिक्कत है। अभी कोई भी दवा न छिड़कें। पौधों के आसपास गिरी हुई और बहुत धब्बे वाली पत्तियाँ हटा दें। पौधों पर नज़र रखें। धब्बे तेज़ी से फैलें तो दूसरी साफ़ फ़ोटो लें। आप पौधा अपने स्थानीय खेती के जानकार को भी दिखा सकते हैं।"
+        },
+        "audio": {
+          "hi": null,
+          "en": null
+        }
+      },
+      "created_at": "2026-05-12T16:00:00+05:30"
+    },
+    "review_task_id": "5188dfaa0410f78793516caf062e71da",
+    "next_steps": [
+      {
+        "action": "ask_expert",
+        "prompt_id": "result_expert"
+      },
+      {
+        "action": "add_photo",
+        "prompt_id": "scan_add_more"
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "I am not sure what is wrong with your apple crop. Please do not spray any medicine now. Remove fallen leaves and badly spotted leaves from around the plants. Watch the plants. If the spots spread quickly, take another clear photo. You can also show the plant to a local agriculture expert.",
+        "hi": "मुझे पक्का नहीं पता कि आपकी सेब की फसल में क्या दिक्कत है। अभी कोई भी दवा न छिड़कें। पौधों के आसपास गिरी हुई और बहुत धब्बे वाली पत्तियाँ हटा दें। पौधों पर नज़र रखें। धब्बे तेज़ी से फैलें तो दूसरी साफ़ फ़ोटो लें। आप पौधा अपने स्थानीय खेती के जानकार को भी दिखा सकते हैं।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  }
+}

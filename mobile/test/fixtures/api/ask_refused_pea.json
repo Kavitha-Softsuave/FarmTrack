@@ -1,0 +1,31 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/ask",
+    "auth": "bearer",
+    "json": {
+      "question": "Which medicine for my pea crop?",
+      "language": "en"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "answer": "I do not have approved advice for this. Please talk to an expert.",
+    "language": "en",
+    "refused": true,
+    "citations": [],
+    "spoken": {
+      "text": {
+        "en": "I do not have approved advice for this. Please talk to an expert.",
+        "hi": ""
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  }
+}

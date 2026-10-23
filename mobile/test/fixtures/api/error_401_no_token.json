@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/me",
+    "auth": "none"
+  },
+  "status": 401,
+  "response_headers": {
+    "www-authenticate": "Bearer",
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "not_authenticated",
+    "message": "Please log in.",
+    "details": null
+  }
+}

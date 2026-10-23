@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/voice/catalogue",
+    "auth": "none",
+    "query": {
+      "lang": "en"
+    },
+    "headers": {
+      "If-None-Match": "\"2026-10-19.1+0909345a-en\""
+    }
+  },
+  "status": 304,
+  "response_headers": {
+    "etag": "\"2026-10-19.1+0909345a-en\""
+  },
+  "body": null,
+  "note": "Sent with If-None-Match: the app does not do this yet; a 304 has no body."
+}

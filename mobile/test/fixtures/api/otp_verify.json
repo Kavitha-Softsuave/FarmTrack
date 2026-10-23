@@ -1,0 +1,34 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/auth/otp/verify",
+    "auth": "none",
+    "json": {
+      "request_id": "31ddfa95373536712ec931e6db250027",
+      "otp": "123456"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "access_token": "FIXTURE-ACCESS-TOKEN",
+    "refresh_token": "FIXTURE-REFRESH-TOKEN",
+    "token_type": "bearer",
+    "expires_in": 3600,
+    "farmer": {
+      "id": "F001",
+      "name": "Dinesh Sharma",
+      "phone_masked": "+91******0001",
+      "language": "hi",
+      "district": "Shimla",
+      "village": "Theog",
+      "crops": [
+        "Apple"
+      ],
+      "primary_crop": "Apple",
+      "station_id": "ST01"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/auth/otp/verify",
+    "auth": "none",
+    "json": {
+      "request_id": "nope",
+      "otp": "123456"
+    }
+  },
+  "status": 400,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "invalid_otp",
+    "message": "That code is not correct.",
+    "details": null
+  }
+}

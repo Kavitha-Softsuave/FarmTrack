@@ -1,0 +1,83 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {
+      "client_crop": "Pea",
+      "client_confidence": "0.9"
+    },
+    "files": [
+      {
+        "field": "photos",
+        "filename": "SCB_09.jpg",
+        "content_type": "image/jpeg",
+        "source": "data/images/testset_v1/leaf/Apple___Apple_scab/SCB_09.jpg"
+      }
+    ]
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "c9f84db519115543bc7847834468de41",
+    "status": "confirm_crop",
+    "created_at": "2026-05-12T16:00:00+05:30",
+    "photos": 1,
+    "crop": {
+      "crop_id": "Pea",
+      "name": {
+        "en": "Pea",
+        "hi": "मटर"
+      },
+      "confidence": 0.9,
+      "needs_confirmation": true,
+      "unknown": false,
+      "candidates": [
+        {
+          "crop_id": "Pea",
+          "name": {
+            "en": "Pea",
+            "hi": "मटर"
+          },
+          "confidence": 0.9
+        },
+        {
+          "crop_id": "Apple",
+          "name": {
+            "en": "Apple",
+            "hi": "सेब"
+          },
+          "confidence": 0.1
+        }
+      ],
+      "source": "on_device"
+    },
+    "quality": {
+      "usable": true,
+      "issues": [],
+      "tip_prompt_id": null
+    },
+    "disease": null,
+    "advice": null,
+    "review_task_id": null,
+    "next_steps": [
+      {
+        "action": "confirm_crop",
+        "prompt_id": "crop_confirm_prompt"
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "This looks like peas. Is this the right crop?",
+        "hi": "यह मटर की फसल लगती है। क्या यह सही फसल है?"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  },
+  "note": "A crop the farmer does not grow and no approved data exists for."
+}

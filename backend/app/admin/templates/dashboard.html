@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% from "_macros.html" import badge, when %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+<dl class="cards">
+  <div><dt>Open review tasks</dt><dd>{{ counts.open_reviews }}</dd></div>
+  <div><dt>Open expert requests</dt><dd>{{ counts.open_expert_requests }}</dd></div>
+  <div><dt>Farmers</dt><dd>{{ counts.farmers }}</dd></div>
+  <div><dt>Alerts raised</dt><dd>{{ counts.alerts }}</dd></div>
+  <div><dt>Alerts not pushed</dt><dd>{{ counts.unpushed_alerts }}</dd></div>
+  <div><dt>Disabled products</dt><dd>{{ counts.disabled_products }}</dd></div>
+</dl>
+<p class="panel">
+  Demo clock: <strong>{{ clock.now.strftime('%d %b %Y %H:%M') }}</strong>
+  ({{ 'fixed by the admin' if clock.fixed else 'real time' }}). <a href="/admin/clock">Change</a>
+</p>
+<h2>Latest alerts</h2>
+<div class="scroll">
+<table>
+  <caption class="muted">The five most recent alerts</caption>
+  <thead><tr><th scope="col">Created</th><th scope="col">Farmer</th><th scope="col">Kind</th><th scope="col">Level</th><th scope="col">Title</th></tr></thead>
+  <tbody>
+  {% for a in alerts %}
+    <tr><td>{{ when(a.created_at) }}</td><td>{{ a.farmer_id }}</td><td>{{ a.kind }}</td><td>{{ badge(a.level) }}</td><td>{{ a.title.en }}</td></tr>
+  {% else %}
+    <tr><td colspan="5" class="muted">No alerts yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<h2>Latest admin actions</h2>
+<div class="scroll">
+<table>
+  <caption class="muted">The five most recent audit entries</caption>
+  <thead><tr><th scope="col">Time (UTC)</th><th scope="col">Actor</th><th scope="col">Action</th><th scope="col">Entity</th></tr></thead>
+  <tbody>
+  {% for e in audit %}
+    <tr><td>{{ when(e.at) }}</td><td>{{ e.actor }}</td><td>{{ e.action }}</td><td>{{ e.entity or '' }} {{ e.entity_id or '' }}</td></tr>
+  {% else %}
+    <tr><td colspan="4" class="muted">Nothing recorded yet.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "form": {
+      "client_crop": "<<bad>>"
+    },
+    "files": [
+      {
+        "field": "photos",
+        "filename": "SCB_09.jpg",
+        "content_type": "image/jpeg",
+        "source": "SCB_09.jpg"
+      }
+    ]
+  },
+  "status": 400,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "invalid_client_crop",
+    "message": "client_crop is not a valid crop name.",
+    "details": null
+  }
+}

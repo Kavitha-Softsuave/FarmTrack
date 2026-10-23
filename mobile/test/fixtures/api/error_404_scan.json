@@ -1,0 +1,16 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/scans/228b2c9f35acaf85c7d607f8c07294b4",
+    "auth": "bearer"
+  },
+  "status": 404,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "scan_not_found",
+    "message": "That scan was not found.",
+    "details": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/audio/5277d52ac77460991d2550303e66e1928c69bdf57640408fb1cf7663caaf0979.mp3",
+    "auth": "none"
+  },
+  "status": 200,
+  "response_headers": {
+    "etag": "\"5277d52ac77460991d2550303e66e1928c69bdf57640408fb1cf7663caaf0979\"",
+    "content-type": "audio/mpeg"
+  },
+  "body": null,
+  "note": "The hi audio url of scan_ok_scab_with_audio.spoken (binary body is not stored)."
+}

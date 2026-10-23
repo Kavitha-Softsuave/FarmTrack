@@ -1,0 +1,187 @@
+{
+  "_comment": "Thresholds marked [V] come from sources in docs/research/agronomy-data.md; [I] are inferred defaults to be confirmed by the client agronomist.",
+  "confidence_policy": {
+    "min_confidence_to_show_result": 0.45,
+    "min_confidence_for_auto_advice": 0.65,
+    "below_threshold_action": "show_not_sure_with_top3_and_send_to_agronomist_queue",
+    "crop_must_be_selected_first": true,
+    "route_to_expert_when_requires_expert_review": true
+  },
+  "rain": {
+    "heavy_rain_window_hours": 12,
+    "repeat_spray_within_days": 7,
+    "heavy_rain_mm_default": 10,
+    "shorten_interval_cumulative_mm": 25,
+    "treat_as_unprotected_cumulative_mm": 50,
+    "rainfast_hours": {
+      "contact": 8,
+      "mixed": 4,
+      "systemic": 2
+    }
+  },
+  "rotation": {
+    "never_repeat_same_chemical": true,
+    "frac_group_alternation": true,
+    "max_per_season": {
+      "DMI": 4,
+      "QoI": 3,
+      "QoI_if_12_or_more_sprays": 4
+    },
+    "SDHI_max_consecutive": 2,
+    "qoi_only_in_mixture": true
+  },
+  "product_constraints": {
+    "dodine_max_air_temp_c": 30,
+    "dodine_no_tank_mix": true,
+    "captan_oil_gap_days": 15,
+    "no_mixing_with_any_other_chemical": true,
+    "min_days_between_insecticide_and_fungicide": 3,
+    "stop_sprays_before_harvest_days": 21,
+    "unknown_waiting_period_policy": "expert_check_if_harvest_within_30_days",
+    "excluded_from_mvp": [
+      "Streptomycin + Tetracycline"
+    ],
+    "ban_status_values": {
+      "banned": "never recommend",
+      "proposed_ban_2020_draft_still_registered": "recommend with warning flag; admin can disable"
+    }
+  },
+  "apple_scab_mills_table": {
+    "source": "Revised Mills table (MacHardy & Gadoury 1989) via Penn State Extension [V]; deg C by conversion",
+    "usage": "Use mean of min and max air temperature during the wet period; join wet periods separated by <8 h; pick the row with the greatest t_c_from <= mean temp; below 1.1 C no infection in the table; above ~26 C infection is rare.",
+    "rows": [
+      {
+        "t_c_from": 1.1,
+        "min_wet_hours": 41
+      },
+      {
+        "t_c_from": 2.2,
+        "min_wet_hours": 35
+      },
+      {
+        "t_c_from": 2.8,
+        "min_wet_hours": 30
+      },
+      {
+        "t_c_from": 3.9,
+        "min_wet_hours": 28
+      },
+      {
+        "t_c_from": 5.0,
+        "min_wet_hours": 21
+      },
+      {
+        "t_c_from": 6.1,
+        "min_wet_hours": 18
+      },
+      {
+        "t_c_from": 7.2,
+        "min_wet_hours": 15
+      },
+      {
+        "t_c_from": 7.8,
+        "min_wet_hours": 13
+      },
+      {
+        "t_c_from": 8.9,
+        "min_wet_hours": 12
+      },
+      {
+        "t_c_from": 10.0,
+        "min_wet_hours": 11
+      },
+      {
+        "t_c_from": 11.1,
+        "min_wet_hours": 9
+      },
+      {
+        "t_c_from": 12.2,
+        "min_wet_hours": 8
+      },
+      {
+        "t_c_from": 13.9,
+        "min_wet_hours": 7
+      },
+      {
+        "t_c_from": 16.1,
+        "min_wet_hours": 6
+      },
+      {
+        "t_c_from": 25.0,
+        "min_wet_hours": 8
+      },
+      {
+        "t_c_from": 26.1,
+        "min_wet_hours": 11
+      }
+    ],
+    "primary_season": {
+      "from_stage": "green_tip",
+      "to": "petal_fall + 21 days"
+    },
+    "lesions_visible_days_after_infection": "9-17"
+  },
+  "marssonina_alternaria_weather": {
+    "active_from_date_mmdd": "06-01",
+    "risk_if": "mean_temp_c > 20 AND mean_rh_pct >= 70 for >= 5 consecutive days, with >= 6 h leaf wetness on rain days",
+    "mean_temp_c_min": 20,
+    "mean_rh_pct_min": 70,
+    "consecutive_days": 5,
+    "min_wetness_hours_per_infection": 6
+  },
+  "late_blight_niphm": {
+    "applies_to": [
+      "Potato",
+      "Tomato"
+    ],
+    "window_days": 7,
+    "hours_temp_between_c": [
+      7.2,
+      26.6
+    ],
+    "hours_temp_min_total": 115,
+    "hours_rh_above_pct": 85,
+    "hours_rh_min_total": 90,
+    "outcome": "late_blight_expected_within_10_days"
+  },
+  "leaf_wetness_proxy": {
+    "wet_if": "precipitation_mm >= 0.1 OR relative_humidity_pct >= 90",
+    "note": "Proxy only. Real leaf-wetness sensors report wet minutes per hour."
+  },
+  "alerts": [
+    {
+      "id": "scab_infection_risk",
+      "when": "Mills threshold reached during primary scab season",
+      "audience": "apple farmers in the station block"
+    },
+    {
+      "id": "marssonina_alternaria_risk",
+      "when": "marssonina_alternaria_weather rule true",
+      "audience": "apple farmers from 1 June"
+    },
+    {
+      "id": "late_blight_risk",
+      "when": "late_blight_niphm rule true",
+      "audience": "potato/tomato farmers"
+    },
+    {
+      "id": "rain_washoff_respray",
+      "when": "heavy rain within 12 h after a logged spray",
+      "audience": "that farmer"
+    },
+    {
+      "id": "waiting_period_reminder",
+      "when": "days to harvest < product waiting period",
+      "audience": "that farmer"
+    },
+    {
+      "id": "rotation_limit_warning",
+      "when": "DMI >= 4, QoI >= 3, SDHI consecutive >= 2, or same product repeated",
+      "audience": "that farmer"
+    }
+  ],
+  "demo": {
+    "clock_is_configurable": true,
+    "note": "It is October, so apple spray stages are not current. The demo runs on a simulated clock; weather after the clock is served from the real archive as a 'perfect forecast' with noise."
+  }
+}

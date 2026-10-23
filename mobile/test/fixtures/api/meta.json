@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/meta",
+    "auth": "none"
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "app_version": "0.1.0",
+    "env": "dev",
+    "demo_clock": "2026-05-12T16:00:00+05:30",
+    "supported_languages": [
+      "hi",
+      "en"
+    ],
+    "supported_crops": [
+      "Apple",
+      "Grape",
+      "Maize",
+      "Potato",
+      "Tomato"
+    ],
+    "providers": {
+      "llm": "mock",
+      "tts": "null",
+      "embeddings": "hash",
+      "vector_store": "memory",
+      "crop_id": "stub",
+      "disease": "stub",
+      "zoho": "mock",
+      "iot": "mock",
+      "weather": "csv",
+      "push": "log"
+    }
+  }
+}

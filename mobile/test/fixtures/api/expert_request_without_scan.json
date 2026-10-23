@@ -1,0 +1,18 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/expert-requests",
+    "auth": "bearer",
+    "json": {
+      "message": "Leaves of my apple tree are curling."
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "729a2bc6149f75d8743d4d786dcf26e3",
+    "status": "open"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/spray-logs",
+    "auth": "bearer",
+    "headers": {
+      "Idempotency-Key": "fixture-spray-key-0001"
+    },
+    "json": {
+      "crop_id": "Apple",
+      "free_text": "mancozeb",
+      "sprayed_at": "2026-05-12T10:00:00+05:30"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "b8d4a88fc3c2479afc7fc5513356c634",
+    "crop_id": "Apple",
+    "product_id": "P005",
+    "product_name": "Mancozeb",
+    "sprayed_at": "2026-05-12T10:00:00+05:30",
+    "advice_id": null,
+    "warnings": [
+      {
+        "code": "PROPOSED_BAN",
+        "level": "yellow",
+        "text": {
+          "en": "Mancozeb may be banned in future. It is still allowed today. Use another medicine from the list if you can.",
+          "hi": "मैन्कोज़ेब पर आगे रोक लग सकती है। अभी इसकी अनुमति है। हो सके तो सूची की कोई दूसरी दवा लें।"
+        }
+      }
+    ],
+    "synced_to_zoho": true,
+    "spoken": {
+      "text": {
+        "en": "Done. It is saved in your diary. Please listen carefully. There is a warning about this medicine. This medicine may be banned in future. It is still allowed today. Use another medicine from the list if you can.",
+        "hi": "हो गया। आपकी डायरी में लिख लिया गया है। ध्यान से सुनिए। इस दवा के बारे में एक चेतावनी है। मैन्कोज़ेब पर आगे रोक लग सकती है। अभी इसकी अनुमति है। हो सके तो सूची की कोई दूसरी दवा लें।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  }
+}

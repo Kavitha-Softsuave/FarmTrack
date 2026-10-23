@@ -1,0 +1,36 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/spray-logs",
+    "auth": "bearer",
+    "json": {
+      "crop_id": "Apple",
+      "advice_id": "d6377e2270798d4310fdc30a52b338b3"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "46e8032671eb8be11a19ba6120ba64c8",
+    "crop_id": "Apple",
+    "product_id": "P011",
+    "product_name": "Hexaconazole",
+    "sprayed_at": "2026-05-12T16:00:00+05:30",
+    "advice_id": "d6377e2270798d4310fdc30a52b338b3",
+    "warnings": [],
+    "synced_to_zoho": true,
+    "spoken": {
+      "text": {
+        "en": "Done. It is saved in your diary.",
+        "hi": "हो गया। आपकी डायरी में लिख लिया गया है।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  },
+  "note": "The plain 'I sprayed this' tick: only advice_id (an older backend answers 4xx)."
+}

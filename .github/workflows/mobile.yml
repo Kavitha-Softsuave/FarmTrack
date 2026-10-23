@@ -1,0 +1,39 @@
+name: mobile
+
+on:
+  push:
+    paths: ['mobile/**', 'voice/**', '.github/workflows/mobile.yml']
+  pull_request:
+    paths: ['mobile/**', 'voice/**', '.github/workflows/mobile.yml']
+
+# Least privilege: the job only reads the repository (no token write scopes, no secrets are used).
+permissions:
+  contents: read
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.47.7'
+          channel: stable
+          cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Voice assets are in sync with voice/prompts.json
+        run: |
+          python tool/sync_voice_assets.py
+          git diff --exit-code -- assets pubspec.yaml
+      - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed lib test
+      - run: flutter analyze
+      - run: flutter test
+      # An APK or IPA build needs the Android SDK / Xcode: not done here (see docs/design-notes/mobile1.md).

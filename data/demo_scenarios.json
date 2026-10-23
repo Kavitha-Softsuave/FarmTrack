@@ -1,0 +1,282 @@
+{
+ "_note": "Scenarios are anchored to REAL weather found in weather/weather_hourly_raw.csv. 'expected_behaviour' is what the finished app should show; 'facts' are computed from the data.",
+ "scenarios": [
+  {
+   "id": "S1",
+   "title": "Scab at petal fall, scanned offline, carbendazim used 10 days ago",
+   "farmer_id": "F001",
+   "station_id": "ST01",
+   "crop": "Apple",
+   "demo_clock": "2026-05-12 16:00:00",
+   "diagnosis_expected": "Apple___Apple_scab (on-device model; works offline)",
+   "photo_note": "Any public apple-scab leaf (PlantDoc 'Apple Scab Leaf' CC-BY-4.0 or PlantVillage).",
+   "facts": {
+    "infection_period": {
+     "start": "2026-05-10 17:00:00",
+     "end": "2026-05-12 15:00:00",
+     "wet_hours": 28,
+     "mills_hours_needed": 7,
+     "mean_temp_c": 14.1,
+     "rain_mm": 2.8
+    },
+    "last_spray": "Carbendazim (Bavistin), FRAC 1, 10 days before the clock",
+    "rain_next_12h_mm": 0.0,
+    "rain_next_48h_mm": 1.6,
+    "rain_prev_24h_mm": 0.9
+   },
+   "expected_behaviour": [
+    "Offline: on-device result + cached basic advice card for scab",
+    "Online: recommend a petal-fall scab product that is NOT FRAC 1 (e.g. myclobutanil 80 g/200 L, waiting period 21 days)",
+    "Show waiting period vs days to harvest; spray-timing advice from the next-12h rain figure above"
+   ]
+  },
+  {
+   "id": "S2",
+   "title": "Marssonina blotch weather in July: the on-device model has no Marssonina class, so the server apple model is needed",
+   "farmer_id": "F028",
+   "station_id": "ST06",
+   "crop": "Apple",
+   "demo_clock": "2026-07-05 08:00:00",
+   "diagnosis_expected": "Apple___Marssonina_blotch (server model ixrbhii/apple-disease-convnext only)",
+   "photo_note": "NO openly downloadable Marssonina photo set exists (Khan et al. 2020 not public). Ask the client for Marssonina photos; until then demo with a model-card example.",
+   "facts": {
+    "marssonina_rule_first_true_day": "2026-07-03",
+    "last_5_days": [
+     {
+      "day": "2026-07-01",
+      "mean_temp_c": 20.4,
+      "mean_rh_pct": 89.0,
+      "rain_mm": 33.2
+     },
+     {
+      "day": "2026-07-02",
+      "mean_temp_c": 21.8,
+      "mean_rh_pct": 75.0,
+      "rain_mm": 5.3
+     },
+     {
+      "day": "2026-07-03",
+      "mean_temp_c": 22.1,
+      "mean_rh_pct": 77.0,
+      "rain_mm": 3.8
+     },
+     {
+      "day": "2026-07-04",
+      "mean_temp_c": 22.3,
+      "mean_rh_pct": 73.0,
+      "rain_mm": 13.7
+     },
+     {
+      "day": "2026-07-05",
+      "mean_temp_c": 22.3,
+      "mean_rh_pct": 73.0,
+      "rain_mm": 6.2
+     }
+    ],
+    "rain_next_12h_mm": 1.3,
+    "rain_next_48h_mm": 7.7,
+    "rain_prev_24h_mm": 4.4
+   },
+   "expected_behaviour": [
+    "On-device model cannot name Marssonina (no such class): expect a wrong class or low confidence -> 'not sure, checking online'",
+    "Server model (untested on field photos): if it returns Marssonina -> advice from Nauni July 2026 advisory (metiram 600 g/200 L protectant)",
+    "Weather-risk badge 'Marssonina/Alternaria weather' is red"
+   ]
+  },
+  {
+   "id": "S3",
+   "title": "Heavy rain right after a mancozeb spray -> automatic 're-spray within 7 days' alert",
+   "farmer_id": "F007",
+   "station_id": "ST02",
+   "crop": "Apple",
+   "demo_clock": "2026-03-30 20:00:00",
+   "diagnosis_expected": "(no scan; automatic alert)",
+   "photo_note": "n/a",
+   "facts": {
+    "spray_datetime": "2026-03-30 08:00:00",
+    "spray_stage": "pink_bud",
+    "rain_in_12h_after_spray_mm": 15.3,
+    "rain_first_2h_mm": 0.0,
+    "heavy_rain_threshold_mm_config": 10
+   },
+   "expected_behaviour": [
+    "Push alert at the clock time: heavy rain within 12 h of spraying -> repeat the spray within 7 days (HP 2026 rule)",
+    "Mark the spray as 'washed off' in the diary and write the note back to Zoho"
+   ]
+  },
+  {
+   "id": "S4",
+   "title": "Scab infection period reached the Mills threshold -> automatic alert to every apple farmer in the Jubbal block",
+   "farmer_id": "(all apple farmers at ST05)",
+   "station_id": "ST05",
+   "crop": "Apple",
+   "demo_clock": "2026-05-04 21:00:00",
+   "diagnosis_expected": "(no scan; automatic alert)",
+   "photo_note": "n/a",
+   "facts": {
+    "period_start": "2026-05-04 11:00:00",
+    "period_end": "2026-05-09 06:00:00",
+    "wet_hours_total": 90,
+    "mills_hours_needed": 11,
+    "mean_temp_c": 10.2,
+    "rain_mm": 28.2,
+    "threshold_reached_at": "2026-05-04 21:00:00",
+    "apple_farmers_alerted": 5
+   },
+   "expected_behaviour": [
+    "Alert fires at the moment cumulative leaf-wetness hours reach the Mills requirement",
+    "Each farmer's message names their own last spray and avoids repeating its chemical group"
+   ]
+  },
+  {
+   "id": "S5",
+   "title": "Off-label products found in the farmer's Zoho history (copied from the client's real rows)",
+   "farmer_id": "F008",
+   "station_id": "ST02",
+   "crop": "Apple",
+   "demo_clock": "2026-07-27 09:00",
+   "diagnosis_expected": "(admin dashboard / history review)",
+   "photo_note": "n/a",
+   "facts": {
+    "flagged": [
+     "Syngenta Miravis Duo (not approved for apple: tomato, chilli, groundnut, grape)",
+     "Meothrin / fenpropathrin 30% EC (no apple label claim)",
+     "Trot / thiamethoxam 30% FS (seed treatment, not a foliar spray)"
+    ]
+   },
+   "expected_behaviour": [
+    "Admin 'data quality' view flags the three rows as off-label for apple",
+    "The recommendation engine never proposes them; farmer sees a gentle warning"
+   ]
+  },
+  {
+   "id": "S9",
+   "title": "Micronutrients logged the same day as a fungicide (the client's own 14/04/2026 pattern)",
+   "farmer_id": "F011",
+   "station_id": "ST02",
+   "crop": "Apple",
+   "demo_clock": "2026-04-15 09:00",
+   "diagnosis_expected": "(spray-diary check)",
+   "photo_note": "n/a",
+   "facts": {
+    "same_day_rows": [
+     "Carbendazim (FRAC 1)",
+     "Zinc, Boron",
+     "12.61.00"
+    ],
+    "hp2026_rule": "HP 2026 point 7: do not mix any other pesticide/chemical/micro-nutrient/growth regulator/hormone with the recommended pesticides (russeting and other disorders); spray separately when necessary"
+   },
+   "expected_behaviour": [
+    "Diary shows an amber note: 'Zinc/Boron and 12-61-00 were logged with a fungicide the same day. HP 2026 says to spray micronutrients separately, not mixed with the recommended pesticides.' (the data cannot tell a tank-mix from separate sprays)"
+   ]
+  },
+  {
+   "id": "S6",
+   "title": "Four DMI (FRAC 3) sprays already used -> next recommendation must avoid DMI",
+   "farmer_id": "F016",
+   "station_id": "ST04",
+   "crop": "Apple",
+   "demo_clock": "2026-06-11 08:00:00",
+   "diagnosis_expected": "Apple___Marssonina_blotch or Apple___Alternaria_leaf_spot",
+   "photo_note": "Server apple model only.",
+   "facts": {
+    "dmi_sprays_so_far": 4,
+    "products": [
+     "difenoconazole",
+     "myclobutanil",
+     "flusilazole",
+     "tebuconazole + captan"
+    ],
+    "frac_limit": "DMI <= 4 per season, alone or in mixture (FRAC pome-fruit guidance)",
+    "rain_next_12h_mm": 0.6,
+    "rain_next_48h_mm": 16.4,
+    "rain_prev_24h_mm": 0.8
+   },
+   "expected_behaviour": [
+    "Engine excludes every product containing FRAC 3 (incl. mixtures)",
+    "Offers non-DMI options such as propineb / metiram, or metiram + pyraclostrobin (QoI count still 0)"
+   ]
+  },
+  {
+   "id": "S7",
+   "title": "Potato late-blight weather (NIPHM 7-day rule) turns true -> automatic alert and advice",
+   "farmer_id": "F032",
+   "station_id": "ST07",
+   "crop": "Potato",
+   "demo_clock": "2026-07-12 08:00:00",
+   "diagnosis_expected": "Potato___Late_blight (on-device model) or alert only",
+   "photo_note": "PlantVillage / PlantDoc potato late blight image.",
+   "facts": {
+    "rule_turned_true_on": "2026-07-12",
+    "hours_temp_7p2_to_26p6_last7d": 167,
+    "hours_rh_gt85_last7d": 90,
+    "thresholds": {
+     "temp_hours": 115,
+     "rh_hours": 90
+    },
+    "last_spray": "mancozeb 13 days earlier"
+   },
+   "expected_behaviour": [
+    "Alert: late blight expected within 10 days",
+    "Advice: mancozeb 2 kg/ha in 1000 L as protectant (every ~10 days); cymoxanil + mancozeb 3 kg/ha only if symptoms are already visible"
+   ]
+  },
+  {
+   "id": "S8",
+   "title": "Tomato yellow leaf curl virus: no cure, only vector control + roguing",
+   "farmer_id": "F044",
+   "station_id": "ST11",
+   "crop": "Tomato",
+   "demo_clock": "2026-06-24 08:00:00",
+   "diagnosis_expected": "Tomato___Tomato_Yellow_Leaf_Curl_Virus (on-device)",
+   "photo_note": "PlantVillage tomato YLCV image.",
+   "facts": {
+    "weather_at_clock": {
+     "rain_next_12h_mm": 3.1,
+     "rain_next_48h_mm": 6.7,
+     "rain_prev_24h_mm": 0.8
+    }
+   },
+   "expected_behaviour": [
+    "Card says 'no cure' in plain words; NO fungicide is offered",
+    "Shows whitefly control (imidacloprid 150-175 ml/ha, waiting period 3 d) and roguing, yellow traps (10 per acre), net nursery"
+   ]
+  },
+  {
+   "id": "S10",
+   "title": "Stale Zoho record (last update > 60 days) -> advice asks the farmer to confirm recent sprays",
+   "farmer_id": "F013",
+   "station_id": "ST03",
+   "crop": "Apple",
+   "demo_clock": "2026-10-17 09:00",
+   "diagnosis_expected": "(any scan)",
+   "photo_note": "n/a",
+   "facts": {
+    "last_spray_on_or_before": "2026-08-05",
+    "days_stale_at_clock": 73
+   },
+   "expected_behaviour": [
+    "Before recommending, the app asks 'Did you spray after 5 Aug?' (checkbox) so rotation and waiting-period logic uses current data"
+   ]
+  },
+  {
+   "id": "S11",
+   "title": "Sensor station offline: 'My field' shows a stale-data warning, alerts are marked 'based on forecast only'",
+   "farmer_id": "(all farmers at ST08, Sangla)",
+   "station_id": "ST08",
+   "crop": "Apple",
+   "demo_clock": "2026-07-12 09:00",
+   "diagnosis_expected": "(no scan)",
+   "photo_note": "n/a",
+   "facts": {
+    "offline_from": "2026-07-10 06:00",
+    "offline_until": "2026-07-14 18:00",
+    "hours": 109
+   },
+   "expected_behaviour": [
+    "Last reading is >48 h old -> amber 'sensor offline since 10 Jul' banner",
+    "Automatic alerts fall back to the weather-API forecast and say so"
+   ]
+  }
+ ]
+}

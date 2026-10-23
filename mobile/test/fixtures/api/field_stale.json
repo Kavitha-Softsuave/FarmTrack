@@ -1,0 +1,117 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/field",
+    "auth": "bearer"
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "station_id": "ST08",
+    "village": "Sangla",
+    "as_of": "2026-07-10T05:00:00+05:30",
+    "stale": true,
+    "readings": {
+      "temp_c": 14.1,
+      "rh_pct": 85.0,
+      "rain_24h_mm": 3.9,
+      "leaf_wetness_min": 60,
+      "soil_moisture_pct": 42.4
+    },
+    "forecast": [
+      {
+        "day": "2026-07-13",
+        "tmin_c": 8.7,
+        "tmax_c": 21.9,
+        "rain_mm": 2.2
+      },
+      {
+        "day": "2026-07-14",
+        "tmin_c": 7.9,
+        "tmax_c": 23.1,
+        "rain_mm": 6.2
+      },
+      {
+        "day": "2026-07-15",
+        "tmin_c": 10.1,
+        "tmax_c": 23.2,
+        "rain_mm": 4.6
+      },
+      {
+        "day": "2026-07-16",
+        "tmin_c": 8.7,
+        "tmax_c": 24.9,
+        "rain_mm": 1.4
+      },
+      {
+        "day": "2026-07-17",
+        "tmin_c": 11.2,
+        "tmax_c": 25.3,
+        "rain_mm": 1.2
+      },
+      {
+        "day": "2026-07-18",
+        "tmin_c": 15.7,
+        "tmax_c": 27.7,
+        "rain_mm": 3.6
+      },
+      {
+        "day": "2026-07-19",
+        "tmin_c": 17.0,
+        "tmax_c": 25.8,
+        "rain_mm": 4.2
+      }
+    ],
+    "risks": [
+      {
+        "id": "scab_infection_risk",
+        "level": "green",
+        "title": {
+          "en": "Apple scab infection risk",
+          "hi": "सेब स्कैब (पपड़ी रोग) के संक्रमण का खतरा"
+        },
+        "text": {
+          "en": "It is not the main scab season for your orchard now.",
+          "hi": "आपके बाग में अभी स्कैब का मुख्य मौसम नहीं है।"
+        }
+      },
+      {
+        "id": "marssonina_alternaria_risk",
+        "level": "green",
+        "title": {
+          "en": "Leaf spot weather (Marssonina, Alternaria)",
+          "hi": "पत्ती धब्बा रोग का मौसम (मार्सोनिना, आल्टरनेरिया)"
+        },
+        "text": {
+          "en": "The weather is not favourable for leaf spots now.",
+          "hi": "अभी मौसम पत्ती धब्बे के लिए अनुकूल नहीं है।"
+        }
+      },
+      {
+        "id": "rain_washoff",
+        "level": "green",
+        "title": {
+          "en": "Rain after your spray",
+          "hi": "छिड़काव के बाद बारिश"
+        },
+        "text": {
+          "en": "The rain after your spray was light. The spray should stay on the leaves.",
+          "hi": "छिड़काव के बाद हल्की बारिश हुई। दवा पत्तियों पर टिकी रहनी चाहिए।"
+        }
+      }
+    ],
+    "spoken": {
+      "text": {
+        "en": "This information is old. Turn on the internet to see new information. It is cool in your field now. Some light rain is expected in the next two days. There is no weather danger for your crops now.",
+        "hi": "यह जानकारी पुरानी है। नई जानकारी के लिए इंटरनेट चालू कीजिए। आपके खेत में अभी मौसम ठंडा है। अगले दो दिन में हल्की बारिश हो सकती है। अभी आपकी फसल को मौसम से कोई खतरा नहीं है।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  },
+  "note": "Station ST08 is offline on this clock."
+}

@@ -1,0 +1,43 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/alerts",
+    "auth": "bearer"
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "items": [
+      {
+        "id": "9acdc8ce21823a2edbdaadb6e48e002d",
+        "kind": "late_blight_risk",
+        "level": "red",
+        "title": {
+          "en": "Late blight risk",
+          "hi": "पछेती झुलसा (लेट ब्लाइट) का खतरा"
+        },
+        "body": {
+          "en": "The last seven days were cool, wet and humid. Late blight can appear within ten days. Check your leaves often and ask for advice.",
+          "hi": "पिछले सात दिन ठंडे, गीले और नमी वाले रहे। दस दिन के अंदर पछेती झुलसा आ सकता है। पत्तियाँ बार-बार देखें और सलाह लें।"
+        },
+        "spoken": {
+          "text": {
+            "en": "Late blight risk. The last seven days were cool, wet and humid. Late blight can appear within ten days. Check your leaves often and ask for advice.",
+            "hi": "पछेती झुलसा (लेट ब्लाइट) का खतरा. पिछले सात दिन ठंडे, गीले और नमी वाले रहे। दस दिन के अंदर पछेती झुलसा आ सकता है। पत्तियाँ बार-बार देखें और सलाह लें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        },
+        "created_at": "2026-07-12T08:00:00+05:30",
+        "read_at": null,
+        "scan_id": null
+      }
+    ],
+    "unread": 1
+  },
+  "note": "F032: S7."
+}

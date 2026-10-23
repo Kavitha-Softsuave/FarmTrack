@@ -1,0 +1,229 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/scans",
+    "auth": "bearer",
+    "query": {
+      "limit": 2,
+      "cursor": "ebffce252ede79bd7302696d84d36ce1"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "items": [
+      {
+        "id": "c9f84db519115543bc7847834468de41",
+        "status": "no_approved_data",
+        "created_at": "2026-05-12T16:00:00+05:30",
+        "photos": 1,
+        "crop": {
+          "crop_id": "Pea",
+          "name": {
+            "en": "Pea",
+            "hi": "मटर"
+          },
+          "confidence": 1.0,
+          "needs_confirmation": false,
+          "unknown": false,
+          "candidates": [],
+          "source": "farmer_confirmed"
+        },
+        "quality": {
+          "usable": true,
+          "issues": [],
+          "tip_prompt_id": null
+        },
+        "disease": {
+          "disease_id": null,
+          "name": null,
+          "confidence": 0.0,
+          "route": "none",
+          "candidates": []
+        },
+        "advice": {
+          "id": "c972933ac3f2732f888877e82c558829",
+          "scan_id": "c9f84db519115543bc7847834468de41",
+          "crop_id": "Pea",
+          "disease_id": null,
+          "severity": "yellow",
+          "headline": {
+            "en": "No approved medicine advice for this crop yet",
+            "hi": "इस फसल के लिए अभी मंज़ूर दवा की सलाह उपलब्ध नहीं है"
+          },
+          "summary": {
+            "en": "The app does not have approved medicine advice for your pea crop yet. Please ask a local agriculture expert before you use any medicine.",
+            "hi": "आपकी मटर की फसल के लिए ऐप के पास अभी मंज़ूर दवा की सलाह नहीं है। कोई भी दवा इस्तेमाल करने से पहले अपने स्थानीय खेती के जानकार से पूछें।"
+          },
+          "products": [],
+          "timing": null,
+          "steps": [
+            {
+              "en": "Remove fallen leaves and badly spotted leaves from around the plants.",
+              "hi": "पौधों के आसपास गिरी हुई और बहुत धब्बे वाली पत्तियाँ हटा दें।"
+            },
+            {
+              "en": "Watch the plants. If the spots spread quickly, take another clear photo.",
+              "hi": "पौधों पर नज़र रखें। धब्बे तेज़ी से फैलें तो दूसरी साफ़ फ़ोटो लें।"
+            }
+          ],
+          "safety": [],
+          "warnings": [],
+          "sources": [
+            "HP Horticulture Dept + UHF Nauni, Spray Schedule 2026 (Apple) (Ensure safe use of pesticides)",
+            "HP Horticulture Dept + UHF Nauni, Spray Schedule 2026 (Apple)",
+            "HP Horticulture Dept + UHF Nauni, Spray Schedule 2026 (Apple) (evaluated-brand table, PDF pp. 8-11)",
+            "research/agronomy-data.md sec. 7"
+          ],
+          "validated": true,
+          "spoken": {
+            "text": {
+              "en": "I do not have approved medicine advice for your pea crop yet. Please ask a local agriculture expert before you use any medicine. Remove fallen leaves and badly spotted leaves from around the plants. Watch the plants. If the spots spread quickly, take another clear photo.",
+              "hi": "आपकी मटर की फसल के लिए मेरे पास अभी मंज़ूर दवा की सलाह नहीं है। कोई भी दवा इस्तेमाल करने से पहले अपने स्थानीय खेती के जानकार से पूछें। पौधों के आसपास गिरी हुई और बहुत धब्बे वाली पत्तियाँ हटा दें। पौधों पर नज़र रखें। धब्बे तेज़ी से फैलें तो दूसरी साफ़ फ़ोटो लें।"
+            },
+            "audio": {
+              "hi": null,
+              "en": null
+            }
+          },
+          "created_at": "2026-05-12T16:00:00+05:30"
+        },
+        "review_task_id": null,
+        "next_steps": [
+          {
+            "action": "ask_expert",
+            "prompt_id": "result_expert"
+          }
+        ],
+        "spoken": {
+          "text": {
+            "en": "I do not have approved medicine advice for your pea crop yet. Please ask a local agriculture expert before you use any medicine. Remove fallen leaves and badly spotted leaves from around the plants. Watch the plants. If the spots spread quickly, take another clear photo.",
+            "hi": "आपकी मटर की फसल के लिए मेरे पास अभी मंज़ूर दवा की सलाह नहीं है। कोई भी दवा इस्तेमाल करने से पहले अपने स्थानीय खेती के जानकार से पूछें। पौधों के आसपास गिरी हुई और बहुत धब्बे वाली पत्तियाँ हटा दें। पौधों पर नज़र रखें। धब्बे तेज़ी से फैलें तो दूसरी साफ़ फ़ोटो लें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        }
+      },
+      {
+        "id": "01741be51ffc985c2eed9e9503d8e467",
+        "status": "not_a_disease",
+        "created_at": "2026-05-12T16:00:00+05:30",
+        "photos": 1,
+        "crop": {
+          "crop_id": "Apple",
+          "name": {
+            "en": "Apple",
+            "hi": "सेब"
+          },
+          "confidence": 0.9,
+          "needs_confirmation": false,
+          "unknown": false,
+          "candidates": [
+            {
+              "crop_id": "Apple",
+              "name": {
+                "en": "Apple",
+                "hi": "सेब"
+              },
+              "confidence": 0.9
+            }
+          ],
+          "source": "on_device"
+        },
+        "quality": {
+          "usable": true,
+          "issues": [],
+          "tip_prompt_id": null
+        },
+        "disease": {
+          "disease_id": "Apple___healthy",
+          "name": {
+            "en": "Healthy apple leaf",
+            "hi": "स्वस्थ सेब की पत्ती"
+          },
+          "confidence": 0.9,
+          "route": "none",
+          "candidates": [
+            {
+              "disease_id": "Apple___healthy",
+              "name": {
+                "en": "Healthy apple leaf",
+                "hi": "स्वस्थ सेब की पत्ती"
+              },
+              "confidence": 0.9
+            }
+          ]
+        },
+        "advice": {
+          "id": "c741e3f1ed755932025c661fb00f1a8d",
+          "scan_id": "01741be51ffc985c2eed9e9503d8e467",
+          "crop_id": "Apple",
+          "disease_id": "Apple___healthy",
+          "severity": "green",
+          "headline": {
+            "en": "No disease seen in this photo",
+            "hi": "इस फ़ोटो में कोई रोग नहीं दिखा"
+          },
+          "summary": {
+            "en": "The app does not see a disease on this apple leaf. No medicine is needed now. If you still see spots or damage, take another clear photo or ask an expert.",
+            "hi": "ऐप को इस सेब की पत्ती में कोई रोग नहीं दिखा। अभी किसी दवा की ज़रूरत नहीं है। फिर भी धब्बे या नुकसान दिखें तो दूसरी साफ़ फ़ोटो लें या खेती के जानकार से पूछें।"
+          },
+          "products": [],
+          "timing": null,
+          "steps": [
+            {
+              "en": "Watch the plants. If the spots spread quickly, take another clear photo.",
+              "hi": "पौधों पर नज़र रखें। धब्बे तेज़ी से फैलें तो दूसरी साफ़ फ़ोटो लें।"
+            }
+          ],
+          "safety": [],
+          "warnings": [],
+          "sources": [
+            "n/a",
+            "HP Horticulture Dept + UHF Nauni, Spray Schedule 2026 (Apple) (Ensure safe use of pesticides)",
+            "HP Horticulture Dept + UHF Nauni, Spray Schedule 2026 (Apple)",
+            "FRAC recommendations for SBI fungicides (frac.info); FRAC QoI WG minutes 2025; FRAC SDHI minutes 2024"
+          ],
+          "validated": true,
+          "spoken": {
+            "text": {
+              "en": "I do not see a disease on this apple leaf. No medicine is needed now. If you still see spots, take another clear photo or ask an expert.",
+              "hi": "मुझे इस सेब की पत्ती में कोई रोग नहीं दिखा। अभी किसी दवा की ज़रूरत नहीं है। फिर भी धब्बे दिखें तो दूसरी साफ़ फ़ोटो लें या खेती के जानकार से पूछें।"
+            },
+            "audio": {
+              "hi": null,
+              "en": null
+            }
+          },
+          "created_at": "2026-05-12T16:00:00+05:30"
+        },
+        "review_task_id": null,
+        "next_steps": [
+          {
+            "action": "add_photo",
+            "prompt_id": "scan_add_more"
+          },
+          {
+            "action": "ask_expert",
+            "prompt_id": "result_expert"
+          }
+        ],
+        "spoken": {
+          "text": {
+            "en": "I do not see a disease on this apple leaf. No medicine is needed now. If you still see spots, take another clear photo or ask an expert.",
+            "hi": "मुझे इस सेब की पत्ती में कोई रोग नहीं दिखा। अभी किसी दवा की ज़रूरत नहीं है। फिर भी धब्बे दिखें तो दूसरी साफ़ फ़ोटो लें या खेती के जानकार से पूछें।"
+          },
+          "audio": {
+            "hi": null,
+            "en": null
+          }
+        }
+      }
+    ],
+    "next_cursor": "01741be51ffc985c2eed9e9503d8e467"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/v1/spray-logs",
+    "auth": "bearer",
+    "query": {
+      "limit": 50
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": [
+    {
+      "id": "a2f724d6c2548dfa8199b9ed4af96f99",
+      "crop_id": "Apple",
+      "product_id": null,
+      "product_name": "my own homemade mix",
+      "sprayed_at": "2026-05-12T16:00:00+05:30",
+      "advice_id": null,
+      "warnings": [
+        {
+          "code": "PRODUCT_NOT_RECOGNISED",
+          "level": "yellow",
+          "text": {
+            "en": "This medicine is not in our list, so we could not check it. Please ask a farm expert before you spray it again.",
+            "hi": "यह दवा हमारी सूची में नहीं मिली, इसलिए इसकी जाँच नहीं हो सकी। दोबारा छिड़कने से पहले खेती के जानकार से पूछ लीजिए।"
+          }
+        }
+      ],
+      "synced_to_zoho": true,
+      "spoken": null
+    },
+    {
+      "id": "34e1df1fed3b8ae28676fdb00e2fe305",
+      "crop_id": "Apple",
+      "product_id": "P005",
+      "product_name": "Mancozeb",
+      "sprayed_at": "2026-05-12T16:00:00+05:30",
+      "advice_id": null,
+      "warnings": [
+        {
+          "code": "PROPOSED_BAN",
+          "level": "yellow",
+          "text": {
+            "en": "Mancozeb may be banned in future. It is still allowed today. Use another medicine from the list if you can.",
+            "hi": "मैन्कोज़ेब पर आगे रोक लग सकती है। अभी इसकी अनुमति है। हो सके तो सूची की कोई दूसरी दवा लें।"
+          }
+        }
+      ],
+      "synced_to_zoho": true,
+      "spoken": null
+    },
+    {
+      "id": "46e8032671eb8be11a19ba6120ba64c8",
+      "crop_id": "Apple",
+      "product_id": "P011",
+      "product_name": "Hexaconazole",
+      "sprayed_at": "2026-05-12T16:00:00+05:30",
+      "advice_id": "d6377e2270798d4310fdc30a52b338b3",
+      "warnings": [],
+      "synced_to_zoho": true,
+      "spoken": null
+    },
+    {
+      "id": "0bb48a89d1d5e774e4c94fc22a633ae7",
+      "crop_id": "Apple",
+      "product_id": "P011",
+      "product_name": "Hexaconazole",
+      "sprayed_at": "2026-05-12T16:00:00+05:30",
+      "advice_id": "d6377e2270798d4310fdc30a52b338b3",
+      "warnings": [],
+      "synced_to_zoho": true,
+      "spoken": null
+    },
+    {
+      "id": "b8d4a88fc3c2479afc7fc5513356c634",
+      "crop_id": "Apple",
+      "product_id": "P005",
+      "product_name": "Mancozeb",
+      "sprayed_at": "2026-05-12T10:00:00+05:30",
+      "advice_id": null,
+      "warnings": [
+        {
+          "code": "PROPOSED_BAN",
+          "level": "yellow",
+          "text": {
+            "en": "Mancozeb may be banned in future. It is still allowed today. Use another medicine from the list if you can.",
+            "hi": "मैन्कोज़ेब पर आगे रोक लग सकती है। अभी इसकी अनुमति है। हो सके तो सूची की कोई दूसरी दवा लें।"
+          }
+        }
+      ],
+      "synced_to_zoho": true,
+      "spoken": null
+    }
+  ]
+}

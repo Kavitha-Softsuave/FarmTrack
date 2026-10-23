@@ -1,0 +1,26 @@
+# Build context is ./backend: keep it small and keep secrets and local state out of the image.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+.coverage
+htmlcov/
+
+tests/
+scripts/
+storage/
+farmtrack.db*
+
+.env
+.env.*
+*.pem
+*.key
+
+Dockerfile
+docker-compose.yml
+.dockerignore
+Makefile

@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/expert-requests",
+    "auth": "bearer",
+    "headers": {
+      "Idempotency-Key": "fixture-expert-key-0001"
+    },
+    "json": {
+      "message": "Idempotency check."
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json",
+    "idempotent-replayed": "true"
+  },
+  "body": {
+    "id": "f155003146bab59e020ea933f0e7d4bf",
+    "status": "open"
+  }
+}

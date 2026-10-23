@@ -1,0 +1,37 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/spray-logs",
+    "auth": "bearer",
+    "json": {
+      "crop_id": "Apple",
+      "advice_id": "d6377e2270798d4310fdc30a52b338b3",
+      "product_id": "P011",
+      "notes": "Contract fixture"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "id": "0bb48a89d1d5e774e4c94fc22a633ae7",
+    "crop_id": "Apple",
+    "product_id": "P011",
+    "product_name": "Hexaconazole",
+    "sprayed_at": "2026-05-12T16:00:00+05:30",
+    "advice_id": "d6377e2270798d4310fdc30a52b338b3",
+    "warnings": [],
+    "synced_to_zoho": true,
+    "spoken": {
+      "text": {
+        "en": "Done. It is saved in your diary.",
+        "hi": "हो गया। आपकी डायरी में लिख लिया गया है।"
+      },
+      "audio": {
+        "hi": null,
+        "en": null
+      }
+    }
+  }
+}

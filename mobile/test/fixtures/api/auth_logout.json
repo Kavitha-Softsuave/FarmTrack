@@ -1,0 +1,12 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/auth/logout",
+    "auth": "none",
+    "json": {
+      "refresh_token": "FIXTURE-REFRESH-TOKEN"
+    }
+  },
+  "status": 204,
+  "body": null
+}

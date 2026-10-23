@@ -1,0 +1,20 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/auth/otp/request",
+    "auth": "none",
+    "json": {
+      "phone": "+910000000999"
+    }
+  },
+  "status": 200,
+  "response_headers": {
+    "content-type": "application/json"
+  },
+  "body": {
+    "request_id": "eb7f8810fd9c2b575cc12d2e0926086c",
+    "expires_in": 300,
+    "dev_otp": null
+  },
+  "note": "Unregistered number: same 200 answer, dev_otp is null (no account enumeration)."
+}

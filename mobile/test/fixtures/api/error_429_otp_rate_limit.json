@@ -1,0 +1,22 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/v1/auth/otp/request",
+    "auth": "none",
+    "json": {
+      "phone": "+910000000010"
+    }
+  },
+  "status": 429,
+  "response_headers": {
+    "retry-after": "900",
+    "content-type": "application/json"
+  },
+  "body": {
+    "code": "rate_limited",
+    "message": "Too many codes requested for this number. Please wait a few minutes.",
+    "details": {
+      "retry_after_seconds": 900
+    }
+  }
+}
