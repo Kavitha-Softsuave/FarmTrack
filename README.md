@@ -45,6 +45,7 @@ Trying it on an Android phone against your own machine (build the APK, start the
 app): see [`mobile/README.md`](mobile/README.md), section "Try it on an Android phone".
 
 ## What is not in this repository, on purpose
+A new developer needs a few things that are not committed: see [`docs/dev-setup.md`](docs/dev-setup.md) for the full list and how to get each.
 
 - **`.env` and any key.** Copy [`.env.example`](.env.example) to `.env` and fill in your own values. Never commit it.
 - **Leaf photos** (`data/images/**`): the test photos are web images of unknown licence and photos collected from users; only
