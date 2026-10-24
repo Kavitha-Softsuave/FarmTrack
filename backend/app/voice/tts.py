@@ -15,6 +15,7 @@ from app.domain.types import Lang
 logger = logging.getLogger(__name__)
 
 GOOGLE_TTS_URL = "https://texttospeech.googleapis.com/v1/text:synthesize"
+GOOGLE_TTS_VOICES_URL = "https://texttospeech.googleapis.com/v1/voices"
 MAX_TEXT_BYTES = 4800                     # the API limit is 5000 bytes of input text
 _DEFAULT_LANGUAGE_CODE: dict[str, str] = {"hi": "hi-IN", "en": "en-IN"}
 _RETRY_STATUS = {429, 500, 502, 503, 504}
@@ -54,6 +55,23 @@ class GoogleCloudTTS:
         if "Chirp3-HD" not in voice:                     # Chirp 3 HD voices accept no speaking rate (and no SSML)
             audio_config["speakingRate"] = min(2.0, max(0.25, speed))
         return {"input": {"text": text}, "voice": {"languageCode": language_code, "name": voice}, "audioConfig": audio_config}
+
+    def list_voices(self, language_code: str) -> list[str] | None:
+        """Names of the voices Google offers for a language code (e.g. "hi-IN"), or None when the call failed.
+        Used by `generate_prompt_audio.py --list-voices` to check that a Hindi voice really exists before generating."""
+        try:
+            response = self._client.get(GOOGLE_TTS_VOICES_URL, params={"languageCode": language_code},
+                                        headers={"X-Goog-Api-Key": self._api_key})
+        except httpx.TransportError as exc:
+            logger.warning("tts: network error while listing voices (%s)", type(exc).__name__)
+            return None
+        if response.status_code != 200:
+            logger.warning("tts: listing voices answered %s (%s)", response.status_code, self._error_status(response))
+            return None
+        try:
+            return sorted(str(v["name"]) for v in response.json().get("voices", []) if isinstance(v, dict) and "name" in v)
+        except (ValueError, AttributeError, TypeError, KeyError):
+            return None
 
     def synthesize(self, text: str, lang: Lang, speed: float = 0.9) -> bytes | None:
         if not text.strip() or not self.voice_for(lang):

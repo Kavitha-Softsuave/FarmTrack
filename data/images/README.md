@@ -64,3 +64,7 @@ Put the client's real photos here. They are used **only to test** the pretrained
 2. Run the on-device model and the server apple model on every photo.
 3. Report top-1 and top-3 accuracy, per-disease results, which diseases the models cannot name at all, and the confidence scores.
 4. Suggest the confidence thresholds for "show result", "give advice" and "ask an expert".
+
+---
+
+**Training (24 Oct 2026):** a small apple leaf model is trained from openly licensed (CC BY) photos in `data/training/` (see its README). The photos in this folder (unknown licence) are **not** used for training; they stay the test set. Confirmed client photos can be copied into `data/training/photos/<class_id>/` (with a `sources.csv` row, licence `client-owned`) once permission is given.

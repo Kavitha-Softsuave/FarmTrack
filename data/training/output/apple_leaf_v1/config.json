@@ -1,0 +1,36 @@
+{
+  "architecture": "convnext_tiny",
+  "num_classes": 4,
+  "label_names": [
+    "Apple___Apple_scab",
+    "Apple___Marssonina_blotch",
+    "Apple___Alternaria_leaf_spot",
+    "Apple___healthy"
+  ],
+  "pretrained_cfg": {
+    "input_size": [
+      3,
+      224,
+      224
+    ],
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "crop_pct": 1.0,
+    "interpolation": "bilinear"
+  },
+  "label_descriptions": {
+    "Apple___Apple_scab": "Apple___Apple_scab",
+    "Apple___Marssonina_blotch": "Apple___Marssonina_blotch",
+    "Apple___Alternaria_leaf_spot": "Apple___Alternaria_leaf_spot",
+    "Apple___healthy": "Apple___healthy"
+  },
+  "note": "FarmTrack apple leaf v1: frozen ImageNet backbone + linear head, labels unconfirmed by an agronomist, see model_card.md"
+}

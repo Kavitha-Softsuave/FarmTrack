@@ -71,19 +71,15 @@ Future<void> _start() async {
       supportDirectoryProvider.overrideWithValue(support),
     ],
   );
-  unawaited(_syncVoiceCatalogue(container, resources));
+  unawaited(_syncVoiceCatalogue(container));
   _firstScreenShown = true;
   runApp(UncontrolledProviderScope(container: container, child: const FarmTrackApp()));
   if (kDebugMode) debugPrint('startup: runApp called after ${startup.elapsedMilliseconds} ms');
 }
 
-/// Loads the saved server voice catalogue, then refreshes it. Best effort, never blocks the first screen.
-Future<void> _syncVoiceCatalogue(ProviderContainer container, AppResources resources) async {
-  final codes = [for (final l in resources.languages) l.code];
-  final sync = container.read(catalogueSyncProvider);
-  await sync.loadCached(codes);
-  await sync.refresh(codes);
-}
+/// Loads the saved server voice catalogue, refreshes it and (over Wi-Fi) downloads the prompt audio. Best effort,
+/// never blocks the first screen.
+Future<void> _syncVoiceCatalogue(ProviderContainer container) => container.read(voicePackageProvider).start();
 
 /// The app's own folder; if the phone does not give one in time, a temporary folder keeps the app usable (the offline
 /// queue and the audio cache then only last until the app is closed).

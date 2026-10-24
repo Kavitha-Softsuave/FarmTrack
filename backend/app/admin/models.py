@@ -36,6 +36,7 @@ class ExpertRequestAdminOut(BaseModel):
     created_at: datetime
     farmer_id: str
     farmer_name: str | None = None
+    farmer_phone: str | None = None              # experts answer by phone call, so the queue shows the number to call
     crop: str | None = None                      # the request's crop, else the scan's crop, else the farmer's main crop
     message: str | None = None
     scan_id: str | None = None

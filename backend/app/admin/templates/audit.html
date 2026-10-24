@@ -1,19 +1,25 @@
 {% extends "base.html" %}
-{% from "_macros.html" import when %}
+{% from "_macros.html" import when, head, pager %}
 {% block title %}Audit log{% endblock %}
 {% block content %}
-<h1>Audit log</h1>
-<div class="scroll">
-<table>
-  <caption class="muted">The 100 most recent entries, times in UTC</caption>
-  <thead><tr><th scope="col">Time</th><th scope="col">Actor</th><th scope="col">Action</th><th scope="col">Entity</th><th scope="col">Detail</th></tr></thead>
-  <tbody>
-  {% for e in entries %}
-    <tr><td>{{ when(e.at) }}</td><td>{{ e.actor }}</td><td>{{ e.action }}</td><td>{{ e.entity or '' }} {{ e.entity_id or '' }}</td><td><code>{{ e.detail|tojson }}</code></td></tr>
-  {% else %}
-    <tr><td colspan="5" class="muted">Nothing recorded yet.</td></tr>
-  {% endfor %}
-  </tbody>
-</table>
-</div>
+{{ head('Audit log', 'Who changed what in the admin, newest first. Times are in UTC.') }}
+<section class="card flush">
+  <div class="scroll">
+  <table>
+    <thead><tr><th scope="col">Time</th><th scope="col">Who</th><th scope="col">Action</th><th scope="col">Area</th><th scope="col">Details</th></tr></thead>
+    <tbody>
+    {% for e in entries %}
+      <tr>
+        <td class="nowrap">{{ when(e.at) }}</td><td>{{ e.actor }}</td><td>{{ e.action|pretty }}</td>
+        <td>{% if e.entity %}{{ e.entity|pretty }}{% else %}<span class="muted">-</span>{% endif %}</td>
+        <td>{% if e.detail or e.entity_id %}<details class="pop"><summary>View</summary>{% if e.entity_id %}<span class="sub">Record: <code>{{ e.entity_id }}</code></span>{% endif %}{% if e.detail %}<code>{{ e.detail|tojson }}</code>{% endif %}</details>{% else %}<span class="muted">-</span>{% endif %}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5" class="empty">Nothing recorded yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {{ pager('/admin/audit', pg) }}
+</section>
 {% endblock %}

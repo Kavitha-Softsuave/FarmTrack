@@ -87,9 +87,17 @@ class OfflineStatusNotifier extends Notifier<OfflineStatus> {
     ref.listen<String?>(sessionProvider.select((s) => s.farmer?.id), (_, _) {
       state = state.copyWith(ready: _visible());
     });
-    ref.listen<AsyncValue<bool>>(onlineProvider, (previous, next) {
-      if (next.value == true && previous?.value != true) unawaited(queue.flush());
+    // The phone's own connection stream, not `onlineProvider`: that one is only watched by Home, and a provider whose
+    // listeners are all on screens that are covered by another screen is paused, so a farmer who is in the diary or
+    // the settings when the network returns would not have the queue sent.
+    final connectivity = ref.watch(connectivityServiceProvider);
+    bool? wasOnline;
+    unawaited(connectivity.isOnline().then((online) => wasOnline ??= online));
+    final connection = connectivity.onlineChanges.listen((online) {
+      if (online && wasOnline != true) unawaited(queue.flush());
+      wasOnline = online;
     });
+    ref.onDispose(() => unawaited(connection.cancel()));
     _all = _loadReady();
     return OfflineStatus(pending: queue.pending, ready: _visible());
   }

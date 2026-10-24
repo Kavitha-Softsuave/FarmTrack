@@ -9,7 +9,7 @@ from __future__ import annotations
 import logging
 import re
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Literal
 
 from sqlalchemy import select
@@ -17,6 +17,7 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
 from app.api.schemas import AdviceOut, NextStep, QualityOut, ScanListOut, ScanOut, SpokenOut, WarningOut
+from app.clock import IST
 from app.db.models import AdviceRow, AuditLogRow, ReviewTaskRow, ScanRow, new_id
 from app.db.repo import sortable_id
 from app.domain.types import (
@@ -64,6 +65,21 @@ _CLIENT_CROP_RE = re.compile(r"^[A-Za-z][A-Za-z0-9 _-]{0,39}$")
 FARMER_REQUEST_PREFIX = "farmer_request"      # ReviewTask.reason of tasks the farmer asked for (POST /v1/expert-requests)
 
 
+MAX_TAKEN_AGE_DAYS = 400       # a phone that has been offline longer than this is not trusted about the time
+MAX_TAKEN_AHEAD = timedelta(days=1)
+
+
+def _sane_taken_at(taken_at: datetime | None, now: datetime) -> datetime | None:
+    """The phone's photo time, or None when it is plainly wrong (a clock set years back or in the future). Never an error:
+    an offline photo must not be lost because the phone's clock was off. A time without a zone is read as Indian time."""
+    if taken_at is None:
+        return None
+    aware = taken_at.replace(tzinfo=IST) if taken_at.tzinfo is None else taken_at
+    if aware > now + MAX_TAKEN_AHEAD or aware < now - timedelta(days=MAX_TAKEN_AGE_DAYS):
+        return None
+    return aware
+
+
 def _unavailable() -> ApiError:
     return ApiError(503, "analysis_unavailable", "We could not check your photo right now. Please try again.")
 
@@ -103,7 +119,8 @@ class ScanService:
 
     def create(self, farmer: FarmerProfile, images: list[CleanImage], *, client_crop: str | None = None,
                client_confidence: float | None = None, taken_at: datetime | None = None,
-               lat: float | None = None, lon: float | None = None, client_request_id: str | None = None) -> ScanOut:
+               lat: float | None = None, lon: float | None = None, client_request_id: str | None = None,
+               offline: bool = False) -> ScanOut:
         """Analyse and store a new scan. With a `client_request_id` a concurrent twin that lost the race to the unique index
         returns the winner's stored result (its photos and rows are rolled back), never an error."""
         now = self.c.clock.now()
@@ -114,7 +131,8 @@ class ScanService:
                                  lat=_first(lat, farmer.lat), lon=_first(lon, farmer.lon))
         paths = [self.store.save(farmer.id, scan_id, data) for data in jpegs]
         row = ScanRow(id=scan_id, farmer_id=farmer.id, created_at=now, status=outcome.status, client_crop=client_crop,
-                      lat=lat, lon=lon, photo_paths=paths, client_request_id=client_request_id)
+                      lat=lat, lon=lon, photo_paths=paths, client_request_id=client_request_id,
+                      taken_at=_sane_taken_at(taken_at, now), offline=offline)
         try:
             return self._persist(farmer, row, outcome, now, new_row=True,
                                  audit_extra={"taken_at": taken_at.isoformat() if taken_at else None}, on_failure_delete=paths)
@@ -170,7 +188,7 @@ class ScanService:
         rule_in = RuleInput(farmer=farmer, crop_id=crop_id, disease_id=disease_id, disease_confidence=confidence, now=now,
                             history=history, weather=self._weather(farmer, _first(row.lat, farmer.lat),
                                                                    _first(row.lon, farmer.lon), now),
-                            language=farmer.language)
+                            weather_enabled=self.c.settings.weather_enabled, language=farmer.language)
         rules = self._recommend(row.id, rule_in)
         if rules.status != "advice":
             return None
@@ -216,7 +234,7 @@ class ScanService:
         weather = self._weather(farmer, lat, lon, now)
         rule_in = RuleInput(farmer=farmer, crop_id=crop.crop_id, disease_id=disease.disease_id if disease.model_covers_crop else None,
                             disease_confidence=disease.confidence, now=now, history=history, weather=weather,
-                            language=farmer.language)
+                            weather_enabled=self.c.settings.weather_enabled, language=farmer.language)
         rules = self._recommend(scan_id, rule_in)
         status = _STATUS_FROM_RULES[rules.status]
         advice = self._advise(scan_id, crop.crop_id, rule_in, rules, history_ok, now)
@@ -260,6 +278,8 @@ class ScanService:
 
     # ------------------------------------------------------------------ context and rules
     def _weather(self, farmer: FarmerProfile, lat: float | None, lon: float | None, now: datetime) -> WeatherSnapshot | None:
+        if not self.c.settings.weather_enabled:
+            return None                                   # WEATHER_ENABLED=false: no lookup at all
         try:
             return self.c.weather.snapshot(farmer.station_id, lat, lon, now)
         except Exception:
@@ -379,6 +399,7 @@ class ScanService:
     def _scan_out(self, row: ScanRow, outcome: Outcome, review_task_id: str | None) -> ScanOut:
         return ScanOut(
             id=row.id, status=outcome.status, created_at=ist(row.created_at), photos=len(row.photo_paths or []),
+            taken_at=ist(row.taken_at) if row.taken_at else None, offline=bool(row.offline),
             crop=crop_out(outcome.crop, self.catalogue) if outcome.crop else None, quality=outcome.quality,
             disease=disease_out(outcome.disease, outcome.rules, self.catalogue), advice=outcome.advice,
             review_task_id=review_task_id, next_steps=outcome.next_steps, spoken=outcome.spoken)

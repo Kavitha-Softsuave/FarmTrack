@@ -594,7 +594,6 @@ class _DiaryEntryScreenState extends ConsumerState<DiaryEntryScreen> {
         key: const ValueKey('diary-done'),
         icon: AppIcons.greenArrow,
         size: 96,
-        label: t('diary_done_label'),
         semanticLabel: t('diary_done_label'),
         onPressed: _finish,
       ),

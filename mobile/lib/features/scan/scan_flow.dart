@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/models/models.dart';
@@ -7,6 +9,7 @@ import '../../core/offline/offline_queue.dart';
 import '../../core/offline/persistent_offline_queue.dart';
 import '../../core/providers.dart';
 import '../../core/router/routes.dart';
+import '../offline/last_result.dart';
 
 /// [queued]: the phone had no connection, so the photos were saved to be sent later (the "saved" screen follows).
 enum ScanPhase { idle, uploading, analysing, done, failed, queued }
@@ -92,12 +95,18 @@ class ScanFlowNotifier extends Notifier<ScanFlowState> {
   }
 
   /// Opens a result that did not come from this flow (a queued scan that was sent): the result screens read it.
-  void showResult(ScanOut scan) {
+  ///
+  /// [remember] false when the result is the one already kept as "last advice" (opening it again must not make it newer).
+  void showResult(ScanOut scan, {bool remember = true}) {
     _cancelRunning();
     _announced = 0;
     _uploadKey = null;
     state = ScanFlowState(phase: ScanPhase.done, progress: 1, scan: scan);
+    if (remember) _remember(scan);
   }
+
+  /// Keeps a finished answer on the phone, so the last advice can be read again with no internet.
+  void _remember(ScanOut scan) => unawaited(ref.read(lastResultProvider.notifier).remember(scan));
 
   /// True when a photo was added that the review screen has not yet announced ("Photo taken").
   bool get hasUnannouncedPhoto => state.added > _announced;
@@ -162,6 +171,7 @@ class ScanFlowNotifier extends Notifier<ScanFlowState> {
       if (run != _run) return null;
       _uploadKey = null;
       state = state.copyWith(phase: ScanPhase.done, progress: 1, scan: scan);
+      _remember(scan);
       return scan;
     } on ApiException catch (e) {
       if (run != _run) return null;
@@ -226,6 +236,7 @@ class ScanFlowNotifier extends Notifier<ScanFlowState> {
       final next = await ref.read(apiClientProvider).confirmCrop(scan.id, cropId);
       if (run != _run) return null;
       state = state.copyWith(phase: ScanPhase.done, scan: next);
+      _remember(next);
       return next;
     } on Object catch (e) {
       if (run != _run) return null;

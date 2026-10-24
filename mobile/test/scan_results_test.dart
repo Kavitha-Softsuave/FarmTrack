@@ -69,13 +69,17 @@ void main() {
         expect(find.textContaining('आज छिड़काव कीजिए'), findsOneWidget);
         expect(find.textContaining('कोई और दवा, खाद या हार्मोन मत मिलाइए'), findsOneWidget);
         expect(find.textContaining('सात दिन के अंदर दोबारा'), findsOneWidget);
+        // The explanation, safety notes and steps wait behind "More".
+        expect(find.textContaining('मुँह पर कपड़ा'), findsNothing);
+        expect(keyed('advice-summary'), findsNothing);
+        await tapKey(tester, 'advice-more');
         expect(find.textContaining('मुँह पर कपड़ा'), findsOneWidget);
         expect(find.byIcon(Icons.warning_amber_rounded), findsWidgets);
         expect(find.byIcon(Icons.report_rounded), findsWidgets, reason: 'the red warning has its own picture');
         expect(find.textContaining('पूरे पेड़ पर'), findsOneWidget);
 
         final advice = MockData.scabAdvice('x');
-        expect(env.voice.log, ['result_intro@hi', '${advice.spoken.text.hi}@hi', 'result_next_diary@hi']);
+        expect(env.voice.log, ['result_intro@hi', '${advice.spoken.text.hi}@hi', 'diary_tick_sprayed@hi']);
         expect(env.voice.unknownIds, isEmpty);
       },
     );
@@ -133,7 +137,7 @@ void main() {
       expect(env.voice.spokenIds, ['result_intro', 'diary_tick_sprayed']);
     });
 
-    testWidgets('the notebook button opens the diary with the advice, crop and medicine preselected', (tester) async {
+    testWidgets('the green tick opens the diary with the advice, crop and medicine preselected', (tester) async {
       final env = await envFor(MockScanScenario.ok);
       await runScan(tester, env);
       expectBigTouchTargets(tester);
@@ -198,7 +202,7 @@ void main() {
       await tapKey(tester, 'crop-yes');
       expect(env.api.confirmedCrops, ['apple']);
       expect(keyed('severity-yellow'), findsOneWidget);
-      expect(env.voice.spokenIds, ['scan_wait', 'result_intro', 'result_next_diary']);
+      expect(env.voice.spokenIds, ['scan_wait', 'result_intro', 'diary_tick_sprayed']);
     });
 
     testWidgets('the red cross opens the grid of crops: likely ones first, six per page, arrows instead of scrolling', (

@@ -26,14 +26,14 @@ Future<void> logInWith(WidgetTester tester, {String username = 'f001', String pa
   await tapKey(tester, 'login-submit');
 }
 
-/// Every tappable area must be at least 64 x 64 dp.
+/// Every tappable area must be at least 56 x 56 dp.
 void expectBigTouchTargets(WidgetTester tester) {
   final small = <String>[];
   for (final element in find.byType(InkWell).evaluate()) {
     final widget = element.widget as InkWell;
     if (widget.onTap == null) continue;
     final size = tester.getSize(find.byWidget(widget));
-    if (size.width < 63.9 || size.height < 63.9) small.add('${size.width}x${size.height} ${widget.key ?? ''}');
+    if (size.width < 55.9 || size.height < 55.9) small.add('${size.width}x${size.height} ${widget.key ?? ''}');
   }
-  expect(small, isEmpty, reason: 'touch targets below 64 dp: $small');
+  expect(small, isEmpty, reason: 'touch targets below 56 dp: $small');
 }

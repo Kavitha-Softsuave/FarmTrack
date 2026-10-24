@@ -20,6 +20,7 @@ class MetaOut {
     this.supportedLanguages = const ['hi', 'en'],
     this.supportedCrops = const [],
     this.providers = const {},
+    this.weatherEnabled = true,
   });
 
   factory MetaOut.fromJson(Json json) {
@@ -38,6 +39,8 @@ class MetaOut {
       supportedLanguages: langs.isEmpty ? const ['hi', 'en'] : langs,
       supportedCrops: json.strList('supported_crops'),
       providers: providers,
+      // An older server has no such field: weather is then on.
+      weatherEnabled: json.boolOr('weather_enabled', true),
     );
   }
 
@@ -48,6 +51,9 @@ class MetaOut {
   final List<String> supportedCrops;
   final Map<String, String> providers;
 
+  /// `weather_enabled` of `/v1/meta`: false when the operator switched weather off (then the app shows no weather).
+  final bool weatherEnabled;
+
   Json toJson() => {
     'app_version': appVersion,
     'env': env,
@@ -55,6 +61,7 @@ class MetaOut {
     'supported_languages': supportedLanguages,
     'supported_crops': supportedCrops,
     'providers': providers,
+    'weather_enabled': weatherEnabled,
   };
 }
 

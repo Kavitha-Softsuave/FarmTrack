@@ -4,32 +4,49 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
+  <meta name="color-scheme" content="light">
   <title>{% block title %}Admin{% endblock %} - FarmTrack admin</title>
-  <link rel="stylesheet" href="/admin/static/admin.css">
+  <link rel="stylesheet" href="/admin/static/admin.css?v={{ css_version }}">
 </head>
 <body>
   <a class="skip" href="#main">Skip to main content</a>
   {% if logged_in %}
-  <header class="bar">
-    <strong class="brand">FarmTrack admin</strong>
-    <nav aria-label="Main">
-      <ul>
-        {% for slug, label in nav %}
-        <li><a href="/admin/{{ slug }}"{% if page == slug %} aria-current="page"{% endif %}>{{ label }}</a></li>
+  <div class="shell">
+    <aside class="side">
+      <a class="brand" href="/admin/dashboard"><span class="mark" aria-hidden="true">F</span><span><strong>FarmTrack</strong><small>Admin console</small></span></a>
+      <nav aria-label="Main">
+        {% for title, items in nav_sections %}
+        <div>
+          <h2 class="navhead">{{ title }}</h2>
+          <ul>
+            {% for slug, label in items %}
+            <li><a href="/admin/{{ slug }}"{% if page == slug %} aria-current="page"{% endif %}>{{ label }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
         {% endfor %}
-      </ul>
-    </nav>
-    <form method="post" action="/admin/logout">
-      <input type="hidden" name="csrf" value="{{ csrf }}">
-      <button type="submit" class="link">Sign out</button>
-    </form>
-  </header>
+      </nav>
+      <form method="post" action="/admin/logout" class="signout">
+        <input type="hidden" name="csrf" value="{{ csrf }}">
+        <button type="submit">Sign out</button>
+      </form>
+    </aside>
+    <div class="content">
+      <main id="main">
+        {% if flash %}
+        <p class="flash {{ flash[0] }}" role="{{ 'alert' if flash[0] == 'error' else 'status' }}">{{ flash[1] }}</p>
+        {% endif %}
+        {% block content %}{% endblock %}
+      </main>
+      <footer class="foot muted">FarmTrack admin &middot; internal use only</footer>
+    </div>
+  </div>
+  {% else %}
+  <div class="auth">
+    <main id="main">
+      {% block auth %}{% endblock %}
+    </main>
+  </div>
   {% endif %}
-  <main id="main">
-    {% if flash %}
-    <p class="flash {{ flash[0] }}" role="{{ 'alert' if flash[0] == 'error' else 'status' }}">{{ flash[1] }}</p>
-    {% endif %}
-    {% block content %}{% endblock %}
-  </main>
 </body>
 </html>

@@ -22,6 +22,7 @@ from app.vision.quality import PillowQualityChecker
 from app.vision.torch_models import (
     DISEASE_PACKAGES,
     TIMM_PACKAGES,
+    load_local_timm_classifier,
     load_plantvillage,
     load_timm_classifier,
     missing_packages,
@@ -44,19 +45,28 @@ def _plantvillage_model(models_dir: str) -> LazyClassifier:
     return LazyClassifier(MODEL_A.short, lambda: load_plantvillage(MODEL_A, Path(models_dir)))
 
 
+@lru_cache
+def _local_model(model_dir: str) -> LazyClassifier:
+    return LazyClassifier(f"local:{Path(model_dir).name}", lambda: load_local_timm_classifier(Path(model_dir)))
+
+
 def clear_model_cache() -> None:
     """Forget the lazily loaded models (tests, or after changing storage_dir)."""
     _timm_model.cache_clear()
     _plantvillage_model.cache_clear()
+    _local_model.cache_clear()
 
 
 def warm_up_models(settings: Settings) -> None:
     """Download (first run only) and load all four models now instead of on the first scan, e.g. at deploy time.
     Raises ModelUnavailableError when one cannot be loaded."""
     models_dir = _models_dir(settings)
-    for spec in (DETECTOR_16, DETECTOR_36, MODEL_B):
+    local_dir = (settings.disease_model_dir or "").strip()
+    for spec in (DETECTOR_16, DETECTOR_36) if local_dir else (DETECTOR_16, DETECTOR_36, MODEL_B):   # a local apple model replaces B
         _timm_model(spec, models_dir).get()
     _plantvillage_model(models_dir).get()
+    if local_dir:
+        _local_model(str(Path(local_dir))).get()
 
 
 def build_quality_checker(settings: Settings) -> PhotoQualityChecker:
@@ -72,7 +82,10 @@ def build_model_crop_identifier(settings: Settings) -> ModelCropIdentifier:
 def build_model_disease_classifier(settings: Settings, apple_a_weight: float = APPLE_A_WEIGHT) -> ModelDiseaseClassifier:
     """The real disease models WITHOUT the safety fallback (errors propagate): for evaluation scripts."""
     models_dir = _models_dir(settings)
-    return ModelDiseaseClassifier(_plantvillage_model(models_dir), _timm_model(MODEL_B, models_dir), apple_a_weight)
+    local_dir = (settings.disease_model_dir or "").strip()
+    local = _local_model(str(Path(local_dir))) if local_dir else None     # DISEASE_MODEL_DIR: locally trained apple model
+    return ModelDiseaseClassifier(_plantvillage_model(models_dir), _timm_model(MODEL_B, models_dir), apple_a_weight,
+                                  apple_local=local, apple_local_name=local.name if local else "local")
 
 
 def build_crop_identifier(settings: Settings) -> CropIdentifier:

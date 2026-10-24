@@ -1,10 +1,8 @@
 {% extends "base.html" %}
-{% from "_macros.html" import when %}
+{% from "_macros.html" import when, head, pager %}
 {% block title %}Expert requests{% endblock %}
 {% block content %}
-<h1>Expert requests</h1>
-<p class="muted">Farmers who tapped "ask a farm expert". A request about a scan is also in the <a href="/admin/review">review queue</a>;
-   a request without a photo is listed only here. Closing a request records your note; the farmer is not messaged.</p>
+{{ head('Expert requests', 'Farmers who tapped "ask a farm expert". Call the farmer on the phone number shown, then close the request with a note. A request about a scan is also in the review queue; a request without a photo is listed only here. The farmer is not messaged when you close a request.') }}
 <ul class="filters" aria-label="Filter by status">
   {% for s in ('open', 'resolved', 'all') %}
   <li><a href="/admin/expert-requests?status={{ s }}"{% if s == status %} aria-current="page"{% endif %}>{{ s|capitalize }}</a></li>
@@ -12,27 +10,34 @@
 </ul>
 {% for r in requests %}
 <article aria-labelledby="request-{{ r.id }}">
-  <h2 id="request-{{ r.id }}">{{ r.farmer_name or r.farmer_id }} <span class="badge {{ 'green' if r.status == 'resolved' else 'yellow' }}">{{ r.status }}</span></h2>
-  <p>Farmer: <strong>{{ r.farmer_name or r.farmer_id }}</strong> ({{ r.farmer_id }}) &middot; {{ when(r.created_at) }}
-     &middot; Crop: <strong>{{ r.crop or 'unknown' }}</strong></p>
-  <p>Question: {% if r.message %}{{ r.message }}{% else %}<span class="muted">(no text)</span>{% endif %}</p>
+  <div class="item-head">
+    <h2 id="request-{{ r.id }}">{{ r.farmer_name or 'Unknown farmer' }}</h2>
+    <span class="badge {{ 'green' if r.status == 'resolved' else 'yellow' }}">{{ r.status|capitalize }}</span>
+  </div>
+  <ul class="meta">
+    <li>Asked <strong>{{ when(r.created_at) }}</strong></li>
+    <li>Crop: <strong>{{ r.crop or 'unknown' }}</strong></li>
+    {% if r.farmer_phone %}<li>Phone: <strong>{{ r.farmer_phone }}</strong></li>{% endif %}
+  </ul>
+  <p>{% if r.message %}{{ r.message }}{% else %}<span class="muted">The farmer did not type a question.</span>{% endif %}</p>
   {% if r.scan_id %}
-  <p>About scan <code>{{ r.scan_id }}</code>{% if r.review_task_id %}: see the open task in the <a href="/admin/review">review queue</a>{% endif %}.</p>
+  <p class="muted">About a scanned photo{% if r.review_task_id %}: see the open task in the <a href="/admin/review">review queue</a>{% endif %}.</p>
   {% else %}
   <p class="muted">No photo: the farmer asked a question only.</p>
   {% endif %}
   {% if r.status == 'open' %}
-  <form method="post" action="/admin/expert-requests/{{ r.id }}/resolve">
+  <form method="post" action="/admin/expert-requests/{{ r.id }}/resolve" class="resolve">
     <input type="hidden" name="csrf" value="{{ csrf }}">
     <label for="note-{{ r.id }}">Note for the record (max 500 characters)</label>
     <textarea id="note-{{ r.id }}" name="note" rows="3" maxlength="500"></textarea>
     <p><button type="submit">Mark answered and close</button></p>
   </form>
   {% else %}
-  <p>Closed {{ when(r.resolved_at) }}{% if r.resolution_note %}: {{ r.resolution_note }}{% endif %}</p>
+  <p class="resolve">Closed {{ when(r.resolved_at) }}{% if r.resolution_note %}: {{ r.resolution_note }}{% endif %}</p>
   {% endif %}
 </article>
 {% else %}
 <p class="panel muted">No expert requests in this view.</p>
 {% endfor %}
+{% if pg.total > pg.size %}<section class="card flush">{{ pager('/admin/expert-requests', pg, '&status=' ~ status) }}</section>{% endif %}
 {% endblock %}

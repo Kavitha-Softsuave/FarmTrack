@@ -122,7 +122,6 @@ class _AlertDetailScreenState extends ConsumerState<AlertDetailScreen> {
                     key: const ValueKey('alert-open-scan'),
                     icon: AppIcons.greenArrow,
                     size: 96,
-                    label: t('alerts_open_scan_label'),
                     semanticLabel: t('alerts_open_scan_label'),
                     onPressed: () => _openScan(alert),
                   ))

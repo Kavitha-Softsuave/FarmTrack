@@ -99,7 +99,41 @@ void main() {
     expect(keyed('voice-caption'), findsNothing);
   });
 
-  testWidgets('the speaker button sits at the bottom-left and replays the screen speech', (tester) async {
+  testWidgets('the caption floats over the content and is one line until tapped; it goes when the speech ends', (
+    tester,
+  ) async {
+    useSmallPhone(tester);
+    final env = await TestEnv.create();
+    final long = List.filled(12, 'Spray the whole tree on a dry morning.').join(' ');
+    await tester.pumpWidget(
+      env.wrap(
+        VoiceScaffold(
+          script: [TextUtterance(long, lang: 'en')],
+          body: const SizedBox(height: 900),
+        ),
+      ),
+    );
+    await tester.pump();
+    final caption = keyed('voice-caption');
+    expect(caption, findsOneWidget);
+    final collapsed = tester.getSize(caption);
+    expect(collapsed.height, lessThan(70), reason: 'one line only: the content keeps the room');
+
+    await tester.tap(caption);
+    await tester.pump();
+    expect(tester.getSize(caption).height, greaterThan(collapsed.height), reason: 'a tap opens the whole sentence');
+    await tester.tap(caption);
+    await tester.pump();
+    expect(tester.getSize(caption).height, collapsed.height);
+
+    env.voice.finishSpeaking();
+    await tester.pump();
+    expect(caption, findsNothing, reason: 'nothing stays under the content once it has been said');
+  });
+
+  testWidgets('the speaker button is the right-most button of the slim top bar and replays the screen speech', (
+    tester,
+  ) async {
     useSmallPhone(tester);
     final env = await TestEnv.create();
     await tester.pumpWidget(
@@ -115,9 +149,9 @@ void main() {
     expect(env.voice.spokenIds, ['welcome']);
 
     final box = tester.getRect(keyed('speaker-button'));
-    expect(box.left, lessThan(40), reason: 'bottom-left');
-    expect(box.bottom, greaterThan(640 - 40));
-    expect(box.width, greaterThanOrEqualTo(80));
+    expect(box.right, greaterThan(360 - 40), reason: 'top-right');
+    expect(box.top, lessThan(40), reason: 'in the slim top bar, not in a footer');
+    expect(box.width, greaterThanOrEqualTo(56));
 
     await tester.tap(keyed('speaker-button'));
     await tester.pump();

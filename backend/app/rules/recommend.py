@@ -142,8 +142,11 @@ def _prepare(ref: ReferenceData, disabled: frozenset[str], inp: RuleInput, crop:
 
     sprays = resolve_history(ref, inp.history, now)
     trace.append(f"History: {len(sprays)} spray rows up to now ({sum(1 for s in sprays if s.nutrient)} nutrient rows).")
-    if inp.weather is None:
+    if not inp.weather_enabled:
         risks: list[RiskItem] = []
+        trace.append("Weather is switched off (WEATHER_ENABLED=false): no weather risks, no weather timing.")
+    elif inp.weather is None:
+        risks = []
         trace.append("No weather snapshot: timing is 'unknown' and no weather risks were evaluated.")
     else:
         risks = risk_rules.evaluate(ref, farmer, risk_rules.farmer_crops(farmer) | {crop.lower()}, inp.weather, now, inp.history)
@@ -280,7 +283,10 @@ def recommend(ref: ReferenceData, disabled: frozenset[str], inp: RuleInput, auto
     # 5. timing and warnings
     products = [build_choice(ctx, item) for item in ranked]
     trace.append("Recommended: " + "; ".join(f"{p.product_id} {p.active_ingredient}" for p in products) + ".")
-    timing = timing_advice(ref, inp.weather, run.sprays, crop, now, [item.product for item in ranked])
+    if inp.weather_enabled:
+        timing = timing_advice(ref, inp.weather, run.sprays, crop, now, [item.product for item in ranked])
+    else:                                         # silent: no sentence about weather or rain
+        timing = TimingAdvice(action="unknown", reasons=["weather_disabled"])
     trace.append(f"Timing: {timing.action} ({', '.join(timing.reasons)}).")
     return run.output("advice", "auto_advice", ["auto_advice_policy"], disease, products=products, excluded=eligibility.excluded,
                       timing=timing, extra_warnings=_harvest_warnings(run, products), measures=_measures(ref, disease))

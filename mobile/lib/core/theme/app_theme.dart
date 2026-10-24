@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../models/models.dart';
 
-/// High-contrast colours that carry meaning: green = yes / safe, red = no / danger, amber = be careful.
+/// High-contrast colours that carry meaning: green = done / yes / safe, red = no / stop / danger, grey ([inkSoft],
+/// [neutralSoft]) = waiting, amber = a warning only (never a button, never "waiting"), blue = information.
 class AppColors {
   const AppColors._();
 
@@ -17,6 +18,7 @@ class AppColors {
   /// 1.8 to 2.0:1.
   static const amberDark = Color(0xFF946100);
   static const amberSoft = Color(0xFFFFF1C7);
+  static const neutralSoft = Color(0xFFECEEF1);
   static const blue = Color(0xFF1F5FA8);
   static const blueSoft = Color(0xFFDCEAF9);
   static const ink = Color(0xFF14181F);
@@ -53,7 +55,7 @@ class AppColors {
 class Dimens {
   const Dimens._();
 
-  static const minTouch = 64.0;
+  static const minTouch = 56.0;
   static const primary = 96.0;
   static const hero = 148.0;
   static const gutter = 16.0;

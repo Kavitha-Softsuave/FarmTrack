@@ -69,7 +69,7 @@ def test_a_database_stamped_at_base_is_out_of_date(prod_settings, monkeypatch):
 def test_ensure_schema_does_nothing_when_current(prod_settings):
     upgrade_to_head(prod_settings.database_url)
     ensure_schema(prod_settings)
-    assert current_revision(get_engine()) == head_revision() == "0001"
+    assert current_revision(get_engine()) == head_revision() == "0002"
 
 
 def test_development_still_creates_the_tables_itself(api_client):

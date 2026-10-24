@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 import '../utils/haptics.dart';
 
-/// A round picture button. Primary actions use [Dimens.primary] (96 dp) or more; nothing is below 64 dp.
+/// A round picture button. Primary actions use [Dimens.primary] (96 dp) or more; nothing is below 56 dp.
 class BigIconButton extends StatelessWidget {
   const BigIconButton({
     super.key,
@@ -14,7 +14,7 @@ class BigIconButton extends StatelessWidget {
     this.foreground = Colors.white,
     this.size = Dimens.primary,
     this.label,
-  }) : assert(size >= Dimens.minTouch, 'touch targets must be at least 64 dp');
+  }) : assert(size >= Dimens.minTouch, 'touch targets must be at least 56 dp');
 
   final IconData icon;
   final VoidCallback? onPressed;

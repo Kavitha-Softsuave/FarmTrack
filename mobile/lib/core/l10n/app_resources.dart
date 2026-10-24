@@ -5,7 +5,13 @@ import 'package:flutter/services.dart';
 import '../models/models.dart';
 
 class LanguageInfo {
-  const LanguageInfo({required this.code, required this.nativeName, required this.ttsLocales, this.promptId = ''});
+  const LanguageInfo({
+    required this.code,
+    required this.nativeName,
+    required this.ttsLocales,
+    this.promptId = '',
+    this.badge = '',
+  });
 
   final String code;
 
@@ -17,6 +23,14 @@ class LanguageInfo {
 
   /// On-device TTS locales to try, best first.
   final List<String> ttsLocales;
+
+  /// One letter (or a short sign) in the language's own script, drawn in a circle next to the name so a farmer who
+  /// cannot read the name still recognises the button (`"badge"` in `languages.json`; the first letter of the name
+  /// when missing).
+  final String badge;
+
+  String get badgeText =>
+      badge.isNotEmpty ? badge : (nativeName.isEmpty ? code : String.fromCharCode(nativeName.runes.first));
 }
 
 class CropInfo {
@@ -43,6 +57,7 @@ class AppResources {
           code: l['code'] as String,
           nativeName: l['native_name'] as String? ?? l['code'] as String,
           promptId: l['prompt_id'] as String? ?? '',
+          badge: l['badge'] as String? ?? '',
           ttsLocales: [for (final t in (l['tts_locales'] as List? ?? const [])) '$t'],
         ),
     ];

@@ -63,11 +63,13 @@ class _DiaryListScreenState extends ConsumerState<DiaryListScreen> {
     });
 
     final failed = logs.hasError && !logs.hasValue;
-    if (failed && pending.isEmpty) {
+    // No internet: the list the phone kept the last time.
+    final remembered = failed ? ref.watch(cachedSprayLogsProvider) : null;
+    if (failed && pending.isEmpty && remembered == null) {
       return ErrorRetryScreen(error: logs.error!, onRetry: () => ref.invalidate(sprayLogsProvider), onBack: _back);
     }
     final loading = !logs.hasValue && !failed;
-    final entries = mergeDiaryEntries(logs.value ?? const [], pending, now);
+    final entries = mergeDiaryEntries(logs.value ?? remembered ?? const [], pending, now);
     final script = promptList([
       'diary_intro',
       if (failed) errorPromptFor(logs.error!) else if (entries.isEmpty) 'diary_empty' else 'diary_add_hint',
@@ -81,10 +83,8 @@ class _DiaryListScreenState extends ConsumerState<DiaryListScreen> {
       bottomRight: BigIconButton(
         key: const ValueKey('diary-add'),
         icon: AppIcons.plus,
-        color: AppColors.amber,
-        foreground: AppColors.ink,
+        color: AppColors.green,
         size: 96,
-        label: t('diary_add_label'),
         semanticLabel: t('diary_add_label'),
         onPressed: () => context.push(Routes.diaryAdd),
       ),

@@ -151,7 +151,7 @@ def test_a_request_about_a_scan_links_to_the_review_queue(authed, db):
     seed_review(db)
     seed(db, request_row(scan_id="scan1"))
     html = authed.get(PAGE).text
-    assert "About scan" in html and "scan1" in html and 'href="/admin/review"' in html and "No photo" not in html
+    assert "About a scanned photo" in html and 'href="/admin/review"' in html and "No photo" not in html
 
 
 def test_closing_a_request_from_the_page(authed, db):
@@ -200,10 +200,10 @@ def test_the_dashboard_counts_open_requests(authed, db):
     import re
 
     seed(db, farmer_row("F901"), request_row("a"), request_row("b"), request_row("c", status="resolved"))
-    assert re.search(r"Open expert requests</dt><dd>2<", authed.get("/admin/dashboard").text)
+    assert re.search(r"Open expert requests</dt><dd><a href=\"/admin/expert-requests\">2<", authed.get("/admin/dashboard").text)
     assert 'href="/admin/expert-requests"' in authed.get("/admin/dashboard").text
 
 
 def test_the_page_shows_a_request_without_text(authed, db):
     seed(db, farmer_row("F901"), request_row(message=None))
-    assert "(no text)" in authed.get(PAGE).text
+    assert "did not type a question" in authed.get(PAGE).text

@@ -94,7 +94,7 @@ try {
   Write-Host 'Backend is up. Running flutter test test_live ...'
 
   $flutter = (Get-Command flutter -ErrorAction SilentlyContinue)
-  $flutterPath = if ($flutter) { $flutter.Source } else { 'C:\siva\tools\flutter\bin\flutter.bat' }
+  $flutterPath = if ($flutter) { $flutter.Source } else { Join-Path $(if ($env:FARMTRACK_FLUTTER) { $env:FARMTRACK_FLUTTER } else { 'D:\tools\flutter' }) 'bin\flutter.bat' }
   Push-Location $mobile
   try {
     & $flutterPath test test_live --reporter expanded "--dart-define=LIVE_API_URL=http://127.0.0.1:$Port" "--dart-define=LIVE_HINTS=$($useHints.ToString().ToLower())"

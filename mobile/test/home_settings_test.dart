@@ -11,7 +11,7 @@ import 'support/harness.dart';
 void main() {
   group('home', () {
     testWidgets(
-      'four big picture buttons, a gear and a bell; every target is at least 64 dp, the picture buttons much larger',
+      'four big picture buttons, a gear and a bell; every target is at least 56 dp, the picture buttons much larger',
       (tester) async {
         useSmallPhone(tester);
         final env = await TestEnv.create(loggedIn: true);

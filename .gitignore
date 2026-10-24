@@ -13,7 +13,7 @@ __pycache__/
 *.egg-info/
 backend/farmtrack.db*
 backend/storage/
-storage/
+/storage/
 *.db
 *.sqlite
 *.sqlite3
@@ -67,3 +67,11 @@ data/images/**/*.webp
 mobile/android/build/
 mobile/android/app/build/
 mobile/android/.kotlin/
+
+# ---- apple leaf training kit (24 Oct 2026): photos carry third-party licences (not redistributed), venv and weights are rebuilt
+data/training/.venv/
+data/training/photos/
+data/training/external_test/*/
+data/training/output/**/*.safetensors
+data/training/output/quick_test/
+data/training/*.log

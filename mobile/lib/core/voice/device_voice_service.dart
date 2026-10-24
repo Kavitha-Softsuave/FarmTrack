@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 
@@ -27,8 +28,8 @@ Duration defaultReadingTime(String text) => Duration(milliseconds: (text.length 
 /// Plays prompts and dynamic text through one queue.
 ///
 /// Fixed prompt: bundled mp3, else cached server audio, else on-device TTS of the text.
-/// Dynamic text: audio url for the language (downloaded and cached by sha256), else on-device TTS.
-/// If nothing can be spoken the caption stays on screen for a reading time and the queue moves on.
+/// Dynamic text: audio url for the language (cached by sha256; downloaded when online), else on-device TTS.
+/// If nothing can be spoken the caption stays on screen for a reading time and the queue moves on (caption only).
 class DeviceVoiceService implements VoiceService {
   DeviceVoiceService({
     required this.catalogue,
@@ -39,6 +40,8 @@ class DeviceVoiceService implements VoiceService {
     required this.settings,
     this.readingTime = defaultReadingTime,
     this.engineWarmUp = const Duration(milliseconds: 700),
+    this.isOnline,
+    this.downloadTimeout = const Duration(seconds: 6),
   });
 
   final PromptCatalogue catalogue;
@@ -52,6 +55,14 @@ class DeviceVoiceService implements VoiceService {
   /// The Android speech engine starts in the background and may say "no voice" in its first moments. If no voice
   /// is found the very first time, wait this long once and ask again before reporting a missing voice.
   final Duration engineWarmUp;
+
+  /// Whether the phone has a network (null: assume yes). Offline, a sentence that is not cached is not even tried
+  /// from the server: the phone's own voice speaks at once.
+  final Future<bool> Function()? isOnline;
+
+  /// A server audio file that takes longer than this to arrive is given up for this sentence (the phone's voice
+  /// speaks instead); the download goes on and the file is cached for the next time.
+  final Duration downloadTimeout;
 
   final ValueNotifier<VoiceState> _state = ValueNotifier(const VoiceState());
   final Map<String, String> _locales = {};
@@ -189,7 +200,7 @@ class DeviceVoiceService implements VoiceService {
     }
     if (epoch != _epoch) return;
     if (remote != null) {
-      final file = await cache.fetch(remote);
+      final file = await _serverAudio(remote);
       if (epoch != _epoch) return;
       if (file != null &&
           await _tryAudio(
@@ -200,6 +211,15 @@ class DeviceVoiceService implements VoiceService {
     }
     if (epoch != _epoch || text.trim().isEmpty) return;
     await _speakWithTts(text, spokenLang, current, cut);
+  }
+
+  /// The server audio file: the cached copy first (works offline), else a download when online, within
+  /// [downloadTimeout]. Null when there is none, and the next source is used.
+  Future<File?> _serverAudio(AudioRef remote) async {
+    final cached = await cache.peek(remote);
+    if (cached != null) return cached;
+    if (isOnline != null && !await isOnline!()) return null;
+    return cache.fetch(remote).timeout(downloadTimeout, onTimeout: () => null);
   }
 
   /// Plays audio; false if it could not be played (the caller then falls back to the next source).

@@ -72,8 +72,22 @@ String _number(double value) {
   return rounded;
 }
 
-/// The tiles for the readings the server sent (a missing reading has no tile).
-List<ReadingTile> readingTiles(ReadingsOut? readings) {
+/// Tiles that come from the weather (not from the soil sensor): hidden when the server has weather switched off.
+const weatherTileIds = {'temp', 'humidity', 'rain', 'leaf'};
+
+/// The tiles for the readings the server sent (a missing reading has no tile). With [weather] false only the sensor
+/// tiles (soil) are kept.
+List<ReadingTile> readingTiles(ReadingsOut? readings, {bool weather = true}) {
+  final all = _allReadingTiles(readings);
+  return weather
+      ? all
+      : [
+          for (final tile in all)
+            if (!weatherTileIds.contains(tile.id)) tile,
+        ];
+}
+
+List<ReadingTile> _allReadingTiles(ReadingsOut? readings) {
   if (readings == null) return const [];
   final temp = readings.tempC;
   final humidity = readings.rhPct;

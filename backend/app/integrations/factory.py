@@ -6,9 +6,11 @@ push_provider (log|fcm). Choosing a real provider whose credentials are missing 
 from __future__ import annotations
 
 import logging
+from datetime import datetime
 
 from app.config import Settings
-from app.integrations.errors import NotConfigured
+from app.domain.types import WeatherSnapshot
+from app.integrations.errors import NotConfigured, WeatherUnavailable
 from app.integrations.iot_mock import MockIoTAdapter
 from app.integrations.push import FcmPushProvider, LogPushProvider
 from app.integrations.weather_csv import CsvWeatherAdapter
@@ -42,7 +44,16 @@ def build_iot(settings: Settings) -> IoTAdapter:
     raise _unknown("iot", provider, "mock")
 
 
+class DisabledWeatherAdapter:
+    """WEATHER_ENABLED=false: nothing is looked up. The callers check the flag first; this is the second line of defence."""
+
+    def snapshot(self, station_id: str | None, lat: float | None, lon: float | None, now: datetime) -> WeatherSnapshot:
+        raise WeatherUnavailable("weather is switched off (WEATHER_ENABLED=false)")
+
+
 def build_weather(settings: Settings) -> WeatherAdapter:
+    if not settings.weather_enabled:
+        return DisabledWeatherAdapter()
     provider = settings.weather_provider.lower()
     if provider == "csv":
         return CsvWeatherAdapter(settings.data_dir)

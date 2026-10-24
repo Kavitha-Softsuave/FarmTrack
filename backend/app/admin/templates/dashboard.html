@@ -1,46 +1,63 @@
 {% extends "base.html" %}
-{% from "_macros.html" import badge, when %}
+{% from "_macros.html" import badge, when, head %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
-<h1>Dashboard</h1>
+{{ head('Dashboard', 'What needs attention now, and the state of the service.') }}
 <dl class="cards">
-  <div><dt>Open review tasks</dt><dd>{{ counts.open_reviews }}</dd></div>
-  <div><dt>Open expert requests</dt><dd>{{ counts.open_expert_requests }}</dd></div>
-  <div><dt>Farmers</dt><dd>{{ counts.farmers }}</dd></div>
-  <div><dt>Alerts raised</dt><dd>{{ counts.alerts }}</dd></div>
-  <div><dt>Alerts not pushed</dt><dd>{{ counts.unpushed_alerts }}</dd></div>
-  <div><dt>Disabled products</dt><dd>{{ counts.disabled_products }}</dd></div>
+  <div{% if counts.open_reviews %} class="attention"{% endif %}><dt>Open review tasks</dt><dd><a href="/admin/review">{{ counts.open_reviews }}</a></dd></div>
+  <div{% if counts.open_expert_requests %} class="attention"{% endif %}><dt>Open expert requests</dt><dd><a href="/admin/expert-requests">{{ counts.open_expert_requests }}</a></dd></div>
+  <div><dt>Farmers</dt><dd><a href="/admin/farmers">{{ counts.farmers }}</a></dd></div>
+  <div><dt>Alerts raised</dt><dd><a href="/admin/alerts">{{ counts.alerts }}</a></dd></div>
+  <div{% if counts.unpushed_alerts %} class="attention"{% endif %}><dt>Alerts not pushed</dt><dd>{{ counts.unpushed_alerts }}</dd></div>
+  <div><dt>Disabled products</dt><dd><a href="/admin/products">{{ counts.disabled_products }}</a></dd></div>
+  <div><dt>Training photos</dt><dd><a href="/admin/training">{{ counts.training_photos }}</a></dd></div>
+  <div><dt>Scans from the offline queue</dt><dd><a href="/admin/uploads?offline=1">{{ counts.offline_scans }}</a></dd></div>
 </dl>
-<p class="panel">
-  Demo clock: <strong>{{ clock.now.strftime('%d %b %Y %H:%M') }}</strong>
-  ({{ 'fixed by the admin' if clock.fixed else 'real time' }}). <a href="/admin/clock">Change</a>
-</p>
-<h2>Latest alerts</h2>
-<div class="scroll">
-<table>
-  <caption class="muted">The five most recent alerts</caption>
-  <thead><tr><th scope="col">Created</th><th scope="col">Farmer</th><th scope="col">Kind</th><th scope="col">Level</th><th scope="col">Title</th></tr></thead>
-  <tbody>
-  {% for a in alerts %}
-    <tr><td>{{ when(a.created_at) }}</td><td>{{ a.farmer_id }}</td><td>{{ a.kind }}</td><td>{{ badge(a.level) }}</td><td>{{ a.title.en }}</td></tr>
-  {% else %}
-    <tr><td colspan="5" class="muted">No alerts yet.</td></tr>
-  {% endfor %}
-  </tbody>
-</table>
+<div class="status-row">
+  <section class="panel {{ 'status-ok' if voice.configured else 'status-warn' }}" role="status">
+    <span class="label">Voice</span>
+    <span class="value">{{ 'Google TTS configured' if voice.configured else 'No TTS provider configured' }}</span>
+    <p>{{ voice.with_audio }} of {{ voice.total }} fixed prompts have audio. {% if not voice.configured %}The phone speaks with its own voice. {% endif %}<a href="/admin/voice">Details</a></p>
+  </section>
+  <section class="panel {{ 'status-ok' if weather_enabled else 'status-warn' }}">
+    <span class="label">Weather</span>
+    <span class="value">{{ 'On' if weather_enabled else 'Off' }}</span>
+    <p>{% if weather_enabled %}Weather risks, alerts and the forecast card are active.{% else %}No weather risks, alerts or forecast (WEATHER_ENABLED=false).{% endif %}</p>
+  </section>
+  <section class="panel">
+    <span class="label">Demo clock</span>
+    <span class="value">{{ clock.now.strftime('%d %b %Y, %H:%M') }}</span>
+    <p>{{ 'Fixed by the admin' if clock.fixed else 'Real time' }}. <a href="/admin/clock">Change</a></p>
+  </section>
 </div>
-<h2>Latest admin actions</h2>
-<div class="scroll">
-<table>
-  <caption class="muted">The five most recent audit entries</caption>
-  <thead><tr><th scope="col">Time (UTC)</th><th scope="col">Actor</th><th scope="col">Action</th><th scope="col">Entity</th></tr></thead>
-  <tbody>
-  {% for e in audit %}
-    <tr><td>{{ when(e.at) }}</td><td>{{ e.actor }}</td><td>{{ e.action }}</td><td>{{ e.entity or '' }} {{ e.entity_id or '' }}</td></tr>
-  {% else %}
-    <tr><td colspan="4" class="muted">Nothing recorded yet.</td></tr>
-  {% endfor %}
-  </tbody>
-</table>
-</div>
+<section class="card flush">
+  <div class="card-head"><h2>Latest alerts</h2><a href="/admin/alerts">View all</a></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th scope="col">Created</th><th scope="col">Farmer</th><th scope="col">Alert</th><th scope="col">Level</th><th scope="col">Title</th></tr></thead>
+    <tbody>
+    {% for a in alerts %}
+      <tr><td class="nowrap">{{ when(a.created_at) }}</td><td>{{ names.get(a.farmer_id, 'Unknown farmer') }}</td><td>{{ a.kind|pretty }}</td><td>{{ badge(a.level) }}</td><td>{{ a.title.en }}</td></tr>
+    {% else %}
+      <tr><td colspan="5" class="empty">No alerts yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="card flush">
+  <div class="card-head"><h2>Latest admin actions</h2><a href="/admin/audit">View all</a></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th scope="col">Time</th><th scope="col">Who</th><th scope="col">Action</th></tr></thead>
+    <tbody>
+    {% for e in audit %}
+      <tr><td class="nowrap">{{ when(e.at) }}</td><td>{{ e.actor }}</td><td>{{ e.action|pretty }}{% if e.entity %} <span class="muted">&middot; {{ e.entity|pretty }}</span>{% endif %}</td></tr>
+    {% else %}
+      <tr><td colspan="3" class="empty">Nothing recorded yet.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
 {% endblock %}

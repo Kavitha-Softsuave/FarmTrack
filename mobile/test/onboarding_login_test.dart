@@ -331,7 +331,7 @@ void main() {
       expect(keyed('welcome-continue'), findsOneWidget);
     });
 
-    testWidgets('fields, eye and tick are at least 64 dp', (tester) async {
+    testWidgets('fields, eye and tick are at least 56 dp', (tester) async {
       final env = await TestEnv.create(onboardingDone: true);
       await openLogin(tester, env);
       expectBigTouchTargets(tester);

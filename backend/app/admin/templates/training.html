@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% from "_macros.html" import when, head, pager %}
+{% block title %}Training photos{% endblock %}
+{% block content %}
+{{ head('Training photos', 'Labelled leaf photos for training the disease model. They are stored on the server (cleaned JPEG, no location data) and are never shown to farmers. A label is only as good as the person who confirmed it: fill in "Label confirmed by" when an agronomist checked it.') }}
+
+{% if error %}<p class="flash error" role="alert">{{ error }}</p>{% endif %}
+{% if results %}
+<section class="card" aria-labelledby="results-h">
+  <h2 id="results-h">Upload result</h2>
+  <ul class="results">
+    {% for r in results %}
+    <li><span class="badge {{ 'green' if r.status == 'stored' else ('yellow' if r.status == 'duplicate' else 'red') }}">{{ r.status }}</span>
+        <code>{{ r.name }}</code> {{ r.message }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
+<form method="post" action="/admin/training/upload" enctype="multipart/form-data" class="card formgrid" aria-labelledby="up-h">
+  <h2 id="up-h" class="wide">Upload photos</h2>
+  <input type="hidden" name="csrf" value="{{ csrf }}">
+  <div class="field wide">
+    <label for="photos">Photos (up to {{ max_files }} at a time, {{ max_mb }} MB each; JPEG or PNG)</label>
+    <input id="photos" name="photos" type="file" accept="image/jpeg,image/png" multiple required>
+  </div>
+  <div class="field">
+    <label for="class_choice">Class (what is on the leaf)</label>
+    <select id="class_choice" name="class_choice" required aria-describedby="class-help">
+      <option value="">Choose a class</option>
+      {% for value, label in options %}<option value="{{ value }}"{% if form.class_choice == value %} selected{% endif %}>{{ label }} ({{ value }})</option>{% endfor %}
+      <option value="{{ other_value }}"{% if form.class_choice == other_value %} selected{% endif %}>Other class (type a name)</option>
+    </select>
+    <p id="class-help" class="hint">The first four are the apple classes the model is trained on.</p>
+  </div>
+  <div class="field">
+    <label for="class_other">Other class name (only when "Other" is chosen)</label>
+    <input id="class_other" name="class_other" type="text" maxlength="60" value="{{ form.class_other or '' }}" placeholder="e.g. Apple___Powdery_mildew">
+  </div>
+  <div class="field"><label for="crop">Crop (optional)</label><input id="crop" name="crop" type="text" maxlength="40" value="{{ form.crop or '' }}"></div>
+  <div class="field"><label for="leaf_id">Leaf or tree id (optional)</label><input id="leaf_id" name="leaf_id" type="text" maxlength="60" value="{{ form.leaf_id or '' }}"></div>
+  <div class="field"><label for="source">Source (optional)</label><input id="source" name="source" type="text" maxlength="200" value="{{ form.source or '' }}" placeholder="village, orchard or web address"></div>
+  <div class="field"><label for="licence">Licence (optional)</label><input id="licence" name="licence" type="text" maxlength="80" value="{{ form.licence or '' }}" placeholder="e.g. own photo, CC BY 4.0"></div>
+  <div class="field"><label for="confirmed_by">Label confirmed by (optional)</label><input id="confirmed_by" name="confirmed_by" type="text" maxlength="80" value="{{ form.confirmed_by or '' }}"></div>
+  <p class="wide"><button type="submit">Upload</button></p>
+</form>
+
+<section class="card" aria-labelledby="ex-h">
+  <h2 id="ex-h">Export</h2>
+  <p>Download everything as a ZIP (<code>&lt;class&gt;/&lt;file&gt;.jpg</code> plus <code>sources.csv</code>), or copy it into the training folder
+     on the server: <code>{{ export_dir }}</code> (photos already there are left alone).</p>
+  <div class="inline">
+    <a class="button" href="/admin/training/export.zip{% if cls %}?cls={{ cls }}{% endif %}">Download ZIP{% if cls %} of {{ cls }}{% endif %}</a>
+    <form method="post" action="/admin/training/export-folder" class="inline">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <button type="submit" class="secondary">Write into the training folder</button>
+    </form>
+  </div>
+</section>
+
+<h2 class="section-title">Stored photos</h2>
+<ul class="filters" aria-label="Filter by class">
+  <li><a href="/admin/training"{% if not cls %} aria-current="page"{% endif %}>All ({{ counts.values()|sum }})</a></li>
+  {% for value, label in options %}{% if counts.get(value) %}<li><a href="/admin/training?cls={{ value }}"{% if cls == value %} aria-current="page"{% endif %}>{{ value|replace('Apple___', '') }} ({{ counts[value] }})</a></li>{% endif %}{% endfor %}
+  {% for value in extra_classes %}<li><a href="/admin/training?cls={{ value }}"{% if cls == value %} aria-current="page"{% endif %}>{{ value }} ({{ counts[value] }})</a></li>{% endfor %}
+</ul>
+<div class="gallery">
+  {% for p in photos %}
+  <figure>
+    <a href="/admin/training/{{ p.id }}/image"><img src="/admin/training/{{ p.id }}/image" alt="Training photo of class {{ p.class_label }}" loading="lazy"></a>
+    <figcaption>
+      <strong>{{ p.class_label }}</strong><br>
+      <span class="muted">{{ p.width }}x{{ p.height }}, {{ (p.size_bytes / 1024)|round|int }} KB</span><br>
+      {% if p.confirmed_by %}Confirmed by {{ p.confirmed_by }}<br>{% endif %}
+      {% if p.source %}<span class="muted">{{ p.source }}</span><br>{% endif %}
+      {{ when(p.created_at) }}{% if p.exported_at %} <span class="badge green">in folder</span>{% endif %}
+      <form method="post" action="/admin/training/{{ p.id }}/delete">
+        <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="cls" value="{{ cls }}">
+        <button type="submit" class="danger" aria-label="Delete this {{ p.class_label }} photo">Delete</button>
+      </form>
+    </figcaption>
+  </figure>
+  {% else %}
+  <p class="panel empty muted">No photos stored{% if cls %} for this class{% endif %}.</p>
+  {% endfor %}
+</div>
+<section class="card flush">{{ pager("/admin/training", pg, ("&cls=" ~ cls) if cls else "") }}</section>
+{% endblock %}

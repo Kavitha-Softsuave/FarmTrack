@@ -26,6 +26,7 @@ def _isolated_settings(monkeypatch, tmp_path):
     """Every test gets a private database, storage dir and a fresh settings/clock/engine cache."""
     monkeypatch.setenv("DATABASE_URL", f"sqlite:///{(tmp_path / 'test.db').as_posix()}")
     monkeypatch.setenv("STORAGE_DIR", str(tmp_path / "storage"))
+    monkeypatch.setenv("WEATHER_ENABLED", "true")       # the product default is off; most tests exercise the weather paths
     monkeypatch.setattr("app.security.passwords.DEFAULT_ITERATIONS", 1_000)     # fast hashing; the stored format carries the count
     get_settings.cache_clear()
     from app.clock import reset_clock

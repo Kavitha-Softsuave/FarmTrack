@@ -9,8 +9,10 @@ import '../voice/voice_widgets.dart';
 import 'big_buttons.dart';
 import 'demo_clock_banner.dart';
 
-/// The frame of every screen: a back arrow on top, the content, the spoken caption, and the speaker button at
-/// the bottom-left. It speaks [script] when the screen appears.
+/// The frame of every screen, kept as thin as possible so the content is the main thing: one slim bar on top (back
+/// arrow, the screen's small buttons, the speaker), the content, and at the bottom only the screen's one main action.
+/// The spoken sentence floats over the content as a one-line caption (tap for all of it) instead of taking a footer.
+/// It speaks [script] when the screen appears.
 class VoiceScaffold extends ConsumerWidget {
   const VoiceScaffold({
     super.key,
@@ -42,10 +44,10 @@ class VoiceScaffold extends ConsumerWidget {
   final Object? restartKey;
   final bool speakEnabled;
 
-  /// The screen's main action, bottom-right (the speaker is always bottom-left).
+  /// The screen's one main action, bottom-right. Its row is the only thing under the content.
   final Widget? bottomRight;
 
-  /// Small buttons at the top-right (settings, alerts).
+  /// Small buttons at the top, next to the speaker (settings, alerts).
   final List<Widget> topRight;
   final bool showBack;
   final VoidCallback? onBack;
@@ -55,6 +57,9 @@ class VoiceScaffold extends ConsumerWidget {
 
   /// Show the spoken sentence as a caption. Turn it off when the screen already shows that text itself (an answer).
   final bool showCaption;
+
+  /// Tallest the main action's row gets; a bigger button, or one with a word under it, shrinks to fit.
+  static const actionHeight = 88.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -80,39 +85,75 @@ class VoiceScaffold extends ConsumerWidget {
                 // Thin strip while the server runs on a demo clock. Never spoken.
                 const DemoClockBanner(),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(Dimens.gutter, 8, Dimens.gutter, Dimens.gutter),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: Dimens.minTouch + 8,
-                          child: Row(
-                            children: [
-                              if (canGoBack)
-                                BigIconButton(
-                                  icon: AppIcons.back,
-                                  semanticLabel: t('a11y_back'),
-                                  color: AppColors.card,
-                                  foreground: AppColors.ink,
-                                  size: Dimens.minTouch,
-                                  onPressed: onBack ?? () => Navigator.of(context).maybePop(),
+                  child: Stack(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(Dimens.gutter, 4, Dimens.gutter, 4),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: Dimens.minTouch + 8,
+                              child: Row(
+                                children: [
+                                  if (canGoBack)
+                                    BigIconButton(
+                                      icon: AppIcons.back,
+                                      semanticLabel: t('a11y_back'),
+                                      color: AppColors.card,
+                                      foreground: AppColors.ink,
+                                      size: Dimens.minTouch,
+                                      onPressed: onBack ?? () => Navigator.of(context).maybePop(),
+                                    ),
+                                  // The screen's own buttons shrink together if the phone is narrow; never an overflow.
+                                  Expanded(
+                                    child: Align(
+                                      alignment: Alignment.centerRight,
+                                      child: FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            for (final w in topRight) ...[w, const SizedBox(width: 8)],
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SpeakerButton(),
+                                ],
+                              ),
+                            ),
+                            if (!keyboardOpen) const VoiceMissingBanner(),
+                            Expanded(
+                              child: scrollable ? _ScrollingBody(captionRoom: !keyboardOpen, child: body) : body,
+                            ),
+                            if (bottomRight != null)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 4),
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: ConstrainedBox(
+                                    // A little smaller while the keyboard is up: the fields need the room.
+                                    constraints: BoxConstraints(
+                                      maxHeight: keyboardOpen ? actionHeight - 24 : actionHeight,
+                                    ),
+                                    child: FittedBox(fit: BoxFit.scaleDown, child: bottomRight),
+                                  ),
                                 ),
-                              const Spacer(),
-                              for (final w in topRight) ...[w, const SizedBox(width: 8)],
-                            ],
-                          ),
+                              ),
+                          ],
                         ),
-                        Expanded(child: scrollable ? _ScrollingBody(child: body) : body),
-                        // While the keyboard is up the room is needed for the fields: the caption and the banner wait.
-                        if (!keyboardOpen) const VoiceMissingBanner(),
-                        if (showCaption && !keyboardOpen) const VoiceCaption(),
-                        const SizedBox(height: 4),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [const SpeakerButton(), const Spacer(), ?bottomRight],
+                      ),
+                      // Floats over the lowest part of the content, above the main action's row; it makes room for
+                      // the fields while the keyboard is up.
+                      if (showCaption && !keyboardOpen)
+                        Positioned(
+                          left: Dimens.gutter,
+                          right: Dimens.gutter,
+                          bottom: bottomRight == null ? 8 : actionHeight + 12,
+                          child: const VoiceCaption(),
                         ),
-                      ],
-                    ),
+                    ],
                   ),
                 ),
               ],
@@ -125,17 +166,24 @@ class VoiceScaffold extends ConsumerWidget {
 }
 
 class _ScrollingBody extends StatelessWidget {
-  const _ScrollingBody({required this.child});
+  const _ScrollingBody({required this.child, required this.captionRoom});
 
   final Widget child;
 
+  /// Leave room under the last item for the floating caption (not while the keyboard is up: there is no caption then).
+  final bool captionRoom;
+
   @override
   Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, constraints) => SingleChildScrollView(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: constraints.maxHeight),
-        child: Align(alignment: Alignment.center, child: child),
-      ),
-    ),
+    builder: (context, constraints) {
+      final room = captionRoom ? 56.0 : 0.0;
+      return SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: room),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(minHeight: (constraints.maxHeight - room).clamp(0.0, double.infinity)),
+          child: Align(alignment: Alignment.center, child: child),
+        ),
+      );
+    },
   );
 }

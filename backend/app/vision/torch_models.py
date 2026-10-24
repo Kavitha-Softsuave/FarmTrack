@@ -59,11 +59,20 @@ class TimmClassifier:
     """A ConvNeXt classifier published as a timm model (the crop detectors and the apple model B)."""
 
     def __init__(self, spec: ModelSpec, models_dir: Path) -> None:
+        self._load(_snapshot(spec, models_dir, ["config.json", "model.safetensors"]))
+
+    @classmethod
+    def from_dir(cls, path: Path) -> TimmClassifier:
+        """A model saved in a local folder (model.safetensors + config.json) instead of the Hugging Face cache."""
+        model = cls.__new__(cls)
+        model._load(path)
+        return model
+
+    def _load(self, path: Path) -> None:
         import timm  # type: ignore[import-not-found,unused-ignore]
         import torch  # type: ignore[import-not-found,unused-ignore]
         from safetensors.torch import load_file  # type: ignore[import-not-found,unused-ignore]
 
-        path = _snapshot(spec, models_dir, ["config.json", "model.safetensors"])
         cfg = json.loads((path / "config.json").read_text(encoding="utf-8"))
         net = timm.create_model(cfg["architecture"], pretrained=False, num_classes=cfg["num_classes"])
         net.load_state_dict({k: v.float() for k, v in load_file(str(path / "model.safetensors")).items()})   # stored in half precision
@@ -111,6 +120,16 @@ def _timed(name: str, build: Callable[[], ImageClassifier]) -> ImageClassifier:
     model = build()
     log.info("loaded %s in %.1f s", name, time.perf_counter() - start)
     return model
+
+
+def load_local_timm_classifier(model_dir: Path) -> ImageClassifier:
+    """A timm classifier from a local folder (model.safetensors + config.json), e.g. the output of data/training/train_apple.py."""
+    def build() -> ImageClassifier:
+        for name in ("model.safetensors", "config.json"):
+            if not (model_dir / name).is_file():
+                raise ModelUnavailableError(f"{model_dir}: {name} not found")
+        return TimmClassifier.from_dir(model_dir)
+    return _timed(f"local:{model_dir.name}", build)
 
 
 def load_timm_classifier(spec: ModelSpec, models_dir: Path) -> ImageClassifier:

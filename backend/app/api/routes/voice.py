@@ -1,8 +1,10 @@
+import os
 import re
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, Request, Response
 from fastapi.responses import FileResponse
+from starlette.background import BackgroundTask
 
 from app.api.deps import get_container
 from app.api.schemas import ErrorOut, VoiceCatalogueOut
@@ -11,6 +13,7 @@ from app.security.errors import ApiError
 from app.security.paths import UnsafePathError, safe_join
 from app.services.container import Container
 from app.voice.catalogue import load_catalogue
+from app.voice.package import build_package
 
 router = APIRouter(tags=["voice"])
 
@@ -32,6 +35,25 @@ def voice_catalogue(request: Request, response: Response, lang: Lang = "hi", con
     response.headers["ETag"] = etag
     response.headers["Cache-Control"] = "no-cache"          # revalidate every time; cheap thanks to the ETag
     return catalogue
+
+
+@router.get("/v1/voice/package", response_class=Response,
+            responses={200: {"content": {"application/zip": {}}}, 304: {"description": "The app already has this version"},
+                       404: {"model": ErrorOut}})
+def voice_package(request: Request, lang: Lang = "hi", container: Container = Depends(get_container)) -> Response:
+    """The whole fixed-prompt audio of one language as one zip (manifest.json + <prompt id>.mp3), for a single download.
+
+    Same version as GET /v1/voice/catalogue (also the ETag: 304 when the app is current). 404 `voice_package_empty` while no
+    audio has been generated yet (the app then uses the phone's own voice). Public, like the catalogue."""
+    version = load_catalogue(container.settings, lang).version
+    etag = f'"{version}-{lang}-package"'
+    if request.headers.get("if-none-match") == etag:
+        return Response(status_code=304, headers={"ETag": etag, "Cache-Control": "no-cache"})
+    path = build_package(container.settings, lang)
+    if path is None:
+        raise ApiError(404, "voice_package_empty", "No prompt audio has been generated yet.")
+    return FileResponse(path, media_type="application/zip", filename=f"voice-{lang}.zip", background=BackgroundTask(os.unlink, path),
+                        headers={"ETag": etag, "Cache-Control": "no-cache"})
 
 
 @router.get("/audio/{name}", response_class=Response, responses={200: {"content": {"audio/mpeg": {}}}, 404: {"model": ErrorOut}})

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
+{% from "_macros.html" import when, head, pager %}
 {% block title %}Review queue{% endblock %}
 {% block content %}
-<h1>Review queue</h1>
+{{ head('Review queue', 'Scans the system could not safely answer on its own. Check the photo, confirm the crop and disease, and optionally release the advice to the farmer.') }}
 <ul class="filters" aria-label="Filter by status">
   {% for s in ('open', 'resolved', 'all') %}
   <li><a href="/admin/review?status={{ s }}"{% if s == status %} aria-current="page"{% endif %}>{{ s|capitalize }}</a></li>
@@ -11,36 +12,48 @@
 <datalist id="disease-options">{% for did, name in diseases %}<option value="{{ did }}">{{ name }}</option>{% endfor %}</datalist>
 {% for t in tasks %}
 <article aria-labelledby="task-{{ t.id }}">
-  <h2 id="task-{{ t.id }}">Scan {{ t.scan_id }} <span class="badge {{ 'green' if t.status == 'resolved' else 'yellow' }}">{{ t.status }}</span></h2>
-  <p>Farmer: <strong>{{ t.farmer_name or t.farmer_id }}</strong> ({{ t.farmer_id }}) &middot; {{ t.created_at.strftime('%d %b %Y %H:%M') }}
-     &middot; Crop guess: <strong>{{ t.crop_guess or 'unknown' }}</strong></p>
+  <div class="item-head">
+    <h2 id="task-{{ t.id }}">{{ t.farmer_name or 'Unknown farmer' }}</h2>
+    <span class="badge {{ 'green' if t.status == 'resolved' else 'yellow' }}">{{ t.status|capitalize }}</span>
+  </div>
+  <ul class="meta">
+    <li>Scanned <strong>{{ t.created_at.strftime('%d %b %Y, %H:%M') }}</strong></li>
+    <li>Crop guess: <strong>{{ t.crop_guess or 'unknown' }}</strong></li>
+  </ul>
   {% if t.reason %}<p>Why it is here: {{ t.reason }}</p>{% endif %}
   {% if t.disease_candidates %}
-  <p>Model candidates:</p>
-  <ul>{% for c in t.disease_candidates %}<li>{{ c.name.en or c.disease_id }} ({{ c.disease_id }}), {{ (c.confidence * 100)|round|int }}%</li>{% endfor %}</ul>
+  <p class="muted">Model candidates:</p>
+  <ul class="candidates">{% for c in t.disease_candidates %}<li>{{ c.name.en or (c.disease_id|pretty) }}, {{ (c.confidence * 100)|round|int }}%</li>{% endfor %}</ul>
   {% endif %}
   {% if t.photo_urls %}
   <div class="photos">
-    {% for url in t.photo_urls %}<a href="{{ url }}"><img src="{{ url }}" alt="Photo {{ loop.index }} of {{ loop.length }} for scan {{ t.scan_id }}" loading="lazy"></a>{% endfor %}
+    {% for url in t.photo_urls %}<a href="{{ url }}"><img src="{{ url }}" alt="Photo {{ loop.index }} of {{ loop.length }} from {{ t.farmer_name or 'the farmer' }}" loading="lazy"></a>{% endfor %}
   </div>
   {% else %}<p class="muted">No photos stored for this scan.</p>{% endif %}
   {% if t.status == 'open' %}
-  <form method="post" action="/admin/review/{{ t.id }}/resolve">
+  <form method="post" action="/admin/review/{{ t.id }}/resolve" class="resolve formgrid">
     <input type="hidden" name="csrf" value="{{ csrf }}">
-    <label for="crop-{{ t.id }}">Confirmed crop</label>
-    <input id="crop-{{ t.id }}" name="confirmed_crop" type="text" list="crop-options" maxlength="40" value="{{ t.crop_guess or '' }}">
-    <label for="disease-{{ t.id }}">Confirmed disease</label>
-    <input id="disease-{{ t.id }}" name="confirmed_disease" type="text" list="disease-options" maxlength="80">
-    <label for="note-{{ t.id }}">Note for the record (max 500 characters)</label>
-    <textarea id="note-{{ t.id }}" name="note" rows="3" maxlength="500"></textarea>
-    <p><label><input type="checkbox" name="release_advice" value="1"> Send the advice for this disease to the farmer</label></p>
-    <button type="submit">Resolve task</button>
+    <div class="field">
+      <label for="crop-{{ t.id }}">Confirmed crop</label>
+      <input id="crop-{{ t.id }}" name="confirmed_crop" type="text" list="crop-options" maxlength="40" value="{{ t.crop_guess or '' }}">
+    </div>
+    <div class="field">
+      <label for="disease-{{ t.id }}">Confirmed disease</label>
+      <input id="disease-{{ t.id }}" name="confirmed_disease" type="text" list="disease-options" maxlength="80">
+    </div>
+    <div class="field wide">
+      <label for="note-{{ t.id }}">Note for the record (max 500 characters)</label>
+      <textarea id="note-{{ t.id }}" name="note" rows="3" maxlength="500"></textarea>
+    </div>
+    <label class="check wide"><input type="checkbox" name="release_advice" value="1"> Send the advice for this disease to the farmer</label>
+    <p class="wide"><button type="submit">Resolve task</button></p>
   </form>
   {% elif t.resolution_note %}
-  <p>Resolution note: {{ t.resolution_note }}</p>
+  <p class="resolve">Resolution note: {{ t.resolution_note }}</p>
   {% endif %}
 </article>
 {% else %}
 <p class="panel muted">No review tasks in this view.</p>
 {% endfor %}
+{% if pg.total > pg.size %}<section class="card flush">{{ pager('/admin/review', pg, '&status=' ~ status) }}</section>{% endif %}
 {% endblock %}

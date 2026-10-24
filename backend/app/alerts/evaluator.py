@@ -96,24 +96,28 @@ def _evaluate_farmer(session: Session, container: Container, farmer: FarmerRow, 
                      products: Mapping[str, ProductRef], weather_cache: dict[str, WeatherSnapshot | None],
                      stale_cache: dict[str, bool]) -> list[AlertRow]:
     station = farmer.station_id or ""
-    if station not in weather_cache:
-        weather_cache[station] = _snapshot(container, farmer, now)
-    weather = weather_cache[station]
-    if weather is None:
-        return []
-    if station not in stale_cache:
-        stale_cache[station] = _sensor_stale(container, station, now)
-    sensor_stale = stale_cache[station] or weather.stale
+    weather_on = container.settings.weather_enabled
+    weather: WeatherSnapshot | None = None
+    if weather_on:
+        if station not in weather_cache:
+            weather_cache[station] = _snapshot(container, farmer, now)
+        weather = weather_cache[station]
+        if weather is None:
+            return []
 
     profile = farmer_profile(farmer)
     history = _history(session, container, farmer, now, products)
     drafts: list[_Draft] = []
-    for risk in container.rules.evaluate_risks(profile, weather, now, history):
-        short = RISK_KINDS.get(risk.id)
-        if short is None or risk.level not in ALERT_LEVELS:
-            continue
-        episode = _episode_date(session, farmer.id, short, station, risk.detail, now)
-        drafts.append(_risk_draft(risk, short, station, episode, sensor_stale))
+    if weather is not None:                     # WEATHER_ENABLED=false: no weather risk alerts, the waiting-period alert still runs
+        if station not in stale_cache:
+            stale_cache[station] = _sensor_stale(container, station, now)
+        sensor_stale = stale_cache[station] or weather.stale
+        for risk in container.rules.evaluate_risks(profile, weather, now, history):
+            short = RISK_KINDS.get(risk.id)
+            if short is None or risk.level not in ALERT_LEVELS:
+                continue
+            episode = _episode_date(session, farmer.id, short, station, risk.detail, now)
+            drafts.append(_risk_draft(risk, short, station, episode, sensor_stale))
     waiting = _waiting_period_draft(profile, history, now, products, container.settings.data_dir)
     if waiting is not None:
         drafts.append(waiting)

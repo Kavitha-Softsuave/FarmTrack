@@ -11,7 +11,7 @@ cd backend
 python -m venv .venv && .venv/Scripts/python -m pip install -e ".[dev]"     # Unix: .venv/bin/python
 .venv/Scripts/python -m uvicorn app.main:app --reload --port 8000           # or: make install / make run
 .venv/Scripts/python -m pytest                                              # whole suite, offline, a few minutes
-.venv/Scripts/python -m ruff check .
+.venv/Scripts/python -m ruff check app tests     # what CI runs; `python -m mypy app` is clean too (not in CI)
 ```
 With the defaults everything runs offline: mock LLM, hash embeddings, in-memory vector store, stub vision, mock Zoho
 and IoT, weather from the demo archive, push and SMS only logged. The demo clock is frozen at 2026-05-12 (apple season;
@@ -39,9 +39,39 @@ setting with a comment). `.env` holds secrets: never commit it, never paste it a
 `LLM_PROVIDER=openai` + `OPENAI_API_KEY` + `OPENAI_MODEL` (default `gpt-4o-mini`, shut down 14 Jan 2027 -> `gpt-6-luna`),
 `TTS_PROVIDER=google`, `CROP_ID_PROVIDER=model` / `DISEASE_PROVIDER=model` (needs `pip install -e ".[ml]"`, ~300 MB of
 model files, see `app/vision/torch_models.py`), `EMBEDDINGS_PROVIDER`, `VECTOR_STORE=pgvector`, `ZOHO_PROVIDER=real`,
-`WEATHER_PROVIDER=openmeteo`, `PUSH_PROVIDER=fcm` (`.[fcm]`), `RULES_AUTO_ADVICE_DISEASES` (default `*`, see below).
+`WEATHER_PROVIDER=openmeteo`, `WEATHER_ENABLED=false` (no weather at all), `TRAINING_EXPORT_DIR`, `PUSH_PROVIDER=fcm` (`.[fcm]`), `RULES_AUTO_ADVICE_DISEASES` (default `*`, see below).
 `ENV=prod` refuses to start with development defaults (secret keys, CORS `*`, demo hints), hides the API docs and uses
 Alembic migrations only.
+
+## Weather off switch (`WEATHER_ENABLED`)
+`WEATHER_ENABLED=false` (default `true`) turns weather off everywhere: no lookup and no network call (`app.integrations.factory`
+builds a `DisabledWeatherAdapter` that only raises), no weather risks (scab infection, leaf spot, late blight, rain wash-off), no
+weather alerts (the waiting-period alert still runs), an empty forecast and no weather sentence on `GET /v1/field`, no repeat-after-rain
+or wait-for-rain timing in advice (`timing.action` is `unknown`, reasons `["weather_disabled"]`, empty text; the advice templates
+then say only "Ask your expert for the best time to spray"). `GET /v1/meta` reports `weather_enabled` so the app can hide the weather UI.
+The field sensor readings are not weather and stay. Weather is read in: `scan_service._weather`, `field_service`, `alerts/evaluator`,
+`rules/recommend` (risks and timing), `integrations/factory`, `api/routes/meta`; the admin dashboard shows the state.
+
+## Admin: training photos, farmers' photos, voice
+- **Admin > Training photos** (`/admin/training`): upload several labelled leaf photos (class from the disease catalogue; the four apple
+  classes first, or a free class name; optional crop, leaf id, source, licence, "confirmed by"). Files go through the same checks as scan
+  photos (`MAX_UPLOAD_MB`, real image decoding, pixel limit, EXIF/GPS removed; the stored file is the cleaned JPEG, long edge 2048 px)
+  and are stored as `STORAGE_DIR/training_uploads/<class>/<sha16>.jpg` with a row in `training_photos` (migration 0002) and an audit
+  entry. Duplicates (same picture, any class) are refused. List by class, preview, delete, **download a ZIP** (`<class>/adm_<sha16>.jpg`
+  + `sources.csv`), or **write into the training folder** (`TRAINING_EXPORT_DIR`, default `data/training/photos/<class>/`, plus
+  `../admin_uploads.csv` in the `sources.csv` columns). At most 20 files per upload (the request body limit is the scan limit).
+- **Admin > Farmer photos** (`/admin/uploads`): the photos farmers sent with scans, with photo time, received time and an "offline queue"
+  mark; filter for offline ones.
+- **Admin > Voice** (`/admin/voice`) and a dashboard line: TTS provider configured or not, prompts with and without audio per language.
+  Steps to generate the audio: `../docs/voice-package.md`.
+
+## Offline uploads
+The app queues a scan with an `Idempotency-Key` and sends it when online, possibly several times. `POST /v1/scans` also takes
+`taken_at` (photo time) and `offline` (form fields); both are stored on the scan (`scans.taken_at`, `scans.offline`) and returned in
+`ScanOut`. A `taken_at` more than 1 day ahead or more than 400 days old is ignored (null), never an error. Advice is always worked out on
+arrival. `GET /v1/scans/by-request/{key}` returns the stored result without photos or analysis when the response was lost. A replay
+(same key) returns the first result whatever the content; a 429 or a validation error does not use up the key. A burst of more than 30
+new scans in 10 minutes gets 429 (the app must retry later). Tests: `tests/api/test_offline_upload_api.py`.
 
 ## Docker
 `docker compose --env-file ../.env up -d --build` (api + PostgreSQL with pgvector; the entrypoint runs

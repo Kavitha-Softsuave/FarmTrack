@@ -67,6 +67,7 @@ class TestEnv {
     MockApiClient? api,
     TokenStore? tokenStore,
     List<Override> extraOverrides = const [],
+    AppResources? resources,
   }) async {
     SharedPreferences.setMockInitialValues({
       'language': ?language,
@@ -77,7 +78,7 @@ class TestEnv {
     final prefs = await SharedPreferences.getInstance();
     final catalogue = loadCatalogue();
     return TestEnv._(
-      resources: loadResources(),
+      resources: resources ?? loadResources(),
       catalogue: catalogue,
       voice: FakeVoice(catalogue, language: language ?? 'hi'),
       api: api ?? MockApiClient(latency: Duration.zero, scanScript: scanScript),

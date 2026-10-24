@@ -117,6 +117,8 @@ class ScanRow(Base):
     lat: Mapped[float | None] = mapped_column(Float)
     lon: Mapped[float | None] = mapped_column(Float)
     client_request_id: Mapped[str | None] = mapped_column(String(80))
+    taken_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))   # when the phone took the photo (offline uploads: hours or days before created_at)
+    offline: Mapped[bool | None] = mapped_column(Boolean, default=False)         # NULL (old rows) = false; the app says the upload waited in its offline queue
 
 
 class AdviceRow(Base):
@@ -220,3 +222,24 @@ class ProductOverrideRow(Base):
     enabled: Mapped[bool] = mapped_column(Boolean, default=True)
     note: Mapped[str | None] = mapped_column(String(300))
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+
+
+class TrainingPhotoRow(Base):
+    """A labelled leaf photo uploaded by an admin for model training (stored under storage_dir/training_uploads/<class>/)."""
+    __tablename__ = "training_photos"
+    __table_args__ = (UniqueConstraint("sha256", name="uq_training_photos_sha256"),)
+    id: Mapped[str] = mapped_column(String(32), primary_key=True, default=new_id)
+    class_label: Mapped[str] = mapped_column(String(80), index=True)           # folder name, e.g. Apple___Apple_scab
+    crop: Mapped[str | None] = mapped_column(String(40))
+    leaf_id: Mapped[str | None] = mapped_column(String(60))
+    source: Mapped[str | None] = mapped_column(String(200))
+    licence: Mapped[str | None] = mapped_column(String(80))
+    confirmed_by: Mapped[str | None] = mapped_column(String(80))               # who confirmed the label (agronomist name), if anyone
+    original_name: Mapped[str | None] = mapped_column(String(120))             # sanitised name the admin's file had; never used as a path
+    sha256: Mapped[str] = mapped_column(String(64))                             # of the stored (re-encoded) JPEG: duplicate check
+    path: Mapped[str] = mapped_column(String(200))                              # relative to storage_dir
+    width: Mapped[int] = mapped_column(Integer)
+    height: Mapped[int] = mapped_column(Integer)
+    size_bytes: Mapped[int] = mapped_column(Integer)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    exported_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

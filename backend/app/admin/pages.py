@@ -6,17 +6,22 @@ parameter come from fixed tables (MESSAGES), never from the parameter itself, so
 from __future__ import annotations
 
 import logging
+import math
+import os
+import re
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 from urllib.parse import urlencode
 
-from fastapi import APIRouter, Depends, Form, HTTPException, Request
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse, Response
 from fastapi.templating import Jinja2Templates
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
+from starlette.background import BackgroundTask
 
-from app.admin import service
+from app.admin import service, training
 from app.admin.auth import (
     COOKIE_NAME,
     COOKIE_PATH,
@@ -38,6 +43,7 @@ from app.api.deps import get_db
 from app.api.schemas import ProductAdminPatch, ReviewResolveIn
 from app.clock import IST, get_clock
 from app.integrations.reference import load_disease_options, load_product_master
+from app.voice.package import package_status
 
 log = logging.getLogger(__name__)
 
@@ -53,10 +59,20 @@ SECURITY_HEADERS = {
                                 "base-uri 'none'; frame-ancestors 'none'"),
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
-    "Referrer-Policy": "no-referrer",
+    "Referrer-Policy": "same-origin",    # "no-referrer" makes Chrome send "Origin: null" on form posts, which check_origin refuses
 }
-NAV = (("dashboard", "Dashboard"), ("review", "Review queue"), ("expert-requests", "Expert requests"), ("farmers", "Farmers"), ("products", "Approved products"),
-       ("alerts", "Alerts"), ("clock", "Demo clock"), ("audit", "Audit log"))
+NAV = (("dashboard", "Dashboard"), ("review", "Review queue"), ("expert-requests", "Expert requests"), ("uploads", "Farmer photos"),
+       ("training", "Training photos"), ("farmers", "Farmers"), ("products", "Approved products"), ("alerts", "Alerts"),
+       ("voice", "Voice"), ("clock", "Demo clock"), ("audit", "Audit log"))
+_LABELS = dict(NAV)
+NAV_GROUPS = (
+    ("Overview", ("dashboard",)),
+    ("Work queue", ("review", "expert-requests")),
+    ("Data", ("farmers", "products", "uploads", "training")),
+    ("Operations", ("alerts", "voice", "clock", "audit")),
+)
+NAV_SECTIONS = tuple((title, tuple((slug, _LABELS[slug]) for slug in slugs)) for title, slugs in NAV_GROUPS)
+LIST_PAGE_SIZE = 15      # rows per page of the table lists (the photo grids use PAGE_SIZE)
 MESSAGES = {
     "resolved": "Review task resolved.",
     "request_closed": "Expert request closed.",
@@ -80,6 +96,8 @@ MESSAGES = {
     "release_failed": "The advice could not be released, so the task stays open.",
     "failed": "The action failed. Nothing was changed.",
     "no_container": "The alert service is not running in this process.",
+    "training_deleted": "Training photo deleted.",
+    "training_folder": "Training folder updated.",
 }
 _ERROR_FOR_STATUS = {404: "not_found", 409: "already_resolved", 422: "invalid", 502: "release_failed"}
 
@@ -96,6 +114,39 @@ def _clock(request: Request):  # noqa: ANN202
     return container.clock if container is not None else get_clock()
 
 
+def _digits(value: str | None) -> int:
+    return int(value) if value and value.isdigit() else 0
+
+
+def page_info(total: int, page: int, size: int) -> dict[str, int]:
+    """Which slice of `total` rows page `page` shows (the page is clamped into range) and what the pager needs to draw itself."""
+    pages = max(1, math.ceil(total / size))
+    page = min(max(page, 1), pages)
+    start = (page - 1) * size
+    return {"page": page, "pages": pages, "total": total, "size": size, "offset": start, "first": start + 1 if total else 0,
+            "last": min(start + size, total)}
+
+
+_DISEASE_SPLIT = re.compile(r"_{2,}")
+
+
+def pretty(value: object) -> str:
+    """'Apple___Alternaria_leaf_spot' -> 'Alternaria leaf spot', 'scab_infection_risk' -> 'Scab infection risk'."""
+    text = _DISEASE_SPLIT.split(str(value or ""))[-1].replace("_", " ").replace(".", " ").strip()
+    return text[:1].upper() + text[1:]
+
+
+templates.env.filters["pretty"] = pretty
+
+
+def _css_version() -> int:
+    """The stylesheet's modification time: a changed file gets a new URL, so a browser never keeps showing the old styles."""
+    try:
+        return int((HERE / "static" / "admin.css").stat().st_mtime)
+    except OSError:
+        return 0
+
+
 def render(request: Request, name: str, session: AdminSession | None, status_code: int = 200, **context: object) -> HTMLResponse:
     query = request.query_params
     flash = None
@@ -103,10 +154,12 @@ def render(request: Request, name: str, session: AdminSession | None, status_cod
         text = MESSAGES[query["ok"]]
         if query["ok"] == "alerts_run" and query.get("n", "").isdigit():
             text = f"Alert run finished: {int(query['n'])} new alerts."
+        if query["ok"] == "training_folder":
+            text = f"Training folder updated: {_digits(query.get('n'))} photos copied, {_digits(query.get('m'))} were already there."
         flash = ("ok", text)
     elif query.get("err") in MESSAGES:
         flash = ("error", MESSAGES[query["err"]])
-    context.update(csrf=csrf_token(settings_of(request), session) if session else "", logged_in=session is not None, nav=NAV, flash=flash,
+    context.update(css_version=_css_version(), csrf=csrf_token(settings_of(request), session) if session else "", logged_in=session is not None, nav=NAV, nav_sections=NAV_SECTIONS, flash=flash,
                    page=name.removesuffix(".html"))
     response = templates.TemplateResponse(request, name, context, status_code=status_code)
     response.headers.update(SECURITY_HEADERS)
@@ -173,17 +226,41 @@ def logout(_: AdminSession = Depends(csrf_protect)) -> RedirectResponse:
 @router.get("/dashboard")
 def dashboard(request: Request, session: AdminSession = Depends(require_session), db: Session = Depends(get_db)) -> Response:
     return render(request, "dashboard.html", session, counts=service.dashboard_counts(db), clock=service.clock_out(_clock(request)),
-                  alerts=service.list_alerts(db, 5), audit=service.list_audit(db, 5))
+                  alerts=service.list_alerts(db, 5), audit=service.list_audit(db, 5), voice=voice_status(settings_of(request)),
+                  weather_enabled=settings_of(request).weather_enabled, names=service.farmer_names(db))
+
+
+# ------------------------------------------------------------------------------------------------- voice
+def voice_status(settings) -> dict[str, object]:  # noqa: ANN001
+    """What the Voice page and the dashboard line say: is a TTS provider usable, and how complete is the prompt audio."""
+    configured = settings.tts_provider == "google" and settings.google_tts_configured
+    rows = package_status(settings)
+    audio_dir = settings.storage_dir / "audio"
+    cached = sum(1 for _ in audio_dir.glob("*.mp3")) if audio_dir.is_dir() else 0
+    return {
+        "provider": settings.tts_provider, "configured": configured, "key_set": settings.google_tts_configured,
+        "voice_hi": settings.tts_voice_hi, "voice_en": settings.tts_voice_en, "rows": rows, "cached_advice_audio": cached,
+        "with_audio": sum(r.with_audio for r in rows), "total": sum(r.prompts for r in rows),
+        "summary": (f"Voice: {'Google TTS configured' if configured else 'no TTS provider configured (the phone speaks with its own voice)'}; "
+                    f"{sum(r.with_audio for r in rows)} of {sum(r.prompts for r in rows)} fixed prompts have audio."),
+    }
+
+
+@router.get("/voice")
+def voice_page(request: Request, session: AdminSession = Depends(require_session)) -> Response:
+    return render(request, "voice.html", session, voice=voice_status(settings_of(request)))
 
 
 # ------------------------------------------------------------------------------------------------- review queue
 @router.get("/review")
-def review(request: Request, status: str = "open", session: AdminSession = Depends(require_session),
+def review(request: Request, status: str = "open", page: int = 1, session: AdminSession = Depends(require_session),
            db: Session = Depends(get_db)) -> Response:
     status = status if status in service.REVIEW_STATUSES else "open"
     data_dir = settings_of(request).data_dir
     crops = sorted({p.crop for p in load_product_master(data_dir).values()})
-    return render(request, "review.html", session, status=status, tasks=service.list_review_tasks(db, status, 50, PHOTO_BASE),
+    tasks = service.list_review_tasks(db, status, 200, PHOTO_BASE)
+    pg = page_info(len(tasks), page, 10)
+    return render(request, "review.html", session, status=status, tasks=tasks[pg["offset"]:pg["offset"] + pg["size"]], pg=pg,
                   crops=crops, diseases=load_disease_options(data_dir))
 
 
@@ -211,10 +288,12 @@ def photo(scan_id: str, index: int, request: Request, _: AdminSession = Depends(
 
 # ------------------------------------------------------------------------------------------------- expert requests
 @router.get("/expert-requests")
-def expert_requests(request: Request, status: str = "open", session: AdminSession = Depends(require_session),
+def expert_requests(request: Request, status: str = "open", page: int = 1, session: AdminSession = Depends(require_session),
                     db: Session = Depends(get_db)) -> Response:
     status = status if status in service.REVIEW_STATUSES else "open"
-    return render(request, "expert-requests.html", session, status=status, requests=service.list_expert_requests(db, status, 100))
+    rows = service.list_expert_requests(db, status, 200)
+    pg = page_info(len(rows), page, 10)
+    return render(request, "expert-requests.html", session, status=status, pg=pg, requests=rows[pg["offset"]:pg["offset"] + pg["size"]])
 
 
 @router.post("/expert-requests/{request_id}/resolve")
@@ -232,9 +311,16 @@ def expert_request_resolve(request_id: str, request: Request, note: str = Form("
 
 # ------------------------------------------------------------------------------------------------- farmers, products
 @router.get("/farmers")
-def farmers(request: Request, session: AdminSession = Depends(require_session), db: Session = Depends(get_db)) -> Response:
+def farmers(request: Request, q: str = "", page: int = 1, session: AdminSession = Depends(require_session),
+            db: Session = Depends(get_db)) -> Response:
     crops = sorted({p.crop for p in load_product_master(settings_of(request).data_dir).values()})
-    return render(request, "farmers.html", session, farmers=service.list_farmers(db, 500), crops=crops)
+    q = q.strip()[:60]
+    rows = service.list_farmers(db, 500)
+    if q:
+        needle = q.lower()
+        rows = [f for f in rows if needle in " ".join(filter(None, (f.name, f.district, f.village, f.primary_crop, f.username))).lower()]
+    pg = page_info(len(rows), page, LIST_PAGE_SIZE)
+    return render(request, "farmers.html", session, farmers=rows[pg["offset"]:pg["offset"] + pg["size"]], crops=crops, q=q, pg=pg)
 
 
 @router.post("/farmers/{farmer_id}/login")
@@ -270,13 +356,15 @@ def farmer_create(request: Request, name: str = Form(""), phone: str = Form(""),
 
 
 @router.get("/products")
-def products(request: Request, crop: str = "", session: AdminSession = Depends(require_session),
+def products(request: Request, crop: str = "", page: int = 1, session: AdminSession = Depends(require_session),
              db: Session = Depends(get_db)) -> Response:
     data_dir = settings_of(request).data_dir
     crops = sorted({p.crop for p in load_product_master(data_dir).values()})
     crop = crop if crop in crops else ""
-    return render(request, "products.html", session, crop=crop, crops=crops, products=service.list_products(db, data_dir, crop or None),
-                  notes=service.product_notes(db))
+    rows = service.list_products(db, data_dir, crop or None)
+    pg = page_info(len(rows), page, LIST_PAGE_SIZE)
+    return render(request, "products.html", session, crop=crop, crops=crops, pg=pg, notes=service.product_notes(db),
+                  products=rows[pg["offset"]:pg["offset"] + pg["size"]])
 
 
 @router.post("/products/{product_id}/toggle")
@@ -293,8 +381,10 @@ def product_toggle(product_id: str, request: Request, enabled: str = Form(""), n
 
 # ------------------------------------------------------------------------------------------------- alerts
 @router.get("/alerts")
-def alerts(request: Request, session: AdminSession = Depends(require_session), db: Session = Depends(get_db)) -> Response:
-    return render(request, "alerts.html", session, alerts=service.list_alerts(db, 100))
+def alerts(request: Request, page: int = 1, session: AdminSession = Depends(require_session), db: Session = Depends(get_db)) -> Response:
+    pg = page_info(service.count_alerts(db), page, LIST_PAGE_SIZE)
+    return render(request, "alerts.html", session, pg=pg, names=service.farmer_names(db),
+                  alerts=service.list_alerts(db, pg["size"], None, pg["offset"]))
 
 
 @router.post("/alerts/run-now")
@@ -337,5 +427,94 @@ def clock_save(request: Request, now: str = Form(""), action: str = Form("set"),
 
 # ------------------------------------------------------------------------------------------------- audit
 @router.get("/audit")
-def audit(request: Request, session: AdminSession = Depends(require_session), db: Session = Depends(get_db)) -> Response:
-    return render(request, "audit.html", session, entries=service.list_audit(db, 100))
+def audit(request: Request, page: int = 1, session: AdminSession = Depends(require_session), db: Session = Depends(get_db)) -> Response:
+    pg = page_info(service.count_audit(db), page, LIST_PAGE_SIZE)
+    return render(request, "audit.html", session, pg=pg, entries=service.list_audit(db, pg["size"], pg["offset"]))
+
+
+# ------------------------------------------------------------------------------------------------- farmers' photos (scans)
+PAGE_SIZE = 48
+
+
+@router.get("/uploads")
+def uploads(request: Request, offline: str = "", page: int = 1, session: AdminSession = Depends(require_session),
+            db: Session = Depends(get_db)) -> Response:
+    only_offline = offline == "1"
+    pg = page_info(service.count_scan_uploads(db, only_offline), page, LIST_PAGE_SIZE)
+    return render(request, "uploads.html", session, only_offline=only_offline, pg=pg,
+                  scans=service.list_scan_uploads(db, pg["size"], only_offline, pg["offset"]))
+
+
+# ------------------------------------------------------------------------------------------------- training photos (admin uploads)
+def _training_context(request: Request, db: Session, cls: str, page: int) -> dict[str, Any]:
+    settings = settings_of(request)
+    options = training.class_options(load_disease_options(settings.data_dir))
+    counts = dict(training.class_counts(db))
+    known = {value for value, _ in options}
+    cls = cls if cls in counts or cls in known else ""
+    pg = page_info(training.count_photos(db, cls), page, PAGE_SIZE)
+    return {"options": options, "counts": counts, "extra_classes": sorted(set(counts) - known), "cls": cls, "pg": pg,
+            "photos": training.list_photos(db, cls, PAGE_SIZE, pg["offset"]),
+            "other_value": training.OTHER, "max_files": training.MAX_FILES_PER_UPLOAD,
+            "max_mb": settings.max_upload_mb, "export_dir": str(settings.training_export_dir)}
+
+
+@router.get("/training")
+def training_page(request: Request, cls: str = "", page: int = 1, session: AdminSession = Depends(require_session),
+                  db: Session = Depends(get_db)) -> Response:
+    return render(request, "training.html", session, results=None, form={}, error=None, **_training_context(request, db, cls, page))
+
+
+@router.post("/training/upload")
+def training_upload(request: Request, photos: list[UploadFile] = File(default_factory=list), class_choice: str = Form(""),
+                    class_other: str = Form(""), crop: str = Form(""), leaf_id: str = Form(""), source: str = Form(""),
+                    licence: str = Form(""), confirmed_by: str = Form(""), session: AdminSession = Depends(csrf_protect),
+                    db: Session = Depends(get_db)) -> Response:
+    settings = settings_of(request)
+    form = {"class_choice": class_choice, "class_other": class_other, "crop": crop, "leaf_id": leaf_id, "source": source,
+            "licence": licence, "confirmed_by": confirmed_by}
+    results: list[training.FileResult] | None = None
+    error: str | None = None
+    try:
+        known = {value for value, _ in training.class_options(load_disease_options(settings.data_dir))}
+        label = training.resolve_class(class_choice, class_other, known)
+        meta = training.build_meta(label, form)
+        results = training.store_uploads(db, settings, photos, meta, _clock(request).now())
+    except training.TrainingError as exc:
+        error = str(exc)
+    return render(request, "training.html", session, status_code=400 if error else 200, results=results, form=form, error=error,
+                  **_training_context(request, db, "", 1))
+
+
+@router.get("/training/export.zip")
+def training_zip(request: Request, cls: str = "", _: AdminSession = Depends(require_session), db: Session = Depends(get_db)) -> Response:
+    path = training.export_zip(db, settings_of(request), cls if training.CLASS_RE.match(cls) else "")
+    return FileResponse(path, media_type="application/zip", filename="training-photos.zip", background=BackgroundTask(os.unlink, path),
+                        headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
+
+
+@router.post("/training/export-folder")
+def training_export_folder(request: Request, _: AdminSession = Depends(csrf_protect), db: Session = Depends(get_db)) -> RedirectResponse:
+    try:
+        copied, already = training.export_to_folder(db, settings_of(request), _clock(request).now())
+    except OSError:
+        log.exception("training export to folder failed")
+        db.rollback()
+        return redirect("/admin/training", err="failed")
+    return redirect("/admin/training", ok="training_folder", n=copied, m=already)
+
+
+@router.get("/training/{photo_id}/image")
+def training_image(photo_id: str, request: Request, _: AdminSession = Depends(require_session), db: Session = Depends(get_db)) -> FileResponse:
+    path = training.photo_path(db, settings_of(request), photo_id)
+    if path is None:
+        raise HTTPException(404, "photo not found")
+    return FileResponse(path, media_type="image/jpeg", headers={"Cache-Control": "private, no-store", "X-Content-Type-Options": "nosniff"})
+
+
+@router.post("/training/{photo_id}/delete")
+def training_delete(photo_id: str, request: Request, cls: str = Form(""), _: AdminSession = Depends(csrf_protect),
+                    db: Session = Depends(get_db)) -> RedirectResponse:
+    if not training.delete_photo(db, settings_of(request), photo_id):
+        return redirect("/admin/training", err="not_found")
+    return redirect("/admin/training", ok="training_deleted", cls=cls if training.CLASS_RE.match(cls) else "")

@@ -42,6 +42,8 @@ class Settings(BaseSettings):
     data_dir: Path = REPO_ROOT / "data"                # reference data, mock zoho, weather, iot
     storage_dir: Path = BACKEND_ROOT / "storage"       # photos, audio cache
     voice_dir: Path = REPO_ROOT / "voice"              # prompt catalogue (+ generated audio)
+    # Admin "Training photos" page: "Write into the training folder" copies labelled photos to <dir>/<class>/ (+ sources.csv).
+    training_export_dir: Path = REPO_ROOT / "data" / "training" / "photos"
 
     # --- auth. MVP login = username + password (POST /v1/auth/login). The OTP code is kept but switched off: when OTP_LOGIN_ENABLED
     # is false the two OTP routes answer 404.
@@ -75,12 +77,18 @@ class Settings(BaseSettings):
 
     crop_id_provider: str = "stub"                     # stub | model
     disease_provider: str = "stub"                     # stub | model
+    # Folder with a locally trained apple leaf model (model.safetensors + config.json, made by data/training/train_apple.py).
+    # With DISEASE_PROVIDER=model it answers for apple INSTEAD of the downloaded model A+B mix. Unset = the downloaded models.
+    disease_model_dir: str | None = None
     # Offline demos only: force the stub disease classifier, e.g. "Apple=Apple___Apple_scab:0.9;Tomato=Tomato___Late_blight"
     # (format and rules in app/vision/hints.py). Ignored by the factory and refused at start-up when ENV=prod.
     demo_disease_hints: str | None = None
     zoho_provider: str = "mock"                        # mock | real
     iot_provider: str = "mock"
     weather_provider: str = "csv"                      # csv (demo archive) | openmeteo
+    # WEATHER_ENABLED=false switches weather OFF everywhere: no weather lookup or network call, no weather risks or alerts,
+    # no forecast card, no repeat-after-rain timing; advice says nothing about weather. /v1/meta reports it so the app can hide the UI.
+    weather_enabled: bool = False
     push_provider: str = "log"                         # log | fcm
     fcm_credentials_file: str | None = None
     # Zoho CRM self-client (ZOHO_PROVIDER=real) and the optional Open-Meteo customer key: read through Settings so a .env file works too.

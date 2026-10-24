@@ -213,6 +213,7 @@ class RuleInput(BaseModel):
     now: datetime
     history: list[SprayRecord] = Field(default_factory=list)
     weather: WeatherSnapshot | None = None
+    weather_enabled: bool = True              # False (WEATHER_ENABLED=false): no weather risks, no weather timing, no weather wording
     days_to_harvest: int | None = None        # None = estimate from stage calendar + variety
     language: Lang = "hi"
 

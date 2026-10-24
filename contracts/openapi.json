@@ -447,7 +447,7 @@
           "scans"
         ],
         "summary": "Create Scan",
-        "description": "Pipeline: photo quality, crop identification, disease, rules, advice, spoken audio.\nAlways returns 200 with a status; 'not sure' is a status, never a raw error.\n\nIdempotent: send an `Idempotency-Key` header (a fresh UUID per queued upload, kept on every retry). A replay by the same\nfarmer returns the stored scan (same ids, 200, header `Idempotent-Replayed: true`) without analysing the photos again.",
+        "description": "Pipeline: photo quality, crop identification, disease, rules, advice, spoken audio.\nAlways returns 200 with a status; 'not sure' is a status, never a raw error.\n\nIdempotent: send an `Idempotency-Key` header (a fresh UUID per queued upload, kept on every retry). A replay by the same\nfarmer returns the stored scan (same ids, 200, header `Idempotent-Replayed: true`) without analysing the photos again.\n\nOffline queue: send `taken_at` (when the photo was taken) and `offline=true`. Advice is always worked out when the server\nreceives the photo (spray timing and weather are about now), the result carries both times. If the response was lost, the\napp can fetch the result with `GET /v1/scans/by-request/{key}` without sending the photos again.",
         "operationId": "create_scan_v1_scans_post",
         "security": [
           {
@@ -845,6 +845,74 @@
               }
             },
             "description": "Service Unavailable"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/scans/by-request/{request_key}": {
+      "get": {
+        "tags": [
+          "scans"
+        ],
+        "summary": "Get Scan By Request",
+        "description": "The stored result of the scan this farmer uploaded with this Idempotency-Key (404 `scan_not_found`: it never arrived).\n\nFor the offline queue: the upload reached the server but the response was lost, so the app does not know the scan id.\nAsking here is free (no photos, no analysis); sending the same upload again returns the same scan too.",
+        "operationId": "get_scan_by_request_v1_scans_by_request__request_key__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "request_key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Request Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScanOut"
+                }
+              }
+            }
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Unauthorized"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Not Found"
           },
           "422": {
             "description": "Validation Error",
@@ -1520,6 +1588,63 @@
                 }
               }
             }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/voice/package": {
+      "get": {
+        "tags": [
+          "voice"
+        ],
+        "summary": "Voice Package",
+        "description": "The whole fixed-prompt audio of one language as one zip (manifest.json + <prompt id>.mp3), for a single download.\n\nSame version as GET /v1/voice/catalogue (also the ETag: 304 when the app is current). 404 `voice_package_empty` while no\naudio has been generated yet (the app then uses the phone's own voice). Public, like the catalogue.",
+        "operationId": "voice_package_v1_voice_package_get",
+        "parameters": [
+          {
+            "name": "lang",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "hi",
+                "en"
+              ],
+              "type": "string",
+              "default": "hi",
+              "title": "Lang"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/zip": {}
+            }
+          },
+          "304": {
+            "description": "The app already has this version"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Not Found"
           },
           "422": {
             "description": "Validation Error",
@@ -3047,7 +3172,14 @@
                 "type": "null"
               }
             ],
-            "title": "Taken At"
+            "title": "Taken At",
+            "description": "ISO-8601 time the phone took the photo (offline uploads: send it)"
+          },
+          "offline": {
+            "type": "boolean",
+            "title": "Offline",
+            "description": "true when this upload waited in the app's offline queue",
+            "default": false
           },
           "lat": {
             "anyOf": [
@@ -4127,6 +4259,11 @@
             },
             "type": "object",
             "title": "Providers"
+          },
+          "weather_enabled": {
+            "type": "boolean",
+            "title": "Weather Enabled",
+            "default": true
           }
         },
         "type": "object",
@@ -4807,6 +4944,23 @@
             "type": "string",
             "format": "date-time",
             "title": "Created At"
+          },
+          "taken_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Taken At"
+          },
+          "offline": {
+            "type": "boolean",
+            "title": "Offline",
+            "default": false
           },
           "photos": {
             "type": "integer",

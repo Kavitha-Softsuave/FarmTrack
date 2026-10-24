@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% from "_macros.html" import when, head, pager %}
+{% block title %}Farmer photos{% endblock %}
+{% block content %}
+{{ head('Farmer photos', 'Photos farmers sent with a scan. "Offline queue" means the app kept the photo on the phone and sent it later; "photo taken" is when the phone took it and "received" is when the server got it.') }}
+<ul class="filters" aria-label="Filter">
+  <li><a href="/admin/uploads"{% if not only_offline %} aria-current="page"{% endif %}>All scans</a></li>
+  <li><a href="/admin/uploads?offline=1"{% if only_offline %} aria-current="page"{% endif %}>Sent from the offline queue</a></li>
+</ul>
+<section class="card flush">
+  <div class="scroll">
+  <table>
+    <thead><tr><th scope="col">Photos</th><th scope="col">Farmer</th><th scope="col">Result</th><th scope="col">Photo taken</th><th scope="col">Received</th><th scope="col">Sent</th></tr></thead>
+    <tbody>
+    {% for s in scans %}
+      <tr>
+        <td>{% if s.photos %}<span class="photos small">{% for i in range(s.photos) %}<a href="/admin/photos/{{ s.scan_id }}/{{ i }}"><img src="/admin/photos/{{ s.scan_id }}/{{ i }}" alt="Photo {{ i + 1 }} sent by {{ s.farmer_name or 'a farmer' }}" loading="lazy"></a>{% endfor %}</span>{% else %}<span class="muted">Deleted (retention)</span>{% endif %}</td>
+        <td class="nowrap">{{ s.farmer_name or 'Unknown farmer' }}</td>
+        <td>{{ s.status|replace('_', ' ')|capitalize }}{% if s.crop_id or s.disease_id %}<span class="sub">{{ s.crop_id or '' }}{% if s.crop_id and s.disease_id %} &middot; {% endif %}{{ s.disease_id|pretty if s.disease_id else '' }}</span>{% endif %}</td>
+        <td class="nowrap">{{ when(s.taken_at) }}</td><td class="nowrap">{{ when(s.created_at) }}</td>
+        <td>{% if s.offline %}<span class="badge yellow">Offline queue</span>{% else %}<span class="badge green">Live</span>{% endif %}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="6" class="empty">No scans in this view.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {{ pager('/admin/uploads', pg, '&offline=1' if only_offline else '') }}
+</section>
+{% endblock %}

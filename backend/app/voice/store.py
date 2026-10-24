@@ -12,6 +12,7 @@ from pathlib import Path
 
 from app.domain.types import Lang
 from app.interfaces import TTSProvider
+from app.voice.catalogue import file_sha
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +27,6 @@ class FileAudioStore:
         self._tts = tts
         self._voices = dict(voices or {})
         self._locks = [threading.Lock() for _ in range(_LOCK_STRIPES)]
-        self._sha_cache: dict[tuple[str, int, int], str] = {}
 
     @property
     def directory(self) -> Path:
@@ -41,11 +41,7 @@ class FileAudioStore:
         return hashlib.sha256(f"{text.strip()}|{lang}|{voice}|{speed:.2f}".encode()).hexdigest()
 
     def _sha(self, path: Path) -> str:
-        stat = path.stat()
-        marker = (str(path), stat.st_mtime_ns, stat.st_size)
-        if marker not in self._sha_cache:
-            self._sha_cache[marker] = hashlib.sha256(path.read_bytes()).hexdigest()
-        return self._sha_cache[marker]
+        return file_sha(path)
 
     def get_cached(self, text: str, lang: Lang, speed: float = 0.9) -> tuple[str, str] | None:
         """The cached audio for this text, or None. Never calls the TTS provider."""

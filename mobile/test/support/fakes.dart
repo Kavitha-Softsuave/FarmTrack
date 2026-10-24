@@ -31,6 +31,15 @@ class FakeVoice implements VoiceService {
   int stopCalls = 0;
   final ValueNotifier<VoiceState> _state = ValueNotifier(const VoiceState());
 
+  /// The fake plays instantly; by default the speech counts as still running (the caption floats while it does). Call
+  /// [finishSpeaking] to let it end, as the real voice does after its last sentence.
+  bool finished = false;
+
+  void finishSpeaking() {
+    finished = true;
+    _state.value = _state.value.copyWith(speaking: false);
+  }
+
   @override
   ValueListenable<VoiceState> get state => _state;
 
@@ -74,6 +83,7 @@ class FakeVoice implements VoiceService {
     spoken.clear();
     unknownIds.clear();
     stopCalls = 0;
+    finished = false;
   }
 
   @override
@@ -87,7 +97,7 @@ class FakeVoice implements VoiceService {
         PromptUtterance(:final id) => _promptText(id, lang),
         TextUtterance(:final text) => text,
       };
-      _state.value = _state.value.copyWith(caption: caption, captionLang: lang, owner: owner, speaking: false);
+      _state.value = _state.value.copyWith(caption: caption, captionLang: lang, owner: owner, speaking: !finished);
     }
   }
 

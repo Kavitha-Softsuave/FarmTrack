@@ -107,6 +107,7 @@ class _FieldScreenState extends ConsumerState<FieldScreen> {
     final t = ref.watch(stringsProvider);
     final words = ref.watch(dateWordsProvider);
     final field = ref.watch(fieldProvider);
+    final weatherOn = ref.watch(weatherOnProvider);
 
     if (field.hasError && !field.hasValue) {
       return ErrorRetryScreen(error: field.error!, onRetry: () => ref.invalidate(fieldProvider), onBack: _back);
@@ -124,7 +125,6 @@ class _FieldScreenState extends ConsumerState<FieldScreen> {
         icon: AppIcons.roundArrow,
         size: 96,
         semanticLabel: t('field_reload_label'),
-        label: t('field_reload_label'),
         onPressed: _reloading || view == null ? null : _reload,
       ),
       body: view == null
@@ -154,8 +154,12 @@ class _FieldScreenState extends ConsumerState<FieldScreen> {
                       ),
                   ],
                   const SizedBox(height: 12),
-                  ReadingTiles(tiles: readingTiles(view.field.readings), onSpeak: _say),
-                  if (view.field.forecast.isNotEmpty) ...[
+                  ReadingTiles(
+                    tiles: readingTiles(view.field.readings, weather: weatherOn),
+                    onSpeak: _say,
+                  ),
+                  // No forecast strip when the server has weather switched off.
+                  if (weatherOn && view.field.forecast.isNotEmpty) ...[
                     const SizedBox(height: 12),
                     Text(t('field_forecast_title'), style: theme.titleLarge),
                     const SizedBox(height: 8),

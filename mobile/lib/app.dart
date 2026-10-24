@@ -39,7 +39,10 @@ class _FarmTrackAppState extends ConsumerState<FarmTrackApp> with WidgetsBinding
     if (state == AppLifecycleState.paused) ref.read(voiceServiceProvider).stop();
     // Back in the app: send what waits, and ask the server again whether it runs on a demo clock.
     ref.read(offlineStatusProvider.notifier).onLifecycle(state);
-    if (state == AppLifecycleState.resumed) ref.invalidate(demoClockProvider);
+    if (state == AppLifecycleState.resumed) {
+      ref.invalidate(serverMetaProvider);
+      ref.invalidate(demoClockProvider);
+    }
   }
 
   @override

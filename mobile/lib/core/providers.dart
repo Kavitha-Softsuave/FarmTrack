@@ -112,6 +112,36 @@ final apiClientProvider = Provider<ApiClient>((ref) {
 
 final metaProvider = FutureProvider<MetaOut>((ref) => ref.watch(apiClientProvider).meta());
 
+/// `GET /v1/meta` once for every screen that needs it (demo date, weather flag); null when the server cannot be
+/// reached. Asked again when the phone comes back online, and when the app is opened again ([FarmTrackApp]).
+final serverMetaProvider = FutureProvider<MetaOut?>((ref) async {
+  ref.watch(onlineProvider.select((online) => online.value ?? true));
+  try {
+    return await ref.watch(apiClientProvider).meta();
+  } on ApiException {
+    return null;
+  }
+});
+
+const _weatherEnabledKey = 'weather_enabled';
+
+/// Whether the server shows weather (`weather_enabled` of /v1/meta; a server without the field means true). The last
+/// answer is kept on the phone, so offline the app does what it did the last time it heard. Fetched again when the
+/// phone comes back online.
+final weatherEnabledProvider = FutureProvider<bool>((ref) async {
+  final prefs = ref.watch(sharedPreferencesProvider);
+  final meta = await ref.watch(serverMetaProvider.future);
+  if (meta == null) return prefs.getBool(_weatherEnabledKey) ?? true;
+  await prefs.setBool(_weatherEnabledKey, meta.weatherEnabled);
+  return meta.weatherEnabled;
+});
+
+/// [weatherEnabledProvider] without the waiting: the saved answer (or true) until the server has answered.
+final weatherOnProvider = Provider<bool>((ref) {
+  final fetched = ref.watch(weatherEnabledProvider).value;
+  return fetched ?? ref.watch(sharedPreferencesProvider).getBool(_weatherEnabledKey) ?? true;
+});
+
 /// Crop ids for the "choose your crop" grid: the server's list, or the app's own table when offline.
 final supportedCropsProvider = FutureProvider<List<String>>((ref) async {
   try {
@@ -261,6 +291,21 @@ final catalogueSyncProvider = Provider<CatalogueSync>(
   ),
 );
 
+/// Catalogue and audio files of the server, kept on the phone (audio only downloaded over Wi-Fi).
+final voicePackageProvider = Provider<VoicePackage>((ref) {
+  final resources = ref.watch(resourcesProvider);
+  final package = VoicePackage(
+    sync: ref.watch(catalogueSyncProvider),
+    cache: ref.watch(audioCacheProvider),
+    catalogue: ref.watch(promptCatalogueProvider),
+    connectivity: ref.watch(connectivityServiceProvider),
+    languages: [for (final l in resources.languages) l.code],
+    preferredLanguage: () => ref.read(settingsProvider).language,
+  );
+  ref.onDispose(package.dispose);
+  return package;
+});
+
 final voiceServiceProvider = Provider<VoiceService>((ref) {
   final resources = ref.watch(resourcesProvider);
   return DeviceVoiceService(
@@ -269,6 +314,7 @@ final voiceServiceProvider = Provider<VoiceService>((ref) {
     tts: ref.watch(ttsPortProvider),
     audio: ref.watch(audioPortProvider),
     cache: ref.watch(audioCacheProvider),
+    isOnline: ref.watch(connectivityServiceProvider).isOnline,
     settings: () {
       final s = ref.read(settingsProvider);
       return VoiceSettings(language: s.language ?? resources.defaultLanguage, speed: s.speed, volume: s.volume);

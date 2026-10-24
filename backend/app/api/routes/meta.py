@@ -37,4 +37,5 @@ def meta(container: Container = Depends(get_container)) -> MetaOut:
         app_version=settings.app_version, env=settings.env,
         demo_clock=container.clock.now() if container.clock.is_fixed else None,
         supported_languages=list(get_args(Lang)), supported_crops=container.rules.supported_crops(),
-        providers={name.removesuffix("_provider"): getattr(settings, name) for name in _PROVIDER_SETTINGS})
+        providers={name.removesuffix("_provider"): getattr(settings, name) for name in _PROVIDER_SETTINGS},
+        weather_enabled=settings.weather_enabled)

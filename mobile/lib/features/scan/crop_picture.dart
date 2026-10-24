@@ -16,7 +16,8 @@ final cropImageAssetsProvider = FutureProvider<Set<String>>((ref) async {
 });
 
 /// A round picture of a crop. Until real crop illustrations are added to `assets/crops/`, each crop shows the
-/// generic picture of its group (tree for fruit, leaf for vegetables, grass for cereals) in the group colour.
+/// generic picture of its group (tree for fruit, leaf for vegetables, grass for cereals). Always blue (information):
+/// green, red and yellow are kept for done, stop and warning.
 class CropPicture extends ConsumerWidget {
   const CropPicture({super.key, required this.cropId, this.size = 120});
 
@@ -28,11 +29,13 @@ class CropPicture extends ConsumerWidget {
     final group = ref.watch(resourcesProvider).cropGroup(cropId);
     final assets = ref.watch(cropImageAssetsProvider).value ?? const <String>{};
     final path = 'assets/crops/${cropId.toLowerCase()}.png';
-    final (icon, color, soft) = switch (group) {
-      'vegetable' => (AppIcons.leaf, AppColors.green, AppColors.greenSoft),
-      'cereal' => (AppIcons.grass, AppColors.amberDark, AppColors.amberSoft),
-      _ => (AppIcons.tree, AppColors.red, AppColors.redSoft),
+    final icon = switch (group) {
+      'vegetable' => AppIcons.leaf,
+      'cereal' => AppIcons.grass,
+      _ => AppIcons.tree,
     };
+    const color = AppColors.blue;
+    const soft = AppColors.blueSoft;
     return Container(
       width: size,
       height: size,

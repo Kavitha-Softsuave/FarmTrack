@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% from "_macros.html" import head %}
+{% block title %}Voice{% endblock %}
+{% block content %}
+{{ head('Voice', 'Text to speech for the spoken advice, and the audio of the fixed prompts.') }}
+<p class="panel {{ 'status-ok' if voice.configured else 'status-warn' }}" role="status">{{ voice.summary }}</p>
+<dl class="facts">
+  <div><dt>TTS provider</dt><dd>{{ voice.provider }}</dd></div>
+  <div><dt>Google key</dt><dd>{{ 'set' if voice.key_set else 'not set' }}</dd></div>
+  <div><dt>Hindi voice</dt><dd>{{ voice.voice_hi }}</dd></div>
+  <div><dt>English voice</dt><dd>{{ voice.voice_en }}</dd></div>
+  <div><dt>Cached advice audio files</dt><dd>{{ voice.cached_advice_audio }}</dd></div>
+</dl>
+<section class="card flush">
+  <div class="card-head"><h2>Fixed prompts and their audio</h2></div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th scope="col">Language</th><th scope="col" class="num">Prompts</th><th scope="col" class="num">With audio</th><th scope="col">Without audio</th><th scope="col" class="num">Size</th><th scope="col">Catalogue version</th></tr></thead>
+    <tbody>
+    {% for r in voice.rows %}
+      <tr><th scope="row">{{ r.lang }}</th><td class="num">{{ r.prompts }}</td><td class="num">{{ r.with_audio }}</td>
+          <td>{{ r.missing|length }}{% if r.missing %} <span class="muted">({{ r.missing[:6]|join(', ') }}{{ ', ...' if r.missing|length > 6 else '' }})</span>{% endif %}</td>
+          <td class="num nowrap">{{ (r.audio_bytes / 1024)|round|int }} KB</td><td><code>{{ r.version }}</code></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="card">
+  <h2>How to generate the audio</h2>
+  <ol>
+    <li>Put <code>GOOGLE_TTS_API_KEY</code> in the <code>.env</code> and set <code>TTS_PROVIDER=google</code> (steps: <code>docs/voice-package.md</code>).</li>
+    <li>Run <code>python scripts/generate_prompt_audio.py</code> in the backend folder (<code>--list-voices</code> first checks that the voices exist).</li>
+    <li>The app downloads the new audio the next time it is online (the catalogue version changes).</li>
+  </ol>
+</section>
+{% endblock %}

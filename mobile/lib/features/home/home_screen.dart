@@ -50,24 +50,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final online = ref.watch(onlineProvider).value ?? true;
     final unread = ref.watch(unreadAlertsProvider).value ?? 0;
     final resultReady = ref.watch(offlineStatusProvider.select((s) => s.ready.isNotEmpty));
-    final tileHeight = (MediaQuery.sizeOf(context).height * 0.27).clamp(140.0, 230.0);
+    final height = MediaQuery.sizeOf(context).height;
+    final heroHeight = (height * 0.27).clamp(124.0, 250.0);
+    final smallHeight = (height * 0.2).clamp(104.0, 180.0);
 
-    Widget tile(String key, Widget picture, String label, String semantic, VoidCallback onTap, Color border) =>
-        Expanded(
-          child: SizedBox(
-            height: tileHeight,
-            child: PictureTile(
-              key: ValueKey(key),
-              semanticLabel: semantic,
-              label: label,
-              borderColor: border,
-              onPressed: onTap,
-              child: picture,
-            ),
-          ),
-        );
+    Widget tile(
+      String key,
+      Widget picture,
+      String label,
+      String semantic,
+      VoidCallback onTap,
+      Color border,
+      double h,
+    ) => SizedBox(
+      height: h,
+      child: PictureTile(
+        key: ValueKey(key),
+        semanticLabel: semantic,
+        label: label,
+        borderColor: border,
+        onPressed: onTap,
+        child: picture,
+      ),
+    );
 
-    const picture = 88.0;
     return VoiceScaffold(
       showBack: false,
       script: promptList([
@@ -96,52 +102,60 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           onPressed: () => context.push(Routes.settings),
         ),
       ],
+      // One big green button (the photo) and three smaller blue ones; the bell and the gear are in the top bar.
       body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: 4),
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const OfflineCards(),
-            Row(
-              children: [
-                tile(
-                  'home-scan',
-                  const Icon(AppIcons.camera, size: picture, color: AppColors.green),
-                  t('home_scan_label'),
-                  t('a11y_camera'),
-                  _openScan,
-                  AppColors.green,
-                ),
-                const SizedBox(width: 16),
-                tile(
-                  'home-field',
-                  const _FieldPicture(size: picture),
-                  t('home_field_label'),
-                  t('home_field_label'),
-                  () => context.push(Routes.field),
-                  AppColors.blue,
-                ),
-              ],
+            tile(
+              'home-scan',
+              const Icon(AppIcons.camera, size: 96, color: AppColors.green),
+              t('home_scan_label'),
+              t('a11y_camera'),
+              _openScan,
+              AppColors.green,
+              heroHeight,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 12),
             Row(
               children: [
-                tile(
-                  'home-diary',
-                  const Icon(AppIcons.notebook, size: picture, color: AppColors.amberDark),
-                  t('home_diary_label'),
-                  t('home_diary_label'),
-                  () => context.push(Routes.diary),
-                  AppColors.amberDark,
+                Expanded(
+                  child: tile(
+                    'home-field',
+                    const _FieldPicture(size: 56),
+                    t('home_field_label'),
+                    t('home_field_label'),
+                    () => context.push(Routes.field),
+                    AppColors.blue,
+                    smallHeight,
+                  ),
                 ),
-                const SizedBox(width: 16),
-                tile(
-                  'home-ask',
-                  const Icon(AppIcons.question, size: picture, color: AppColors.inkSoft),
-                  t('home_ask_label'),
-                  t('home_ask_label'),
-                  () => context.push(Routes.ask),
-                  AppColors.inkSoft,
+                const SizedBox(width: 10),
+                Expanded(
+                  child: tile(
+                    'home-diary',
+                    const Icon(AppIcons.notebook, size: 56, color: AppColors.blue),
+                    t('home_diary_label'),
+                    t('home_diary_label'),
+                    () => context.push(Routes.diary),
+                    AppColors.blue,
+                    smallHeight,
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: tile(
+                    'home-ask',
+                    const Icon(AppIcons.question, size: 56, color: AppColors.blue),
+                    t('home_ask_label'),
+                    t('home_ask_label'),
+                    () => context.push(Routes.ask),
+                    AppColors.blue,
+                    smallHeight,
+                  ),
                 ),
               ],
             ),
@@ -203,16 +217,22 @@ class _TopIcon extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         button,
+        // The number never takes taps from the bell under it, and stays small however large the text is set.
         Positioned(
           right: -2,
           top: -2,
-          child: Container(
-            key: const ValueKey('alert-badge'),
-            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-            decoration: const BoxDecoration(color: AppColors.red, shape: BoxShape.circle),
-            child: Text(
-              '$badge',
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 16),
+          child: IgnorePointer(
+            child: MediaQuery.withClampedTextScaling(
+              maxScaleFactor: 1.2,
+              child: Container(
+                key: const ValueKey('alert-badge'),
+                padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                decoration: const BoxDecoration(color: AppColors.red, shape: BoxShape.circle),
+                child: Text(
+                  '$badge',
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w800, fontSize: 16),
+                ),
+              ),
             ),
           ),
         ),

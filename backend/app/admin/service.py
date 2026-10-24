@@ -35,6 +35,7 @@ from app.db.models import (
     RefreshTokenRow,
     ReviewTaskRow,
     ScanRow,
+    TrainingPhotoRow,
     as_ist,
 )
 from app.domain.types import LocalizedText, Severity
@@ -189,7 +190,7 @@ def _expert_out(session: Session, requests: list[ExpertRequestRow]) -> list[Expe
         farmer = farmers.get(r.farmer_id)
         out.append(ExpertRequestAdminOut(
             id=r.id, status="resolved" if r.status == "resolved" else "open", created_at=_aware(r.created_at), farmer_id=r.farmer_id,
-            farmer_name=farmer.name if farmer else None,
+            farmer_name=farmer.name if farmer else None, farmer_phone=farmer.phone if farmer else None,
             crop=r.crop_id or (scan_crops.get(r.scan_id) if r.scan_id else None) or (farmer.primary_crop if farmer else None),
             message=r.message, scan_id=r.scan_id, review_task_id=tasks.get(r.scan_id) if r.scan_id else None,
             resolved_at=as_ist(r.resolved_at), resolution_note=(r.resolution or {}).get("note")))
@@ -303,7 +304,7 @@ def set_farmer_login(session: Session, farmer_id: str, body: FarmerLoginIn) -> F
         raise HTTPException(409, USERNAME_TAKEN)
     farmer.username, farmer.password_hash = body.username, hash_password(body.password)
     revoked = session.execute(update(RefreshTokenRow).where(RefreshTokenRow.farmer_id == farmer.id,
-                                                            RefreshTokenRow.revoked.is_(False)).values(revoked=True)).rowcount
+                                                            RefreshTokenRow.revoked.is_(False)).values(revoked=True)).rowcount  # type: ignore[attr-defined]  # CursorResult
     write_audit(session, "farmer.set_login", "farmer", farmer.id, {"username": body.username, "sessions_ended": revoked})
     try:
         session.commit()
@@ -354,15 +355,29 @@ def alert_out(row: AlertRow) -> AdminAlertOut:
     )
 
 
-def list_alerts(session: Session, limit: int, farmer_id: str | None = None) -> list[AdminAlertOut]:
-    query = select(AlertRow).order_by(AlertRow.created_at.desc(), AlertRow.id).limit(clamp(limit))
+def list_alerts(session: Session, limit: int, farmer_id: str | None = None, offset: int = 0) -> list[AdminAlertOut]:
+    query = select(AlertRow).order_by(AlertRow.created_at.desc(), AlertRow.id).limit(clamp(limit)).offset(max(offset, 0))
     if farmer_id:
         query = query.where(AlertRow.farmer_id == farmer_id)
     return [alert_out(r) for r in session.scalars(query).all()]
 
 
-def list_audit(session: Session, limit: int) -> list[AuditOut]:
-    rows = session.scalars(select(AuditLogRow).order_by(AuditLogRow.at.desc(), AuditLogRow.id).limit(clamp(limit))).all()
+def count_alerts(session: Session) -> int:
+    return int(session.scalar(select(func.count()).select_from(AlertRow)) or 0)
+
+
+def count_audit(session: Session) -> int:
+    return int(session.scalar(select(func.count()).select_from(AuditLogRow)) or 0)
+
+
+def farmer_names(session: Session) -> dict[str, str]:
+    """farmer id -> name, so admin pages can show people instead of ids."""
+    return dict(session.execute(select(FarmerRow.id, FarmerRow.name)).all())
+
+
+def list_audit(session: Session, limit: int, offset: int = 0) -> list[AuditOut]:
+    rows = session.scalars(select(AuditLogRow).order_by(AuditLogRow.at.desc(), AuditLogRow.id).limit(clamp(limit))
+                           .offset(max(offset, 0))).all()
     return [AuditOut(id=r.id, at=_utc(r.at), actor=r.actor, action=r.action, entity=r.entity, entity_id=r.entity_id,
                      detail=r.detail or {}) for r in rows]
 
@@ -378,6 +393,8 @@ def dashboard_counts(session: Session) -> dict[str, int]:
         "alerts": count(AlertRow),
         "unpushed_alerts": count(AlertRow, AlertRow.pushed_at.is_(None)),
         "disabled_products": count(ProductOverrideRow, ProductOverrideRow.enabled.is_(False)),
+        "training_photos": count(TrainingPhotoRow),
+        "offline_scans": count(ScanRow, ScanRow.offline.is_(True)),
     }
 
 
@@ -395,3 +412,24 @@ def photo_file(session: Session, storage_dir: Path, scan_id: str, index: int) ->
     if base not in candidate.parents or not candidate.is_file():
         return None
     return candidate
+
+
+def list_scan_uploads(session: Session, limit: int = 50, offline_only: bool = False, offset: int = 0) -> list[dict[str, Any]]:
+    """Scans with the photos farmers uploaded (including the ones that waited in the phone's offline queue), newest first."""
+    stmt = select(ScanRow, FarmerRow.name).join(FarmerRow, FarmerRow.id == ScanRow.farmer_id, isouter=True)
+    if offline_only:
+        stmt = stmt.where(ScanRow.offline.is_(True))
+    rows = session.execute(stmt.order_by(ScanRow.created_at.desc(), ScanRow.id.desc()).limit(clamp(limit)).offset(max(offset, 0))).all()
+    return [{
+        "scan_id": scan.id, "farmer_id": scan.farmer_id, "farmer_name": name or "", "status": scan.status,
+        "crop_id": scan.crop_id, "disease_id": scan.disease_id, "created_at": _aware(scan.created_at),
+        "taken_at": _aware(scan.taken_at) if scan.taken_at else None, "offline": bool(scan.offline),
+        "photos": len(scan.photo_paths or []),
+    } for scan, name in rows]
+
+
+def count_scan_uploads(session: Session, offline_only: bool = False) -> int:
+    stmt = select(func.count()).select_from(ScanRow)
+    if offline_only:
+        stmt = stmt.where(ScanRow.offline.is_(True))
+    return int(session.scalar(stmt) or 0)

@@ -287,8 +287,8 @@ def test_the_page_keeps_its_security_headers(authed):
     assert "form-action 'self'" in response.headers["content-security-policy"] and response.headers["cache-control"] == "no-store"
 
 
-# ------------------------------------------------------------------------------------------------- the owner dropped the expert call
-def test_the_expert_requests_page_does_not_show_phone_numbers(authed, db):
+# ------------------------------------------------------------------------------------------------- experts answer by phone call
+def test_the_expert_requests_page_shows_the_phone_number_to_call(authed, db):
     from app.db.models import ExpertRequestRow
 
     seed(db, farmer_row("F901", phone="+919876543210"),
@@ -296,4 +296,5 @@ def test_the_expert_requests_page_does_not_show_phone_numbers(authed, db):
     page = authed.get("/admin/expert-requests")
     api = authed.get(f"{BASE}/expert-requests")
     assert "leaves are curling" in page.text
-    assert "9876543210" not in page.text and "9876543210" not in api.text and "phone" not in api.text
+    assert "+919876543210" in page.text and "+919876543210" in api.text            # owner decision: the expert calls the farmer
+    assert "9876543210" not in authed.get("/admin/farmers").text                    # but the farmers list keeps phones hidden

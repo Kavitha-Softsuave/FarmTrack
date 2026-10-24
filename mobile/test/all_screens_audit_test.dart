@@ -284,7 +284,7 @@ Future<List<String>> _check(WidgetTester tester, TestEnv env, String name, {requ
   try {
     expectBigTouchTargets(tester);
   } on TestFailure catch (e) {
-    problems.add('touch target below 64 dp: ${e.message?.split('\n').first}');
+    problems.add('touch target below 56 dp: ${e.message?.split('\n').first}');
   }
   final small = await meetsGuideline(androidTapTargetGuideline).matchAsync(tester);
   if (small != null) {

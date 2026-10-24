@@ -148,6 +148,17 @@ class PersistentOfflineQueue implements KeyedOfflineQueue {
     return [for (final i in _items) i.key];
   }
 
+  /// The diary entries that wait to be sent, oldest first, so the diary can show them as "waiting" after a restart.
+  /// With [owner] only that farmer's entries (and entries of nobody) are returned.
+  List<({String key, SprayLogIn log})> waitingSprayLogs({String? owner}) {
+    _ensureLoaded();
+    return [
+      for (final i in _items)
+        if (i.kind == QueueKind.sprayLog && (owner == null || i.owner == null || i.owner == owner))
+          (key: i.key, log: i.log!),
+    ];
+  }
+
   /// The photos and files of waiting items together, in bytes.
   int get usedBytes {
     _ensureLoaded();

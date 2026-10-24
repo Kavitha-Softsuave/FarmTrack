@@ -37,6 +37,21 @@ void main() {
   Future<TestEnv> env(_MetaApi api, {String language = 'hi', List<Override> extra = const []}) =>
       TestEnv.create(language: language, loggedIn: true, api: api, extraOverrides: [fetch, ...extra]);
 
+  testWidgets('a tap on the demo strip hides it for the rest of the run (it never takes room from the content)', (
+    tester,
+  ) async {
+    useSmallPhone(tester);
+    final e = await env(_MetaApi(clock: _may12));
+    final container = await pumpApp(tester, e, location: '/home');
+    expect(keyed('demo-banner'), findsOneWidget);
+    await tester.tap(keyed('demo-banner'));
+    await tester.pump();
+    expect(keyed('demo-banner'), findsNothing);
+    container.read(routerProvider).go('/ask');
+    await tester.pumpAndSettle();
+    expect(keyed('demo-banner'), findsNothing, reason: 'stays away on the other screens');
+  });
+
   testWidgets('a demo clock shows a thin strip with the date at the top of every screen; the voice never reads it', (
     tester,
   ) async {

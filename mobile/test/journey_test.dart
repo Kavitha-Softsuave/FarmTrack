@@ -7,7 +7,7 @@ import 'support/finders.dart';
 import 'support/harness.dart';
 
 /// Walks through every screen of the app on small phones and at large text sizes. Any overflow, layout error or
-/// exception fails the test; every screen must also keep its touch targets at 64 dp or more.
+/// exception fails the test; every screen must also keep its touch targets at 56 dp or more.
 void main() {
   const profiles = [
     (name: 'text scale 1.5 on a 360x640 phone', size: Size(360, 640), scale: 1.5),

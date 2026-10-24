@@ -86,12 +86,15 @@ class ModelDiseaseClassifier:
     Several photos: each photo is masked and renormalised on its own, then the probability vectors are averaged.
     """
 
-    def __init__(self, model_a: ImageClassifier, model_b: ImageClassifier, apple_a_weight: float = APPLE_A_WEIGHT) -> None:
+    def __init__(self, model_a: ImageClassifier, model_b: ImageClassifier, apple_a_weight: float = APPLE_A_WEIGHT,
+                 apple_local: ImageClassifier | None = None, apple_local_name: str = "local") -> None:
         if not 0.0 <= apple_a_weight <= 1.0:
             raise ValueError("apple_a_weight must be between 0 and 1")
         self._a = model_a
         self._b = model_b
         self._apple_a_weight = apple_a_weight
+        self._apple_local = apple_local          # locally trained apple model (DISEASE_MODEL_DIR): replaces A+B for apple
+        self._apple_local_name = apple_local_name
 
     def covers(self, crop_id: str) -> bool:
         return covers_crop(crop_id)
@@ -101,17 +104,32 @@ class ModelDiseaseClassifier:
         if not covers_crop(crop):
             return DiseaseResult(crop_id=crop, disease_id=None, model="none", model_covers_crop=False)
         pictures = decode_all(images)
+        if crop in B_COVERED_CROPS and self._apple_local is not None:
+            return self._result(crop, self._local_apple(pictures), self._apple_local_name)
         dist = self._model_a(pictures, crop)
         model = MODEL_A.short
         if crop in B_COVERED_CROPS:
             dist = _mix(self._model_b(pictures), dist, self._apple_a_weight)
             model = f"{MODEL_A.short}+{MODEL_B.short}"
+        return self._result(crop, dist, model)
+
+    @staticmethod
+    def _result(crop: str, dist: Mapping[str, float], model: str) -> DiseaseResult:
         ranked = top_k(dist, MAX_CANDIDATES)
         if not ranked:
             return DiseaseResult(crop_id=crop, disease_id=None, model=model, model_covers_crop=True)
         candidates = [DiseaseCandidate(disease_id=d, confidence=floor4(p)) for d, p in ranked]
         return DiseaseResult(crop_id=crop, disease_id=ranked[0][0], confidence=candidates[0].confidence, candidates=candidates,
                              model=model, model_covers_crop=True)
+
+    def _local_apple(self, pictures: list[Image.Image]) -> dict[str, float]:
+        """The locally trained model: its labels ARE catalogue ids (train_apple.py writes them), averaged over the photos."""
+        assert self._apple_local is not None
+        raw = list(self._apple_local.labels)
+        vectors = self._apple_local.predict_proba(pictures)
+        for probs in vectors:
+            check_distribution(probs, raw)
+        return dict(zip(raw, mean_vectors(vectors), strict=True))
 
     def _model_a(self, pictures: list[Image.Image], crop: str) -> dict[str, float]:
         labels = list(self._a.labels)

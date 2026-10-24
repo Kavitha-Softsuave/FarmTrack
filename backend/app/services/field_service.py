@@ -29,9 +29,10 @@ class FieldService:
 
     def get(self, farmer: FarmerProfile) -> FieldOut:
         now = self.c.clock.now()
-        weather = self._weather(farmer, now)
+        weather = self._weather(farmer, now) if self.c.settings.weather_enabled else None
+        weather_on = self.c.settings.weather_enabled
         reading, sensor_stale = self._sensor(farmer, now)
-        stale = sensor_stale or weather is None or weather.stale
+        stale = sensor_stale or (weather_on and (weather is None or weather.stale))
         risks = self._risks(farmer, weather, now) if weather else []
         readings = self._readings(reading, weather)
         as_of = reading.time if reading else (weather.as_of if weather else now)
@@ -40,7 +41,7 @@ class FieldService:
             forecast=[ForecastDayOut(day=d.day, tmin_c=d.tmin_c, tmax_c=d.tmax_c, rain_mm=d.rain_mm)
                       for d in (weather.daily_forecast[:7] if weather else [])],
             risks=[RiskOut(id=r.id, level=r.level, title=r.title, text=r.text) for r in risks],
-            spoken=self._spoken(readings, weather, risks, stale))
+            spoken=self._spoken(readings, weather, risks, stale, weather_on))
 
     # ------------------------------------------------------------------ data (each source may fail on its own)
     def _weather(self, farmer: FarmerProfile, now: datetime) -> WeatherSnapshot | None:
@@ -79,18 +80,20 @@ class FieldService:
 
     # ------------------------------------------------------------------ speech
     def _spoken(self, readings: ReadingsOut | None, weather: WeatherSnapshot | None, risks: list[RiskItem],
-                stale: bool) -> SpokenOut:
+                stale: bool, weather_on: bool = True) -> SpokenOut:
         book = PromptBook(self.c.settings.voice_dir)
         parts: list[LocalizedText] = []
         if stale:
             parts.append(book.get("field_stale", texts.FIELD_STALE_FALLBACK))
-        if readings is None and weather is None:
+        if readings is None and weather is None:   # (also true when weather is off and there is no sensor)
             parts.append(book.get("field_no_data", texts.FIELD_NO_DATA_FALLBACK))
             return speak(self.c.audio, book.join(*parts))
         if readings is not None and readings.temp_c is not None:
             parts.append(texts.FIELD_TEMPERATURE[_temperature_band(readings.temp_c)])
         if weather is not None:
             parts.append(texts.FIELD_RAIN[_rain_band(weather.rain_next_48h_mm)])
+        if not weather_on:                             # no weather: say nothing about weather risks either
+            return speak(self.c.audio, book.join(*parts))
         notable = sorted((r for r in risks if r.level != Severity.green), key=lambda r: _LEVEL_ORDER[r.level])[:2]
         if notable:
             parts.append(texts.FIELD_RISK_LEAD)

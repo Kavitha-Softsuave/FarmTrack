@@ -70,24 +70,73 @@ class _LanguageButtonsState extends ConsumerState<LanguageButtons> {
             borderColor: widget.selected == language.code ? AppColors.green : AppColors.ink,
             color: widget.selected == language.code ? AppColors.greenSoft : AppColors.card,
             onPressed: _busy ? null : () => _choose(language),
-            child: Text(
-              language.nativeName,
-              style: TextStyle(fontSize: widget.compact ? 34 : 52, fontWeight: FontWeight.w800, color: AppColors.ink),
+            child: _LanguageFace(
+              language: language,
+              selected: widget.selected == language.code,
+              fontSize: widget.compact ? 34 : 52,
             ),
           ),
         ),
     ];
-    if (widget.compact) {
+    // Two languages fit side by side in the compact (settings) layout; more are stacked, so the list can grow as data.
+    if (widget.compact && tiles.length <= 2) {
       return Row(
         children: [
           for (var i = 0; i < tiles.length; i++) ...[if (i > 0) const SizedBox(width: 12), Expanded(child: tiles[i])],
         ],
       );
     }
+    final gap = widget.compact ? 12.0 : 20.0;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        for (final tile in tiles) ...[tile, const SizedBox(height: 20)],
+        for (final tile in tiles) ...[tile, SizedBox(height: gap)],
+      ],
+    );
+  }
+}
+
+/// The face of a language button: a round badge with a letter, the name in its own script, and a green tick when it
+/// is the chosen language.
+class _LanguageFace extends StatelessWidget {
+  const _LanguageFace({required this.language, required this.selected, required this.fontSize});
+
+  final LanguageInfo language;
+  final bool selected;
+  final double fontSize;
+
+  @override
+  Widget build(BuildContext context) {
+    final badge = fontSize * 1.1;
+    // The tile scales its picture down to fit (FittedBox), so this row sizes itself to its content.
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          key: ValueKey('language-badge-${language.code}'),
+          width: badge,
+          height: badge,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(color: AppColors.ink, shape: BoxShape.circle),
+          child: Text(
+            language.badgeText,
+            style: TextStyle(fontSize: fontSize * 0.62, fontWeight: FontWeight.w800, color: Colors.white),
+          ),
+        ),
+        SizedBox(width: fontSize * 0.3),
+        Text(
+          language.nativeName,
+          style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w800, color: AppColors.ink),
+        ),
+        if (selected) ...[
+          SizedBox(width: fontSize * 0.3),
+          Icon(
+            AppIcons.tick,
+            key: ValueKey('language-selected-${language.code}'),
+            size: fontSize,
+            color: AppColors.green,
+          ),
+        ],
       ],
     );
   }

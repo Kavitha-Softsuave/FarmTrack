@@ -181,7 +181,9 @@ class NextStep(BaseModel):
 class ScanOut(BaseModel):
     id: str
     status: Literal["ok", "confirm_crop", "needs_expert", "no_approved_data", "photo_unusable", "not_a_disease"]
-    created_at: datetime
+    created_at: datetime                       # when the server evaluated the scan (the demo clock in demos)
+    taken_at: datetime | None = None           # when the phone took the photo (offline uploads: earlier than created_at); null = not sent
+    offline: bool = False                      # the app sent this scan from its offline queue
     photos: int
     crop: CropOut | None = None
     quality: QualityOut
@@ -331,6 +333,7 @@ class MetaOut(BaseModel):
     supported_languages: list[Lang]
     supported_crops: list[str]                  # crops with approved-list data
     providers: dict[str, str]
+    weather_enabled: bool = True                # False: the app hides every weather screen and card (WEATHER_ENABLED)
 
 
 class HealthOut(BaseModel):

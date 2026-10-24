@@ -60,7 +60,7 @@ def test_login_page_and_security_headers(client):
     assert response.status_code == 200 and 'type="password"' in response.text and '<html lang="en">' in response.text
     headers = response.headers
     assert headers["cache-control"] == "no-store" and headers["x-content-type-options"] == "nosniff"
-    assert headers["x-frame-options"] == "DENY" and headers["referrer-policy"] == "no-referrer"
+    assert headers["x-frame-options"] == "DENY" and headers["referrer-policy"] == "same-origin"
     csp = headers["content-security-policy"]
     assert "default-src 'none'" in csp and "script-src" not in csp and "frame-ancestors 'none'" in csp and "unsafe-inline" not in csp
 
@@ -164,9 +164,9 @@ def test_dashboard_shows_counts_clock_and_recent_items(authed, db, container):
     container.rules = FakeRules([risk("scab_infection_risk", "red", episode="2026-05-04")])
     authed.post("/admin/alerts/run-now", data={"csrf": csrf_from(authed, "/admin/alerts")})
     html = authed.get("/admin/dashboard").text
-    assert "12 May 2026 08:00" in html and "fixed by the admin" in html
-    assert re.search(r"Open review tasks</dt><dd>1<", html) and re.search(r"Farmers</dt><dd>1<", html)
-    assert "scab_infection_risk" in html and "alerts.run_now" in html
+    assert "12 May 2026, 08:00" in html and "Fixed by the admin" in html
+    assert re.search(r"Open review tasks</dt><dd><a [^>]*>1<", html) and re.search(r"Farmers</dt><dd><a [^>]*>1<", html)
+    assert "Scab infection risk" in html and "Alerts run now" in html and "Test Farmer F901" in html
 
 
 def test_stylesheet_is_public(client):
@@ -245,9 +245,9 @@ def test_query_parameters_are_never_reflected(authed):
 def test_review_page_shows_the_task_with_photos_and_a_resolve_form(authed, db):
     seed_review(db)
     html = authed.get("/admin/review").text
-    assert "Scan scan1" in html and "Test Farmer F901" in html and "Alternaria or Marssonina" in html
-    assert 'src="/admin/photos/scan1/0"' in html and 'alt="Photo 1 of 1 for scan scan1"' in html
-    assert "Apple scab (Apple___Apple_scab), 61%" in html
+    assert "Test Farmer F901" in html and "Alternaria or Marssonina" in html and "scan1" not in html.replace("/admin/photos/scan1/0", "")
+    assert 'src="/admin/photos/scan1/0"' in html and 'alt="Photo 1 of 1 from Test Farmer F901"' in html
+    assert "Apple scab, 61%" in html and "Apple___Apple_scab)" not in html
     assert 'action="/admin/review/t1/resolve"' in html and 'name="confirmed_disease"' in html and 'name="release_advice"' in html
     assert '<option value="Apple___Apple_scab">' in html and '<option value="Apple">' in html
     assert "No review tasks" not in html
@@ -258,8 +258,8 @@ def test_review_status_filter_and_empty_state(authed, db):
     seed_review(db)
     db.get(ReviewTaskRow, "t1").status = "resolved"
     db.commit()
-    assert "Scan scan1" not in authed.get("/admin/review").text
-    assert "Scan scan1" in authed.get("/admin/review?status=resolved").text and "Scan scan1" in authed.get("/admin/review?status=all").text
+    assert "Test Farmer F901" not in authed.get("/admin/review").text
+    assert "Test Farmer F901" in authed.get("/admin/review?status=resolved").text and "Test Farmer F901" in authed.get("/admin/review?status=all").text
     assert 'aria-current="page">All' in authed.get("/admin/review?status=all").text
 
 
@@ -313,16 +313,18 @@ def test_release_checkbox_calls_the_hook_and_a_failure_keeps_the_task_open(app, 
 def test_farmers_page_lists_farmers_without_phone_numbers(authed, db):
     seed(db, farmer_row("F901"), farmer_row("F902", language="hi", primary_crop="Potato"))
     html = authed.get("/admin/farmers").text
-    assert "Test Farmer F901" in html and "Potato" in html and "2 farmers" in html
-    assert "+91" not in html and "phone" in html.lower()                      # only the caption mentions phones
+    assert "Test Farmer F901" in html and "Potato" in html and "Showing 1&ndash;2 of 2" in html
+    assert "+91" not in html and "F901" not in html.replace("Test Farmer F901", "").replace("user-F901", "").replace("pass-F901", "").replace("/F901/", "")
 
 
 def test_products_page_lists_the_master_and_filters_by_crop(authed):
     html = authed.get("/admin/products").text
-    assert html.count('action="/admin/products/P') == 97 and "97 products" in html
+    assert html.count('action="/admin/products/P') == 15 and "Showing 1&ndash;15 of 97" in html           # one page of the list
+    assert authed.get("/admin/products?page=7").text.count('action="/admin/products/P') == 7             # 97 = 6 x 15 + 7
+    assert authed.get("/admin/products?page=999").text.count('action="/admin/products/P') == 7           # a page past the end is clamped
     apple = authed.get("/admin/products?crop=Apple").text
-    assert apple.count('action="/admin/products/P') == 68 and '<option value="Apple" selected>' in apple
-    assert authed.get("/admin/products?crop=Banana").text.count('action="/admin/products/P') == 97      # unknown crop is ignored
+    assert "of 68" in apple and '<option value="Apple" selected>' in apple and "crop=Apple" in apple
+    assert "of 97" in authed.get("/admin/products?crop=Banana").text                                    # unknown crop is ignored
 
 
 def test_toggling_a_product_through_the_form(authed, db):
@@ -335,7 +337,7 @@ def test_toggling_a_product_through_the_form(authed, db):
     assert row.enabled is False and row.note == "agronomist said stop"
     html = authed.get("/admin/products?crop=Apple&ok=product_updated").text
     assert "Product setting saved." in html and 'class="badge disabled">Disabled' in html and "agronomist said stop" in html
-    assert ">Enable P001<" in html and ">Disable P002<" in html
+    assert "Confirm enable" in html and "Confirm disable" in html and ">P001<" not in html
     back = authed.post("/admin/products/P001/toggle", data={"csrf": token, "enabled": "1"}, follow_redirects=False)
     assert back.status_code == 303
     db.expire_all()
@@ -407,4 +409,4 @@ def test_audit_page_shows_admin_actions(authed):
     token = csrf_from(authed, "/admin/products")
     authed.post("/admin/products/P001/toggle", data={"csrf": token, "enabled": "0"})
     html = authed.get("/admin/audit").text
-    assert "product.disable" in html and "P001" in html and "&#34;note&#34;" not in html
+    assert "Product disable" in html and "P001" in html and "&#34;note&#34;" not in html

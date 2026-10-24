@@ -3,7 +3,7 @@ PY = $(firstword $(wildcard .venv/Scripts/python.exe .venv/bin/python) python)
 ENV_FILE ?= ../.env
 IMAGE ?= farmtrack-api:dev
 
-.PHONY: help venv install test lint fix run export-openapi docker-build docker-up docker-down docker-logs clean
+.PHONY: help venv install test lint fix run export-openapi voice voice-status docker-build docker-up docker-down docker-logs clean
 
 help:
 	@echo "install | test | lint | fix | run | export-openapi | docker-build | docker-up | docker-down | docker-logs | clean"
@@ -26,6 +26,13 @@ fix:
 
 run:
 	$(PY) -m uvicorn app.main:app --reload --port 8000
+
+# Generate the fixed-prompt audio (needs GOOGLE_TTS_API_KEY and TTS_PROVIDER=google in ../.env); see ../docs/voice-package.md
+voice:
+	$(PY) scripts/generate_prompt_audio.py
+
+voice-status:
+	$(PY) scripts/generate_prompt_audio.py --status
 
 export-openapi:
 	$(PY) -m app.export_openapi ../contracts/openapi.json
